@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialiser le mot de passe{% endblock %}
+
+{% block body %}
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-center">
+        <div class="container">
+            <div class="my-5">
+            
+                <h1>Réinitialisez votre mot de passe</h1>
+
+                {{ form_start(resetForm) }}
+                    {{ form_row(resetForm.plainPassword) }}
+                    <button class="btn btn-lg btn-primary my-3">Envoyer</button>
+                {{ form_end(resetForm) }}
+            
+            </div>
+        </div>
+    </section>
+{% endblock %}

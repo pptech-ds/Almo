@@ -41,6 +41,10 @@
 
         {% include 'shared/_header.html.twig' %}
 
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">{{ message }}</div>
+        {% endfor %}
+
         {% block body %}{% endblock %}
 
         {% include 'shared/_footer.html.twig' %}
