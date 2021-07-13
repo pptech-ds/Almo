@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'une catégorie{% endblock %}
+
+{% block body %}
+
+<!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-center">
+        <div class="container">
+        
+        </div>
+    </section><!-- End Hero -->
+    
+    <main id="main">
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Liste des ressources par categorie</h2>
+                </div>
+
+                <table id="datatablesSimple">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Parent</th>
+                            <th>Nom</th>
+                            <th>Sluge</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th hidden>Id</th>
+                            <th hidden>Parent</th>
+                            <th hidden>Nom</th>
+                            <th hidden>Sluge</th>
+                            <th hidden>Actions</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for ressourceCategory in ressourceCategories %}
+                            <tr>
+                                <td>{{ressourceCategory.id}}</td>
+                                <td>{{ressourceCategory.parent}}</td>
+                                <td>{{ressourceCategory.name}}</td>
+                                <td>{{ressourceCategory.slug}}</td>
+                                <td><a href="{{ path('admin_category_index', {id: ressourceCategory.id}) }}" class="btn btn-primary btn-sm">Modifier</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section><!-- End Services Section -->
+    </main><!-- End
+{% endblock %}

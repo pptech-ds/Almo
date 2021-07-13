@@ -6,8 +6,10 @@ use App\Entity\Ressource;
 use App\Form\RessourceFormType;
 use App\Entity\RessourceCategory;
 use App\Form\RessourceCategoryFormType;
+use App\Repository\RessourceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\RessourceCategoryRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -19,10 +21,12 @@ class AdminController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(): Response
+    public function index(RessourceRepository $ressourceRepository): Response
     {
+        $ressources = $ressourceRepository->findAll();
+
         return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+            'ressources' => $ressources,
         ]);
     }
 
@@ -47,6 +51,17 @@ class AdminController extends AbstractController
 
         return $this->render('admin/ressource_category/add.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/ressource_category/", name="category_index")
+     */
+    public function indexCategory(RessourceCategoryRepository $ressourceCategoryRepository): Response
+    {
+        return $this->render('admin/ressource_category/index.html.twig', [
+            'ressourceCategories' => $ressourceCategoryRepository->findAll(),
         ]);
     }
 
