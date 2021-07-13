@@ -6,6 +6,7 @@ use App\Repository\RessourceCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=RessourceCategoryRepository::class)
@@ -25,6 +26,7 @@ class RessourceCategory
     private $name;
 
     /**
+     * @gedmo\Slug(fields={"name"})
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
@@ -50,6 +52,11 @@ class RessourceCategory
         $this->ressources = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,13 +77,6 @@ class RessourceCategory
     public function getSlug(): ?string
     {
         return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
     }
 
     public function getParent(): ?self

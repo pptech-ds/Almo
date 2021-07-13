@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\RessourceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=RessourceRepository::class)
@@ -23,6 +24,7 @@ class Ressource
     private $title;
 
     /**
+     * @gedmo\Slug(fields={"title"})
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
@@ -38,6 +40,7 @@ class Ressource
     private $image;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -81,13 +84,6 @@ class Ressource
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
     public function getContent(): ?string
     {
         return $this->content;
@@ -115,13 +111,6 @@ class Ressource
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     public function getActive(): ?bool
