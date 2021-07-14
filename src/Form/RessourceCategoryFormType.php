@@ -18,7 +18,7 @@ class RessourceCategoryFormType extends AbstractType
                 "label" => "Nom de la catégorie",
             ])
             /*->add('slug')*/
-            /*->add('parent')*/
+            ->add('parent')
             ->add('Valider', SubmitType::class)
         ;
     }
