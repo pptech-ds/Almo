@@ -49,10 +49,55 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $ressources;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $address;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $city;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $zipcode;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $hospital = [];
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $doctor = [];
+
     public function __construct()
     {
         $this->ressources = new ArrayCollection();
     }
+
+    // public function __toString()
+    // {
+    //     return $this->roles;
+    // }
 
     public function getId(): ?int
     {
@@ -181,6 +226,102 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $ressource->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getZipcode(): ?string
+    {
+        return $this->zipcode;
+    }
+
+    public function setZipcode(?string $zipcode): self
+    {
+        $this->zipcode = $zipcode;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getHospital(): ?array
+    {
+        return $this->hospital;
+    }
+
+    public function setHospital(?array $hospital): self
+    {
+        $this->hospital = $hospital;
+
+        return $this;
+    }
+
+    public function getDoctor(): ?array
+    {
+        return $this->doctor;
+    }
+
+    public function setDoctor(?array $doctor): self
+    {
+        $this->doctor = $doctor;
 
         return $this;
     }

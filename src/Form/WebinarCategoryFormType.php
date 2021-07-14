@@ -2,20 +2,20 @@
 
 namespace App\Form;
 
-use App\Entity\RessourceCategory;
+use App\Entity\WebinarCategory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class RessourceCategoryFormType extends AbstractType
+class WebinarCategoryFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name', TextType::class, [
-                "label" => "Nom de la catégorie",
+                "label" => "Nom du webinar",
             ])
             /*->add('slug')*/
             ->add('parent')
@@ -26,7 +26,7 @@ class RessourceCategoryFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => RessourceCategory::class,
+            'data_class' => WebinarCategory::class,
         ]);
     }
 }
