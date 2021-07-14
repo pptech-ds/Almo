@@ -1,6 +1,6 @@
 {% extends 'admin/sbadmin2.html.twig' %}
 
-{% block title %}Ajout d'une catégorie{% endblock %}
+{% block title %}Liste des utilisateurs{% endblock %}
 
 {% block body %}
 
@@ -22,30 +22,30 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Parent</th>
-                                <th>Nom</th>
-                                <th>Sluge</th>
+                                <th>Email</th>
+                                <th>Roles</th>
+                                <th>Validé</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th hidden>Id</th>
-                                <th hidden>Parent</th>
-                                <th hidden>Nom</th>
-                                <th hidden>Sluge</th>
+                                <th hidden>Email</th>
+                                <th hidden>Roles</th>
+                                <th hidden>Validé</th>
                                 <th hidden>Actions</th>
                             </tr>
                         </tfoot>
                         <tbody>
                             
-                            {% for ressourceCategory in ressourceCategories %}
+                            {% for user in users %}
                                 <tr>
-                                    <td>{{ressourceCategory.id}}</td>
-                                    <td>{{ressourceCategory.parent}}</td>
-                                    <td>{{ressourceCategory.name}}</td>
-                                    <td>{{ressourceCategory.slug}}</td>
-                                    <td><a href="{{ path('admin_ressource_category_index', {id: ressourceCategory.id}) }}" class="btn btn-primary btn-sm">Modifier</a></td>
+                                    <td>{{user.id}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.roles[0]}}</td>
+                                    <td>{{user.isVerified}}</td>
+                                    <td><a href="{{ path('admin_user_index', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a></td>
                                 </tr>
                             {% endfor %}
                             
