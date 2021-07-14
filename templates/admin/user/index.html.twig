@@ -60,7 +60,13 @@
                                     <td>{{user.id}}</td>
                                     <td>{{user.email}}</td>
                                     <td>{{user.roles[0]}}</td>
-                                    <td>{{user.isVerified}}</td>
+                                    {# <td>{{user.isVerified}}</td> #}
+                                    <td>
+                                        <div class="custom-control custom-switch">
+                                            <input class="custom-control-input" type="checkbox" name="active" id="customSwitch{{ user.id }}" data-id="{{ user.id }}" {{ user.isVerified ? 'checked' : null}}>
+                                            <label class="custom-control-label" for="customSwitch{{ user.id }}"></label>
+                                        </div>
+                                    </td>
                                     <td>{{user.lastname}}</td>
                                     <td>{{user.firstname}}</td>
                                     <td>{{user.address}}</td>
@@ -71,7 +77,11 @@
                                     <td>{{user.doctor[0]}}</td> #}
                                     <td>{{user.phone}}</td>
                                     <td>{{user.phone}}</td>
-                                    <td><a href="{{ path('admin_user_update', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a></td>
+                                    
+                                    <td>
+                                        <a href="{{ path('admin_user_update', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                        <a href="" class="btn btn-danger btn-sm modal-trigger" data-toggle="modal" data-target="#modalDelete" data-id="{{ user.id }}" data-title="{{ user.email }}">Supprimer</a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             
@@ -85,4 +95,53 @@
     <!-- /.container-fluid -->
 
 
+    <!-- Modal -->
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Supprimer une ressource</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <a href="" class="btn btn-primary">Supprimer</a>
+            </div>
+            </div>
+        </div>
+    </div>}
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        window.onload = () => {
+            console.log('Load !!!!')
+            let activate = document.querySelectorAll("[type=checkbox]")
+            console.log(activate)
+            for(let button of activate) {
+                console.log(button)
+                button.addEventListener("click", function(){
+                    // alert('clik!!')
+                    let xmlhttp = new XMLHttpRequest
+                    xmlhttp.open("get", `/admin/user/verify/${this.dataset.id}`)
+                    xmlhttp.send();
+                    // console.log(xmlhttp)
+                })
+            }
+
+            let btdeletes = document.querySelectorAll(".modal-trigger")
+            for(let btdelete of btdeletes) {
+                btdelete.addEventListener("click", function(){
+                    document.querySelector(".modal-footer a").href=`/admin/user/delete/${this.dataset.id}`
+                    document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer cette ressource "${this.dataset.title}"`
+                })
+            }
+        }
+    </script>
 {% endblock %}

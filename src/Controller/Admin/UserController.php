@@ -112,4 +112,35 @@ class UserController extends AbstractController
         ]);
     }
 
+
+
+    /**
+     * @Route("/admin/user/verify/{id}", name="admin_user_verify", requirements={"id"="\d+"})
+     */
+    public function verifyUser(User $user): Response
+    {
+        $user->setIsVerified( ($user->isVerified()) ?  false : true );
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return new Response('true');
+    }
+
+
+    /**
+     * @Route("/admin/user/delete/{id}", name="admin_user_delete", requirements={"id"="\d+"})
+     */
+    public function deleteUser(User $user): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+
+        $this->addFlash('success', 'L\'utilisateur a été supprimé avec succes !');
+
+        return $this->redirectToRoute('admin_user_index');
+    }
+
 }
