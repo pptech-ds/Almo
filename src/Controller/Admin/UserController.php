@@ -51,7 +51,7 @@ class UserController extends AbstractController
     // public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -67,15 +67,7 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('no-reply@almo.com', 'Almo'))
-                    ->to($user->getEmail())
-                    ->subject('Merci de confirmer votre email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
-            // do anything else you need here, like send an email
+            
 
             $this->addFlash('success', 'Votre enregistrement a été pris en compte, mais vous devez valider votre email');
 
@@ -83,7 +75,7 @@ class UserController extends AbstractController
         }
 
         return $this->render('admin/user/add.html.twig', [
-            'registrationForm' => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
