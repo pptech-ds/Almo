@@ -18,6 +18,20 @@ class RessourceController extends AbstractController
 {
     
     /**
+     * @Route("/admin/ressource", name="admin_ressource_index")
+     */
+    public function indexRessource(RessourceRepository $ressourceRepository): Response
+    {
+        $ressources = $ressourceRepository->findAll();
+
+        return $this->render('admin/ressource/index.html.twig', [
+            'ressources' => $ressources,
+        ]);
+    }
+
+
+    
+    /**
      * @Route("/admin/ressource/add", name="admin_ressource_add")
      */
     public function addRessource(Request $request): Response
@@ -43,14 +57,60 @@ class RessourceController extends AbstractController
 
 
     /**
-     * @Route("/admin/ressource", name="admin_ressource_index")
+     * @Route("/admin/ressource/update/{id}", name="admin_ressource_update", requirements={"id"="\d+"})
      */
-    public function indexRessource(RessourceRepository $ressourceRepository): Response
+    public function updateRessource(Ressource $ressource, Request $request): Response
     {
-        $ressources = $ressourceRepository->findAll();
+        $form = $this->createForm(RessourceFormType::class, $ressource);
+        $form->handleRequest($request);
 
-        return $this->render('admin/ressource/index.html.twig', [
-            'ressources' => $ressources,
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($ressource);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre ressource a été modifié avec succes !');
+
+            return $this->redirectToRoute('admin_ressource_index');
+        }
+
+        return $this->render('admin/ressource/update.html.twig', [
+            'form' => $form->createView(),
         ]);
+    }
+
+
+    /**
+     * @Route("/admin/ressource/activate/{id}", name="admin_ressource_activate", requirements={"id"="\d+"})
+     */
+    public function activateRessource(Ressource $ressource): Response
+    {
+        // dd($ressource);
+        $ressource->setActive( ($ressource->getActive()) ?  false : true );
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($ressource);
+        $em->flush();
+
+        return new Response('true');
+    }
+
+
+
+    /**
+     * @Route("/admin/ressource/delete/{id}", name="admin_ressource_delete", requirements={"id"="\d+"})
+     */
+    public function deleteRessource(Ressource $ressource): Response
+    {
+        // dd($ressource);
+        // $ressource->setActive( ($ressource->getActive()) ?  false : true );
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($ressource);
+        $em->flush();
+
+        $this->addFlash('success', 'Votre ressource a été supprimé avec succes !');
+
+        return $this->redirectToRoute('admin_ressource_index');
     }
 }

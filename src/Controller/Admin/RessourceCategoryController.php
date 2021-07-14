@@ -18,6 +18,18 @@ class RessourceCategoryController extends AbstractController
 {
     
     /**
+     * @Route("/admin/ressource_category", name="admin_ressource_category_index")
+     */
+    public function indexRessourceCategory(RessourceCategoryRepository $ressourceCategoryRepository): Response
+    {
+        return $this->render('admin/ressource_category/index.html.twig', [
+            'ressourceCategories' => $ressourceCategoryRepository->findAll(),
+        ]);
+    }
+
+
+    
+    /**
      * @Route("/admin/ressource_category/add", name="admin_ressource_category_add")
      */
     public function addRessourceCategory(Request $request): Response
@@ -39,14 +51,42 @@ class RessourceCategoryController extends AbstractController
     }
 
 
+    
     /**
-     * @Route("/admin/ressource_category", name="admin_ressource_category_index")
+     * @Route("/admin/ressource_category/update/{id}", name="admin_ressource_category_update", requirements={"id"="\d+"})
      */
-    public function indexCategory(RessourceCategoryRepository $ressourceCategoryRepository): Response
+    public function updateRessourceCategory(RessourceCategory $ressourceCategory, Request $request): Response
     {
-        return $this->render('admin/ressource_category/index.html.twig', [
-            'ressourceCategories' => $ressourceCategoryRepository->findAll(),
+        $form = $this->createForm(RessourceCategoryFormType::class, $ressourceCategory);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($ressourceCategory);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre Cetegorie a été modifié avec succes !');
+
+            return $this->redirectToRoute('admin_ressource_category_index');
+        }
+
+        return $this->render('admin/ressource_category/update.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
+
+    /**
+     * @Route("/admin/ressource_category/delete/{id}", name="admin_ressource_category_delete", requirements={"id"="\d+"})
+     */
+    public function deleteRessourceCategory(RessourceCategory $ressourceCategory): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($ressourceCategory);
+        $em->flush();
+
+        $this->addFlash('success', 'Votre categorie a été supprimé avec succes !');
+
+        return $this->redirectToRoute('admin_ressource_category_index');
+    }
 }
