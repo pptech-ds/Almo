@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Entity\Ressource;
+use App\Form\UserFormType;
 use App\Form\RessourceFormType;
 use App\Security\EmailVerifier;
 use App\Entity\RessourceCategory;
@@ -30,6 +31,18 @@ class UserController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
     
+    
+    /**
+     * @Route("/admin/user", name="admin_user_index")
+     */
+    public function indexUser(UserRepository $userRepository): Response
+    {
+        return $this->render('admin/user/index.html.twig', [
+            'users' => $userRepository->findAll(),
+        ]);
+    }
+
+
     
     /**
      * @Route("/admin/user/add", name="admin_user_add")
@@ -75,13 +88,27 @@ class UserController extends AbstractController
     }
 
 
+    
     /**
-     * @Route("/admin/user", name="admin_user_index")
+     * @Route("/admin/user/update/{id}", name="admin_user_update", requirements={"id"="\d+"})
      */
-    public function indexUser(UserRepository $userRepository): Response
+    public function updateUser(User $user, Request $request): Response
     {
-        return $this->render('admin/user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+        $form = $this->createForm(UserFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre utilisateur a été modifié avec succes !');
+
+            return $this->redirectToRoute('admin_user_index');
+        }
+
+        return $this->render('admin/user/update.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

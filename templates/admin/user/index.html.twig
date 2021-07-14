@@ -25,6 +25,14 @@
                                 <th>Email</th>
                                 <th>Roles</th>
                                 <th>Validé</th>
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Adresse</th>
+                                <th>Code Postal</th>
+                                <th>Ville</th>
+                                <th>Téléphone</th>
+                                <th >Hopital</th>
+                                <th >Medecin</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -34,6 +42,14 @@
                                 <th hidden>Email</th>
                                 <th hidden>Roles</th>
                                 <th hidden>Validé</th>
+                                <th hidden>Nom</th>
+                                <th hidden>Prenom</th>
+                                <th hidden>Adresse</th>
+                                <th hidden>Code Postal</th>
+                                <th hidden>Ville</th>
+                                <th hidden>Téléphone</th>
+                                <th hidden>Hopital</th>
+                                <th hidden>Medecin</th>
                                 <th hidden>Actions</th>
                             </tr>
                         </tfoot>
@@ -45,7 +61,17 @@
                                     <td>{{user.email}}</td>
                                     <td>{{user.roles[0]}}</td>
                                     <td>{{user.isVerified}}</td>
-                                    <td><a href="{{ path('admin_user_index', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a></td>
+                                    <td>{{user.lastname}}</td>
+                                    <td>{{user.firstname}}</td>
+                                    <td>{{user.address}}</td>
+                                    <td>{{user.zipcode}}</td>
+                                    <td>{{user.city}}</td>
+                                    <td>{{user.phone}}</td>
+                                    {# <td>{{user.hospital[0]}}</td>
+                                    <td>{{user.doctor[0]}}</td> #}
+                                    <td>{{user.phone}}</td>
+                                    <td>{{user.phone}}</td>
+                                    <td><a href="{{ path('admin_user_update', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a></td>
                                 </tr>
                             {% endfor %}
                             
