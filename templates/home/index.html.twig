@@ -20,7 +20,7 @@
                     <div class="col-lg-4 col-md-6" style="height: 35rem;">
                         <div class="icon-box">
                             {# <div class="icon"><i class="fas fa-heartbeat"></i></div> #}
-                            <h4><a href="">{{article.title}}</a></h4>
+                            <h4><a href="{{ path('article_view', {slug: article.slug }) }}">{{article.title}}</a></h4>
                             <img src={{ article.image }} alt="" style="width: 100%">
                             {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
                             
