@@ -9,6 +9,18 @@
         <div class="container">
             <div class="my-5">
 
+                
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ======= Appointment Section ======= -->
+    <section id="appointment" class="appointment section-bg">
+      <div class="container">
+
+        <div class="my-5">
+
                 {% for flashError in app.flashes('reset_password_error') %}
                     <div class="alert alert-danger" role="alert">{{ flashError }}</div>
                 {% endfor %}
@@ -24,9 +36,10 @@
 
                     <button class="btn btn-lg btn-primary my-3">Envoyer</button>
                 {{ form_end(requestForm) }}
-
+                
             </div>
-        </div>
-    </section>
+
+      </div>
+    </section><!-- End Appointment Section -->
     
 {% endblock %}

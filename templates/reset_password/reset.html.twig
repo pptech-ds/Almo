@@ -8,14 +8,27 @@
         <div class="container">
             <div class="my-5">
             
-                <h1>Réinitialisez votre mot de passe</h1>
-
-                {{ form_start(resetForm) }}
-                    {{ form_row(resetForm.plainPassword) }}
-                    <button class="btn btn-lg btn-primary my-3">Envoyer</button>
-                {{ form_end(resetForm) }}
+                
             
             </div>
         </div>
     </section>
+
+    <!-- ======= Appointment Section ======= -->
+    <section id="appointment" class="appointment section-bg">
+      <div class="container">
+
+        <div class="my-5">
+
+            <h1>Réinitialisez votre mot de passe</h1>
+
+            {{ form_start(resetForm) }}
+                {{ form_row(resetForm.plainPassword) }}
+                <button class="btn btn-lg btn-primary my-3">Envoyer</button>
+            {{ form_end(resetForm) }}
+            
+        </div>
+
+      </div>
+    </section><!-- End Appointment Section -->
 {% endblock %}
