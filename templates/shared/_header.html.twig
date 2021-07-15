@@ -14,6 +14,9 @@
 			<li><a class="nav-link scrollto" href="{{ path('app_register') }}">Enregistrement</a></li>
 			<li><a class="nav-link scrollto" href="{{ path('app_login') }}">Connexion</a></li>
 		{% else %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li><a class="nav-link scrollto" href="{{ path('admin_home') }}">Administration</a></li>
+            {% endif %}
 			<li><a class="nav-link scrollto" href="{{ path('app_logout') }}">Deconnexion</a></li>
 		{% endif %}
 
