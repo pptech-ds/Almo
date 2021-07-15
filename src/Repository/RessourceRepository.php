@@ -47,4 +47,26 @@ class RessourceRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    /**
+     * Returns last 6 Ressources by category
+     * @return Ressource[] Returns an array of Artist objects 
+     */
+    public function findLastRessourcesByCategory(string $categoryName = null, int $maxResult = 6)
+    {
+        $query = $this->createQueryBuilder('r')
+            ->select('r')
+            ->innerJoin('r.ressourceCategory', 'c')
+            ->andWhere('c.name = :name', 'r.active = :active')
+            ->setParameter('name', $categoryName)
+            ->setParameter('active', true)
+            ->orderBy('r.createdAt', 'DESC')
+            ->setMaxResults($maxResult)
+            ;
+
+        // dd($query->getQuery()->getResult());
+        
+        return $query->getQuery()->getResult();
+    }
 }
