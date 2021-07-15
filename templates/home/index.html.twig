@@ -56,7 +56,7 @@
                     <div class="col-lg-4 col-md-6" style="height: 35rem;">
                         <div class="icon-box">
                             {# <div class="icon"><i class="fas fa-heartbeat"></i></div> #}
-                            <h4><a href="">{{document.title}}</a></h4>
+                            <h4><a href="{{ path('document_view', {slug: document.slug }) }}">{{document.title}}</a></h4>
                             <img src={{ document.image }} alt="" style="width: 100%">
                             {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
                             
@@ -65,6 +65,10 @@
                     </div>
                 {% endfor %}
 
+            </div>
+
+            <div class="h-100 row align-items-center">
+                <a class="btn btn-primary text-uppercase" href="{{ path('document') }}">Afficher tout les documents</a>
             </div>
         </div>
     </section><!-- End Services Section -->
