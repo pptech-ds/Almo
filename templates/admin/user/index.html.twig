@@ -60,23 +60,20 @@
                                     <td>{{user.id}}</td>
                                     <td>{{user.email}}</td>
                                     <td>{{user.roles[0]}}</td>
-                                    {# <td>{{user.isVerified}}</td> #}
                                     <td>
                                         <div class="custom-control custom-switch">
                                             <input class="custom-control-input" type="checkbox" name="active" id="customSwitch{{ user.id }}" data-id="{{ user.id }}" {{ user.isVerified ? 'checked' : null}}>
                                             <label class="custom-control-label" for="customSwitch{{ user.id }}"></label>
                                         </div>
                                     </td>
-                                    <td>{{user.lastname}}</td>
-                                    <td>{{user.firstname}}</td>
-                                    <td>{{user.address}}</td>
-                                    <td>{{user.zipcode}}</td>
-                                    <td>{{user.city}}</td>
-                                    <td>{{user.phone}}</td>
-                                    <td>{{user.hospital[0]}}</td>
-                                    <td>{{user.doctor[0]}}</td>
-                                    {# <td>{{user.phone}}</td>
-                                    <td>{{user.phone}}</td> #}
+                                    <td>{{ (user.lastname is defined) ? user.lastname : '' }}</td>
+                                    <td>{{ (user.firstname is defined) ? user.firstname : '' }}</td>
+                                    <td>{{ (user.address is defined) ? user.address : '' }}</td>
+                                    <td>{{ (user.zipcode is defined) ? user.zipcode : '' }}</td>
+                                    <td>{{ (user.city is defined) ? user.city : '' }}</td>
+                                    <td>{{ (user.phone is defined) ? user.phone : '' }}</td>
+                                    <td>{{ (user.hospital[0] is defined) ? user.hospital[0] : '' }}</td>
+                                    <td>{{ (user.doctor[0] is defined) ? user.doctor[0] : '' }}</td>
                                     
                                     <td>
                                         <a href="{{ path('admin_user_update', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>

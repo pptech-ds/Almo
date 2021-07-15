@@ -9,12 +9,25 @@
         <div class="container">
             <div class="my-5">
                 
-                <p>
-                    Si un compte ayant votre email existe, un email vous a été avec un lien de réinitialisation, le lien expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-                </p>
-                <p>Si vous ne voyez pas d'email, merci de vérifier vos spams <a href="{{ path('app_forgot_password_request') }}">Réessayer</a>.</p>
-
+                
             </div>
         </div>
     </section>
+
+    <!-- ======= Appointment Section ======= -->
+    <section id="appointment" class="appointment section-bg">
+      <div class="container">
+
+        <div class="my-5">
+
+            <p>
+                Si un compte ayant votre email existe, un email vous a été avec un lien de réinitialisation, le lien expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+            </p>
+            <p>Si vous ne voyez pas d'email, merci de vérifier vos spams <a href="{{ path('app_forgot_password_request') }}">Réessayer</a>.</p>
+
+                
+        </div>
+
+      </div>
+    </section><!-- End Appointment Section -->
 {% endblock %}
