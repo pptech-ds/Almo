@@ -1,14 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <!-- ======= Hero Section ======= -->
-    <section id="hero" class="d-flex align-items-center">
+    <div style="height: 30rem; background-color: rgba(255,0,0,0.1);">
+    </div>
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
         <div class="container">
-        <h1>Bienvenue sur Almo</h1>
-        <h2>test</h2>
-        
+
+            <div class="section-title">
+                <h2>Les articles</h2>
+                <p>Les derniers articles postés</p>
+            </div>
+
+            <div class="row">
+                {% for article in articles %}
+                    <div class="col-lg-4 col-md-6" style="height: 35rem;">
+                        <div class="icon-box">
+                            {# <div class="icon"><i class="fas fa-heartbeat"></i></div> #}
+                            <h4><a href="{{ path('article_view', {slug: article.slug }) }}">{{article.title}}</a></h4>
+                            <img src={{ article.image }} alt="" style="width: 100%">
+                            {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
+                            
+                        </div>
+                        <p class="fs-6">Ecrit par {{article.user.email}} {{article.createdAt | ago}}</p>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+            <div class="h-100 row align-items-center">
+                <a class="btn btn-primary text-uppercase" href="{{ path('article') }}">Afficher tout les articles</a>
+            </div>
+
         </div>
-    </section><!-- End Hero -->
+
+        
+
+    </section><!-- End Services Section -->
+
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+        <div class="container">
+
+            <div class="section-title">
+                <h2>Les documents</h2>
+                <p>Les derniers documents mis à jour</p>
+            </div>
+
+            <div class="row">
+                {% for document in documents %}
+                    <div class="col-lg-4 col-md-6" style="height: 35rem;">
+                        <div class="icon-box">
+                            {# <div class="icon"><i class="fas fa-heartbeat"></i></div> #}
+                            <h4><a href="{{ path('document_view', {slug: document.slug }) }}">{{document.title}}</a></h4>
+                            <img src={{ document.image }} alt="" style="width: 100%">
+                            {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
+                            
+                        </div>
+                        <p class="fs-6">Ecrit par {{document.user.email}} {{document.createdAt | ago}}</p>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+            <div class="h-100 row align-items-center">
+                <a class="btn btn-primary text-uppercase" href="{{ path('document') }}">Afficher tout les documents</a>
+            </div>
+        </div>
+    </section><!-- End Services Section -->
+
+    
 {% endblock %}
