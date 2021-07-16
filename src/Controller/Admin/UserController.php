@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\RessourceCategoryRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -52,6 +55,46 @@ class UserController extends AbstractController
     {
         $user = new User();
         $form = $this->createForm(UserFormType::class, $user);
+        $form->add('roles', ChoiceType::class, [
+            'choices' => [
+                'ROLE_USER' => 'ROLE_USER',
+                'ROLE_ADMIN' => 'ROLE_ADMIN',
+                'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN'
+            ],
+        'expanded'  => true,
+        'multiple' => true,
+        'label' => 'Roles'
+        ])
+            // ->add('isVerified', BooleanType::class)
+            ->add('firstname', TextType::class)
+            ->add('lastname', TextType::class)
+            ->add('address', TextType::class)
+            ->add('city', TextType::class)
+            ->add('zipcode', TextType::class)
+            ->add('phone', TextType::class)
+            ->add('hospital', ChoiceType::class, [
+                'choices' => [
+                    'Hopital 1' => 'Hopital 1',
+                    'Hopital 2' => 'Hopital 2',
+                    'Hopital 3' => 'Hopital 3'
+                ],
+            'expanded'  => true,
+            'multiple' => true,
+            'label' => 'Hopital'
+            ])
+            ->add('doctor', ChoiceType::class, [
+                'choices' => [
+                    'Doctor 1' => 'Doctor 1',
+                    'Doctor 2' => 'Doctor 2',
+                    'Doctor 3' => 'Doctor 3'
+                ],
+            'expanded'  => true,
+            'multiple' => true,
+            'label' => 'Doctor'
+            ])
+            ->add('Envoyer', SubmitType::class)
+            ;
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -87,6 +130,38 @@ class UserController extends AbstractController
     public function updateUser(User $user, Request $request): Response
     {
         $form = $this->createForm(UserFormType::class, $user);
+        $form->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'ROLE_USER' => 'ROLE_USER',
+                    'ROLE_ADMIN' => 'ROLE_ADMIN',
+                    'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN'
+                ],
+                'expanded'  => true,
+                'multiple' => true,
+                'label' => 'Roles'
+            ])
+            ->add('hospital', ChoiceType::class, [
+                'choices' => [
+                    'Hopital 1' => 'Hopital 1',
+                    'Hopital 2' => 'Hopital 2',
+                    'Hopital 3' => 'Hopital 3'
+                ],
+                'expanded'  => true,
+                'multiple' => true,
+                'label' => 'Hopital'
+            ])
+            ->add('doctor', ChoiceType::class, [
+                'choices' => [
+                    'Doctor 1' => 'Doctor 1',
+                    'Doctor 2' => 'Doctor 2',
+                    'Doctor 3' => 'Doctor 3'
+                ],
+                'expanded'  => true,
+                'multiple' => true,
+                'label' => 'Medecin'
+            ])
+            ->add('Envoyer', SubmitType::class)
+            ;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

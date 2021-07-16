@@ -1,0 +1,17 @@
+<nav id="navbar" class="navbar order-last order-lg-0">
+    <ul>
+    <li><a class="nav-link scrollto" href="{{ path('home') }}">Accueil</a></li>
+    
+    {% if not is_granted("ROLE_USER") %}
+        <li><a class="nav-link scrollto" href="{{ path('app_register') }}">Enregistrement</a></li>
+        <li><a class="nav-link scrollto" href="{{ path('app_login') }}">Connexion</a></li>
+    {% else %}
+        {% if is_granted("ROLE_ADMIN") %}
+            <li><a class="nav-link scrollto" href="{{ path('admin_home') }}">Administration</a></li>
+        {% endif %}
+        <li><a class="nav-link scrollto" href="{{ path('app_logout') }}">Deconnexion</a></li>
+    {% endif %}
+
+    </ul>
+    <i class="bi bi-list mobile-nav-toggle"></i>
+</nav><!-- .navbar -->
