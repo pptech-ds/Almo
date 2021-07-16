@@ -1,0 +1,21 @@
+{% block chatbot %}
+
+    <div class="container">
+    <!--Chatbot contents goes here -->
+        <div class="border border-primary rounded border-3 chats" id="chats">
+            <img class="botAvatar" src="{{ asset('chatbot/img/botAvatar.png') }}">Bonjour, je suis Almo, comment puis-je vous aider?</p><div class="clearfix"></div>
+            <div class="clearfix"></div>
+        </div>
+
+        <!--user typing indicator -->
+        <div>
+            <input type="text" id="keypad" class="border border-secondary rounded border-3 usrInput browser-default" placeholder="Tapez votre message ici..." autocomplete="off">
+        </div>
+    </div>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ asset('chatbot/js/materialize.min.js') }}"></script>
+    <!--Main Script -->
+    <script type="text/javascript" src="{{ asset('chatbot/js/script.js') }}"></script>
+{% endblock %}
