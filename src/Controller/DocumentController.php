@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DocumentController extends AbstractController
 {
     /**
-     * @Route("/document", name="document")
+     * @Route("/document", name="document_index")
      */
     public function index(Request $request, PaginatorInterface $paginator, RessourceRepository $ressourceRepository): Response
     {

@@ -6,10 +6,27 @@
         <li><a class="nav-link scrollto" href="{{ path('app_register') }}">Enregistrement</a></li>
         <li><a class="nav-link scrollto" href="{{ path('app_login') }}">Connexion</a></li>
     {% else %}
+        
+        
+        
+
+
+        <li class="dropdown"><a href="#"><span>Ressource</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+                <li><a class="nav-link scrollto" href="{{ path('article_index') }}">Les articles</a></li>
+                <li><a class="nav-link scrollto" href="{{ path('document_index') }}">Les documents</a></li>
+                <li><a class="nav-link scrollto" href="{{ path('webinar_index') }}">Les webinars</a></li>
+            </ul>
+        </li>
+
+
+
         <li><a class="nav-link scrollto" href="{{ path('user_index') }}">Mon Compte</a></li>
+
         {% if is_granted("ROLE_ADMIN") %}
             <li><a class="nav-link scrollto" href="{{ path('admin_home') }}">Administration</a></li>
         {% endif %}
+
         <li><a class="nav-link scrollto" href="{{ path('app_logout') }}">Deconnexion</a></li>
     {% endif %}
 
