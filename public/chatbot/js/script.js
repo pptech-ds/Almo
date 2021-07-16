@@ -21,6 +21,18 @@ function getFocusChatField() {
 	document.getElementById("keypad").focus();
 }
 
+
+function showHideChatBot() {
+	var x = document.getElementById("chatbotShowHide");
+	if (x.style.display === "none") {
+	  x.style.display = "block";
+	} else {
+	  x.style.display = "none";
+	}
+}
+
+
+
 //------------------------------------- Set user response------------------------------------
 function setUserResponse(val) {
 	var UserResponse = '<img class="userAvatar" src=' + "chatbot/img/userAvatar.jpg" + '><p class="userMsg">' + val + ' </p><div class="clearfix"></div>';
