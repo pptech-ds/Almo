@@ -82,24 +82,24 @@ class RegistrationFormType extends AbstractType
             'multiple' => true,
             'label' => 'Hopital'
             ])
-            ->add('doctor', ChoiceType::class, [
-                'choices' => [
-                    'Doctor 1' => 'Doctor 1',
-                    'Doctor 2' => 'Doctor 2',
-                    'Doctor 3' => 'Doctor 3'
-                ],
-            'expanded'  => true,
-            'multiple' => true,
-            'label' => 'Doctor'
-            ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
+            // ->add('doctor', ChoiceType::class, [
+            //     'choices' => [
+            //         'Doctor 1' => 'Doctor 1',
+            //         'Doctor 2' => 'Doctor 2',
+            //         'Doctor 3' => 'Doctor 3'
+            //     ],
+            // 'expanded'  => true,
+            // 'multiple' => true,
+            // 'label' => 'Doctor'
+            // ])
+            // ->add('agreeTerms', CheckboxType::class, [
+            //     'mapped' => false,
+            //     'constraints' => [
+            //         new IsTrue([
+            //             'message' => 'You should agree to our terms.',
+            //         ]),
+            //     ],
+            // ])
             ->add('Enregistrer', SubmitType::class)
         ;
     }

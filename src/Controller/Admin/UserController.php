@@ -133,33 +133,34 @@ class UserController extends AbstractController
         $form->add('roles', ChoiceType::class, [
                 'choices' => [
                     'ROLE_USER' => 'ROLE_USER',
-                    'ROLE_ADMIN' => 'ROLE_ADMIN',
-                    'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN'
+                    'ROLE_DOC' => 'ROLE_DOC',
+                    'ROLE_PRO' => 'ROLE_PRO',
+                    'ROLE_ADMIN' => 'ROLE_ADMIN'
                 ],
                 'expanded'  => true,
                 'multiple' => true,
                 'label' => 'Roles'
             ])
-            ->add('hospital', ChoiceType::class, [
-                'choices' => [
-                    'Hopital 1' => 'Hopital 1',
-                    'Hopital 2' => 'Hopital 2',
-                    'Hopital 3' => 'Hopital 3'
-                ],
-                'expanded'  => true,
-                'multiple' => true,
-                'label' => 'Hopital'
-            ])
-            ->add('doctor', ChoiceType::class, [
-                'choices' => [
-                    'Doctor 1' => 'Doctor 1',
-                    'Doctor 2' => 'Doctor 2',
-                    'Doctor 3' => 'Doctor 3'
-                ],
-                'expanded'  => true,
-                'multiple' => true,
-                'label' => 'Medecin'
-            ])
+            // ->add('hospital', ChoiceType::class, [
+            //     'choices' => [
+            //         'Hopital 1' => 'Hopital 1',
+            //         'Hopital 2' => 'Hopital 2',
+            //         'Hopital 3' => 'Hopital 3'
+            //     ],
+            //     'expanded'  => true,
+            //     'multiple' => true,
+            //     'label' => 'Hopital'
+            // ])
+            // ->add('doctor', ChoiceType::class, [
+            //     'choices' => [
+            //         'Doctor 1' => 'Doctor 1',
+            //         'Doctor 2' => 'Doctor 2',
+            //         'Doctor 3' => 'Doctor 3'
+            //     ],
+            //     'expanded'  => true,
+            //     'multiple' => true,
+            //     'label' => 'Medecin'
+            // ])
             ->add('Envoyer', SubmitType::class)
             ;
         $form->handleRequest($request);

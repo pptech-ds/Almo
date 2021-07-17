@@ -80,14 +80,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $phone;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\ManyToOne(targetEntity=Hospital::class, inversedBy="doctor")
      */
-    private $hospital = [];
+    private $hospital;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
-    private $doctor = [];
+    
+
 
     public function __construct()
     {
@@ -302,27 +300,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getHospital(): ?array
+    public function getHospital(): ?Hospital
     {
         return $this->hospital;
     }
 
-    public function setHospital(?array $hospital): self
+    public function setHospital(?Hospital $hospital): self
     {
         $this->hospital = $hospital;
 
         return $this;
     }
 
-    public function getDoctor(): ?array
-    {
-        return $this->doctor;
-    }
 
-    public function setDoctor(?array $doctor): self
-    {
-        $this->doctor = $doctor;
-
-        return $this;
-    }
 }
