@@ -40,8 +40,30 @@ class UserController extends AbstractController
      */
     public function indexUser(UserRepository $userRepository): Response
     {
+        // $user = $userRepository->findBy([
+        //     'id' => 15
+        // ]);
+        // dd($user[0]->getHospital()->getName());
+
+        $usersRender = [];
+
+        foreach($userRepository->findAll() as $user){
+            $usersRenderLocal['user'] = $user;
+
+            if($userRepository->findBy(['id' => $user->getId()])[0]->getHospital() != null) {
+                $usersRenderLocal['hospital'] = $userRepository->findBy(['id' => $user->getId()])[0]->getHospital()->getName();
+            } else{
+                $usersRenderLocal['hospital'] = '';
+            }
+            $usersRender[] = $usersRenderLocal;
+        }
+
+        // dd($usersRender);
+
+
         return $this->render('admin/user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            // 'users' => $userRepository->findAll(),
+            'users' => $usersRender,
         ]);
     }
 
@@ -72,26 +94,26 @@ class UserController extends AbstractController
             ->add('city', TextType::class)
             ->add('zipcode', TextType::class)
             ->add('phone', TextType::class)
-            ->add('hospital', ChoiceType::class, [
-                'choices' => [
-                    'Hopital 1' => 'Hopital 1',
-                    'Hopital 2' => 'Hopital 2',
-                    'Hopital 3' => 'Hopital 3'
-                ],
-            'expanded'  => true,
-            'multiple' => true,
-            'label' => 'Hopital'
-            ])
-            ->add('doctor', ChoiceType::class, [
-                'choices' => [
-                    'Doctor 1' => 'Doctor 1',
-                    'Doctor 2' => 'Doctor 2',
-                    'Doctor 3' => 'Doctor 3'
-                ],
-            'expanded'  => true,
-            'multiple' => true,
-            'label' => 'Doctor'
-            ])
+            // ->add('hospital', ChoiceType::class, [
+            //     'choices' => [
+            //         'Hopital 1' => 'Hopital 1',
+            //         'Hopital 2' => 'Hopital 2',
+            //         'Hopital 3' => 'Hopital 3'
+            //     ],
+            // 'expanded'  => true,
+            // 'multiple' => true,
+            // 'label' => 'Hopital'
+            // ])
+            // ->add('doctor', ChoiceType::class, [
+            //     'choices' => [
+            //         'Doctor 1' => 'Doctor 1',
+            //         'Doctor 2' => 'Doctor 2',
+            //         'Doctor 3' => 'Doctor 3'
+            //     ],
+            // 'expanded'  => true,
+            // 'multiple' => true,
+            // 'label' => 'Doctor'
+            // ])
             ->add('Envoyer', SubmitType::class)
             ;
 
@@ -133,33 +155,34 @@ class UserController extends AbstractController
         $form->add('roles', ChoiceType::class, [
                 'choices' => [
                     'ROLE_USER' => 'ROLE_USER',
-                    'ROLE_ADMIN' => 'ROLE_ADMIN',
-                    'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN'
+                    'ROLE_DOC' => 'ROLE_DOC',
+                    'ROLE_PRO' => 'ROLE_PRO',
+                    'ROLE_ADMIN' => 'ROLE_ADMIN'
                 ],
                 'expanded'  => true,
                 'multiple' => true,
                 'label' => 'Roles'
             ])
-            ->add('hospital', ChoiceType::class, [
-                'choices' => [
-                    'Hopital 1' => 'Hopital 1',
-                    'Hopital 2' => 'Hopital 2',
-                    'Hopital 3' => 'Hopital 3'
-                ],
-                'expanded'  => true,
-                'multiple' => true,
-                'label' => 'Hopital'
-            ])
-            ->add('doctor', ChoiceType::class, [
-                'choices' => [
-                    'Doctor 1' => 'Doctor 1',
-                    'Doctor 2' => 'Doctor 2',
-                    'Doctor 3' => 'Doctor 3'
-                ],
-                'expanded'  => true,
-                'multiple' => true,
-                'label' => 'Medecin'
-            ])
+            // ->add('hospital', ChoiceType::class, [
+            //     'choices' => [
+            //         'Hopital 1' => 'Hopital 1',
+            //         'Hopital 2' => 'Hopital 2',
+            //         'Hopital 3' => 'Hopital 3'
+            //     ],
+            //     'expanded'  => true,
+            //     'multiple' => true,
+            //     'label' => 'Hopital'
+            // ])
+            // ->add('doctor', ChoiceType::class, [
+            //     'choices' => [
+            //         'Doctor 1' => 'Doctor 1',
+            //         'Doctor 2' => 'Doctor 2',
+            //         'Doctor 3' => 'Doctor 3'
+            //     ],
+            //     'expanded'  => true,
+            //     'multiple' => true,
+            //     'label' => 'Medecin'
+            // ])
             ->add('Envoyer', SubmitType::class)
             ;
         $form->handleRequest($request);

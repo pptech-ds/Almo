@@ -44,27 +44,27 @@ class UserProfileController extends AbstractController
     public function updateUser(User $user, Request $request): Response
     {
         $form = $this->createForm(UserFormType::class, $user);
-        $form->add('hospital', ChoiceType::class, [
-                'choices' => [
-                    'Hopital 1' => 'Hopital 1',
-                    'Hopital 2' => 'Hopital 2',
-                    'Hopital 3' => 'Hopital 3'
-                ],
-                'expanded'  => true,
-                'multiple' => true,
-                'label' => 'Hopital'
-            ])
-            ->add('doctor', ChoiceType::class, [
-                'choices' => [
-                    'Doctor 1' => 'Doctor 1',
-                    'Doctor 2' => 'Doctor 2',
-                    'Doctor 3' => 'Doctor 3'
-                ],
-                'expanded'  => true,
-                'multiple' => true,
-                'label' => 'Medecin'
-            ])
-            ->add('Envoyer', SubmitType::class)
+        // $form->add('hospital', ChoiceType::class, [
+        //         'choices' => [
+        //             'Hopital 1' => 'Hopital 1',
+        //             'Hopital 2' => 'Hopital 2',
+        //             'Hopital 3' => 'Hopital 3'
+        //         ],
+        //         'expanded'  => true,
+        //         'multiple' => true,
+        //         'label' => 'Hopital'
+        //     ])
+        //     ->add('doctor', ChoiceType::class, [
+        //         'choices' => [
+        //             'Doctor 1' => 'Doctor 1',
+        //             'Doctor 2' => 'Doctor 2',
+        //             'Doctor 3' => 'Doctor 3'
+        //         ],
+        //         'expanded'  => true,
+        //         'multiple' => true,
+        //         'label' => 'Medecin'
+        //     ])
+        $form->add('Envoyer', SubmitType::class)
             ;
         $form->handleRequest($request);
 

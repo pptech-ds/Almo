@@ -80,18 +80,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $phone;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\ManyToOne(targetEntity=Hospital::class, inversedBy="doctor")
      */
-    private $hospital = [];
+    private $hospital;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="doctor")
      */
-    private $doctor = [];
+    private $patients;
+
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="patients")
+     */
+    private $doctor;
+
+    
+
+    
+
 
     public function __construct()
     {
         $this->ressources = new ArrayCollection();
+        $this->doctor = new ArrayCollection();
     }
 
     // public function __toString()
@@ -302,27 +313,61 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getHospital(): ?array
+    public function getHospital(): ?Hospital
     {
         return $this->hospital;
     }
 
-    public function setHospital(?array $hospital): self
+    public function setHospital(?Hospital $hospital): self
     {
         $this->hospital = $hospital;
 
         return $this;
     }
 
-    public function getDoctor(): ?array
+    public function getPatients(): ?self
+    {
+        return $this->patients;
+    }
+
+    public function setPatients(?self $patients): self
+    {
+        $this->patients = $patients;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getDoctor(): Collection
     {
         return $this->doctor;
     }
 
-    public function setDoctor(?array $doctor): self
+    public function addDoctor(self $doctor): self
     {
-        $this->doctor = $doctor;
+        if (!$this->doctor->contains($doctor)) {
+            $this->doctor[] = $doctor;
+            $doctor->setPatients($this);
+        }
 
         return $this;
     }
+
+    public function removeDoctor(self $doctor): self
+    {
+        if ($this->doctor->removeElement($doctor)) {
+            // set the owning side to null (unless already changed)
+            if ($doctor->getPatients() === $this) {
+                $doctor->setPatients(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
+
+
 }
