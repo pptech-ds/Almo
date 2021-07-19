@@ -45,4 +45,14 @@ class HomeController extends AbstractController
             'webinars' => $webinars,
         ]);
     }
+
+    /**
+     * @Route("/error_405", name="error_405")
+     */
+    public function error405(): Response
+    {
+        return $this->render('error/405.html.twig', [
+            
+        ]);
+    }
 }
