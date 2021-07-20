@@ -3,13 +3,15 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Webinar;
+use App\Entity\Ressource;
 use App\Form\WebinarFormType;
 use App\Entity\WebinarCategory;
+use App\Form\RessourceFormType;
 use App\Form\WebinarCategoryFormType;
 use App\Repository\WebinarRepository;
+use App\Repository\WebinarCategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Repository\WebinarCategoryRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -50,6 +52,32 @@ class WebinarController extends AbstractController
         }
 
         return $this->render('admin/webinar/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
+
+    /**
+     * @Route("/admin/webinar/ressource/add", name="admin_webinar_ressource_add")
+     */
+    public function addWebinarRessource(Request $request): Response
+    {
+        $webinar = new Ressource();
+        $form = $this->createForm(RessourceFormType::class, $webinar);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $webinar->setUser($this->getUser());
+            $webinar->setActive(false);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($webinar);
+            $em->flush();
+            return $this->redirectToRoute('admin_ressource_index');
+        }
+
+        return $this->render('admin/ressource/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
