@@ -85,16 +85,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $hospital;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="doctor")
-     */
-    private $patients;
-
-    /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="patients")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="patients")
      */
     private $doctor;
 
-    
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="doctor")
+     */
+    private $patients;
 
     
 
@@ -102,7 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->ressources = new ArrayCollection();
-        $this->doctor = new ArrayCollection();
+        $this->patients = new ArrayCollection();
     }
 
     // public function __toString()
@@ -325,14 +323,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPatients(): ?self
+    public function getDoctor(): ?self
     {
-        return $this->patients;
+        return $this->doctor;
     }
 
-    public function setPatients(?self $patients): self
+    public function setDoctor(?self $doctor): self
     {
-        $this->patients = $patients;
+        $this->doctor = $doctor;
 
         return $this;
     }
@@ -340,27 +338,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection|self[]
      */
-    public function getDoctor(): Collection
+    public function getPatients(): Collection
     {
-        return $this->doctor;
+        return $this->patients;
     }
 
-    public function addDoctor(self $doctor): self
+    public function addPatient(self $patient): self
     {
-        if (!$this->doctor->contains($doctor)) {
-            $this->doctor[] = $doctor;
-            $doctor->setPatients($this);
+        if (!$this->patients->contains($patient)) {
+            $this->patients[] = $patient;
+            $patient->setDoctor($this);
         }
 
         return $this;
     }
 
-    public function removeDoctor(self $doctor): self
+    public function removePatient(self $patient): self
     {
-        if ($this->doctor->removeElement($doctor)) {
+        if ($this->patients->removeElement($patient)) {
             // set the owning side to null (unless already changed)
-            if ($doctor->getPatients() === $this) {
-                $doctor->setPatients(null);
+            if ($patient->getDoctor() === $this) {
+                $patient->setDoctor(null);
             }
         }
 
@@ -368,6 +366,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     
-
 
 }

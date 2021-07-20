@@ -73,7 +73,7 @@
                                     <td>{{ (user['user'].city is defined) ? user['user'].city : '' }}</td>
                                     <td>{{ (user['user'].phone is defined) ? user['user'].phone : '' }}</td>
                                     <td>{{ (user['hospital'] is defined) ? user['hospital'] : '' }}</td>
-                                    <td>{{ (user.doctor[0] is defined) ? user.doctor[0] : '' }}</td>
+                                    <td>{{ (user['doctor'] is defined) ? user['doctor'] : '' }}</td>
                                     
                                     <td>
                                         <a href="{{ path('admin_user_update', {id: user['user'].id}) }}" class="btn btn-primary btn-sm">Modifier</a>
@@ -97,7 +97,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Supprimer une ressource</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Supprimer utilisateur</h5>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

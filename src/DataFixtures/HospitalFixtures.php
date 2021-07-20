@@ -18,6 +18,7 @@ class HospitalFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
         
+        // print('Starting HospitalFixtures ');
 
         for($i = 0; $i < 3; $i++ ) {
 
@@ -28,13 +29,6 @@ class HospitalFixtures extends Fixture implements DependentFixtureInterface
             $hospital->setZipcode($faker->postcode());
             $manager->persist($hospital);
 
-            // for($j = 0; $j <= 10; $j++ ) {
-            //     $user = $this->getReference('user_' . $j);
-            //     if(($user->getRoles()[0] == 'ROLE_DOC') && (rand(0,10) < 4)){
-            //         $hospital->addDoctor($user);
-            //         $manager->persist($hospital);
-            //     }
-            // }
 
             if($i == 0){
                 $user = $this->getReference('user_doc_1');
@@ -77,6 +71,9 @@ class HospitalFixtures extends Fixture implements DependentFixtureInterface
 
             
         }
+
+        // print('End HospitalFixtures ');
+
         $manager->flush();
     }
 

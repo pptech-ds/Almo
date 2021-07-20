@@ -55,6 +55,13 @@ class UserController extends AbstractController
             } else{
                 $usersRenderLocal['hospital'] = '';
             }
+
+            if($userRepository->findBy(['id' => $user->getId()])[0]->getDoctor() != null) {
+                $usersRenderLocal['doctor'] = $userRepository->findBy(['id' => $user->getId()])[0]->getDoctor()->getEmail();
+            } else{
+                $usersRenderLocal['doctor'] = '';
+            }
+
             $usersRender[] = $usersRenderLocal;
         }
 
