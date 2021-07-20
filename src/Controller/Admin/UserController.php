@@ -55,6 +55,13 @@ class UserController extends AbstractController
             } else{
                 $usersRenderLocal['hospital'] = '';
             }
+
+            if($userRepository->findBy(['id' => $user->getId()])[0]->getDoctor() != null) {
+                $usersRenderLocal['doctor'] = $userRepository->findBy(['id' => $user->getId()])[0]->getDoctor()->getEmail();
+            } else{
+                $usersRenderLocal['doctor'] = '';
+            }
+
             $usersRender[] = $usersRenderLocal;
         }
 
@@ -68,6 +75,27 @@ class UserController extends AbstractController
     }
 
 
+
+    /**
+     * @Route("/admin/user_by_role/{role}", name="admin_user_by_role_index")
+     */
+    public function indexUserByRole(UserRepository $userRepository, Request $request): Response
+    {
+        // dd($userRepository->findByRole('ROLE_USER'));
+        // dd($userRepository->findBy(['roles' => '[\"ROLE_ADMIN\"]']));
+
+        $role = $request->get('role');
+
+        // dd($role);
+
+        return $this->render('admin/user/index_by_role.html.twig', [
+            // 'users' => $userRepository->findAll(),
+            'users' => $userRepository->findByRole($role),
+        ]);
+    }
+
+
+    
     
     /**
      * @Route("/admin/user/add", name="admin_user_add")

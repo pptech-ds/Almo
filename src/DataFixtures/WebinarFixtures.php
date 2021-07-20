@@ -15,10 +15,12 @@ class WebinarFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
 
+        // print('Starting WebinarFixtures ');
+
         for($i = 1; $i <= 200; $i++ ) {
             // getting references created in WebinarCategoryFixtures
             $webinarCategory = $this->getReference('webinarCategory_' . $faker->numberBetween(0, 1));
-            $user = $this->getReference('user_pro_' . $faker->numberBetween(6, 10));
+            $user = $this->getReference('user_pro_' . $faker->numberBetween(9, 10));
             $webinar = new Webinar;
             $webinar->setWebinarCategory($webinarCategory);
             $webinar->setTitle($faker->catchPhrase());

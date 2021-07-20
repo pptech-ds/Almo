@@ -57,27 +57,27 @@
                             
                             {% for user in users %}
                                 <tr>
-                                    <td>{{user['user'].id}}</td>
-                                    <td>{{user['user'].email}}</td>
-                                    <td>{{user['user'].roles[0]}}</td>
+                                    <td>{{user.id}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.roles[0]}}</td>
                                     <td>
                                         <div class="custom-control custom-switch">
-                                            <input class="custom-control-input" type="checkbox" name="active" id="customSwitch{{ user['user'].id }}" data-id="{{ user['user'].id }}" {{ user['user'].isVerified ? 'checked' : null}}>
-                                            <label class="custom-control-label" for="customSwitch{{ user['user'].id }}"></label>
+                                            <input class="custom-control-input" type="checkbox" name="active" id="customSwitch{{ user.id }}" data-id="{{ user.id }}" {{ user.isVerified ? 'checked' : null}}>
+                                            <label class="custom-control-label" for="customSwitch{{ user.id }}"></label>
                                         </div>
                                     </td>
-                                    <td>{{ (user['user'].lastname is defined) ? user['user'].lastname : '' }}</td>
-                                    <td>{{ (user['user'].firstname is defined) ? user['user'].firstname : '' }}</td>
-                                    <td>{{ (user['user'].address is defined) ? user['user'].address : '' }}</td>
-                                    <td>{{ (user['user'].zipcode is defined) ? user['user'].zipcode : '' }}</td>
-                                    <td>{{ (user['user'].city is defined) ? user['user'].city : '' }}</td>
-                                    <td>{{ (user['user'].phone is defined) ? user['user'].phone : '' }}</td>
+                                    <td>{{ (user.lastname is defined) ? user.lastname : '' }}</td>
+                                    <td>{{ (user.firstname is defined) ? user.firstname : '' }}</td>
+                                    <td>{{ (user.address is defined) ? user.address : '' }}</td>
+                                    <td>{{ (user.zipcode is defined) ? user.zipcode : '' }}</td>
+                                    <td>{{ (user.city is defined) ? user.city : '' }}</td>
+                                    <td>{{ (user.phone is defined) ? user.phone : '' }}</td>
                                     <td>{{ (user['hospital'] is defined) ? user['hospital'] : '' }}</td>
                                     <td>{{ (user['doctor'] is defined) ? user['doctor'] : '' }}</td>
                                     
                                     <td>
-                                        <a href="{{ path('admin_user_update', {id: user['user'].id}) }}" class="btn btn-primary btn-sm">Modifier</a>
-                                        <a href="" class="btn btn-danger btn-sm modal-trigger" data-toggle="modal" data-target="#modalDelete" data-id="{{ user['user'].id }}" data-title="{{ user['user'].email }}">Supprimer</a>
+                                        <a href="{{ path('admin_user_update', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                        <a href="" class="btn btn-danger btn-sm modal-trigger" data-toggle="modal" data-target="#modalDelete" data-id="{{ user.id }}" data-title="{{ user.email }}">Supprimer</a>
                                     </td>
                                 </tr>
                             {% endfor %}
