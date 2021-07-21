@@ -96,9 +96,17 @@ class UserFormType extends AbstractType
 
 
             $formModifier = function (FormInterface $form, Hospital $hospital = null) {
-                $doctors = null === $hospital ? [] : $hospital->getUser();
+                $usersInHospital = null === $hospital ? [] : $hospital->getUser();
+
+                $doctors = [];
+
+                foreach($usersInHospital as $userInHospital){
+                    if($userInHospital->getRoles()[0] === 'ROLE_DOC'){
+                        $doctors[] = $userInHospital;
+                    }
+                };
                 
-                
+
         
                 $form->add('doctor', EntityType::class, [
                     'class' => User::class,
