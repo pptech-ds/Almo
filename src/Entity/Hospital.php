@@ -42,11 +42,16 @@ class Hospital
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="hospital")
      */
-    private $doctor;
+    private $user;
 
     public function __construct()
     {
-        $this->doctor = new ArrayCollection();
+        $this->user = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -105,27 +110,27 @@ class Hospital
     /**
      * @return Collection|User[]
      */
-    public function getDoctor(): Collection
+    public function getUser(): Collection
     {
-        return $this->doctor;
+        return $this->user;
     }
 
-    public function addDoctor(User $doctor): self
+    public function addUser(User $user): self
     {
-        if (!$this->doctor->contains($doctor)) {
-            $this->doctor[] = $doctor;
-            $doctor->setHospital($this);
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+            $user->setHospital($this);
         }
 
         return $this;
     }
 
-    public function removeDoctor(User $doctor): self
+    public function removeUser(User $user): self
     {
-        if ($this->doctor->removeElement($doctor)) {
+        if ($this->user->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($doctor->getHospital() === $this) {
-                $doctor->setHospital(null);
+            if ($user->getHospital() === $this) {
+                $user->setHospital(null);
             }
         }
 

@@ -11,6 +11,9 @@ use App\Entity\RessourceCategory;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
+use App\Repository\HospitalRepository;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 use App\Form\RessourceCategoryFormType;
 use App\Repository\RessourceRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -18,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\RessourceCategoryRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -56,8 +60,8 @@ class UserController extends AbstractController
                 $usersRenderLocal['hospital'] = '';
             }
 
-            if($userRepository->findBy(['id' => $user->getId()])[0]->getDoctor() != null) {
-                $usersRenderLocal['doctor'] = $userRepository->findBy(['id' => $user->getId()])[0]->getDoctor()->getEmail();
+            if($userRepository->findBy(['id' => $user->getId()])[0]->getUser() != null) {
+                $usersRenderLocal['doctor'] = $userRepository->findBy(['id' => $user->getId()])[0]->getUser()->getEmail();
             } else{
                 $usersRenderLocal['doctor'] = '';
             }
@@ -100,54 +104,39 @@ class UserController extends AbstractController
     /**
      * @Route("/admin/user/add", name="admin_user_add")
      */
-    public function addUser(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
-    // public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function addUser(Request $request, UserPasswordEncoderInterface $passwordEncoder, HospitalRepository $hospitalRepository): Response
     {
+
+        // dd($hospitalRepository->findAll());
+
+        $hostpitals = [];
+
+        foreach ($hospitalRepository->findAll() as $hospital) {
+            // // dd($hospital->getUser());
+            // foreach($hospital->getUser() as $userInHospital){
+            //     dd($userInHospital->getEmail());
+            // }
+
+            $hostpitals[$hospital->getName()] = $hospital;
+        }
+
+        // dd($hostpitals);
+
+        $doctors = [];
+
         $user = new User();
         $form = $this->createForm(UserFormType::class, $user);
-        $form->add('roles', ChoiceType::class, [
-            'choices' => [
-                'ROLE_USER' => 'ROLE_USER',
-                'ROLE_ADMIN' => 'ROLE_ADMIN',
-                'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN'
-            ],
-        'expanded'  => true,
-        'multiple' => true,
-        'label' => 'Roles'
-        ])
-            // ->add('isVerified', BooleanType::class)
-            ->add('firstname', TextType::class)
-            ->add('lastname', TextType::class)
-            ->add('address', TextType::class)
-            ->add('city', TextType::class)
-            ->add('zipcode', TextType::class)
-            ->add('phone', TextType::class)
-            // ->add('hospital', ChoiceType::class, [
-            //     'choices' => [
-            //         'Hopital 1' => 'Hopital 1',
-            //         'Hopital 2' => 'Hopital 2',
-            //         'Hopital 3' => 'Hopital 3'
-            //     ],
-            // 'expanded'  => true,
-            // 'multiple' => true,
-            // 'label' => 'Hopital'
-            // ])
-            // ->add('doctor', ChoiceType::class, [
-            //     'choices' => [
-            //         'Doctor 1' => 'Doctor 1',
-            //         'Doctor 2' => 'Doctor 2',
-            //         'Doctor 3' => 'Doctor 3'
-            //     ],
-            // 'expanded'  => true,
-            // 'multiple' => true,
-            // 'label' => 'Doctor'
-            // ])
-            ->add('Envoyer', SubmitType::class)
-            ;
+        
+        
 
         $form->handleRequest($request);
 
+        
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // dd($form->get('hospital')->getData());
+
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -155,6 +144,8 @@ class UserController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            // $currentHospital = $form->get('hospital');
+            $user->setHospital($form->get('hospital')->getData());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -162,9 +153,9 @@ class UserController extends AbstractController
 
             
 
-            $this->addFlash('success', 'Votre enregistrement a été pris en compte, mais vous devez valider votre email');
+            $this->addFlash('success', 'Le nouvel utilisateur a été enregistré avec succes dans la base de données');
 
-            return $this->redirectToRoute('admin_user_index');
+            return $this->redirectToRoute('admin_user_add');
         }
 
         return $this->render('admin/user/add.html.twig', [
