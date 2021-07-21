@@ -3,12 +3,18 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Hospital;
 use Doctrine\DBAL\Types\JsonType;
 use Doctrine\DBAL\Types\ArrayType;
 use Doctrine\DBAL\Types\BooleanType;
+use Symfony\Component\Form\FormEvent;
+use App\Repository\HospitalRepository;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -58,7 +64,63 @@ class UserFormType extends AbstractType
             ->add('city', TextType::class)
             ->add('zipcode', TextType::class)
             ->add('phone', TextType::class)
-        ;
+            
+            
+            // ->add('hospital', EntityType::class, [
+            //     'compound' => true,
+            //     'class' => 'App\Entity\Hospital',
+            //     'placeholder' => 'selectionner l\'hopital',
+            //     'mapped' => false,
+            //     // 'require' => false,
+            //     // 'expanded'  => true,
+            //     // 'multiple' => true,
+            //     'label' => 'Hopital'
+            // ])
+
+
+            ->add('hospital', EntityType::class, [
+                'mapped' => false,
+                'class' => Hospital::class,
+                'choice_label' => 'name',
+                'placeholder' => 'Hospital',
+                'label' => 'Hospital',
+                'required' => false
+            ])
+
+            ->add('doctor', ChoiceType::class, [
+                'placeholder' => 'choisir un medecin',
+                'required' => false
+            ])
+            
+            ->add('Envoyer', SubmitType::class);
+
+
+            $formModifier = function (FormInterface $form, Hospital $hospital = null) {
+                $doctors = null === $hospital ? [] : $hospital->getUser();
+                
+                
+        
+                $form->add('doctor', EntityType::class, [
+                    'class' => User::class,
+                    'choices' => $doctors,
+                    'required' => false,
+                    'choice_label' => 'email',
+                    'placeholder' => 'choisir un medecin',
+                    'attr' => ['class' => 'custom-select'],
+                    'label' => 'medecin'
+                ]);
+            };
+
+
+            $builder->get('hospital')->addEventListener(
+                FormEvents::POST_SUBMIT,
+                function (FormEvent $event) use ($formModifier) {
+                    $hospital = $event->getForm()->getData();
+                    $formModifier($event->getForm()->getParent(), $hospital);
+                }
+            );
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -64,7 +64,7 @@ class UserFixtures extends Fixture
 
         for($i = 11; $i <= 16; $i++){
             $user = new User;
-            $user->setRoles(['ROLE_USER']);
+            $user->setRoles(['ROLE_PATIENT']);
             $user->setEmail($faker->email);
             $user->setIsVerified($faker->numberBetween(0,1));
             $user->setPassword($this->encoder->encodePassword($user, '123456'));
@@ -83,7 +83,7 @@ class UserFixtures extends Fixture
 
         for($i = 17; $i <= 20; $i++){
             $user = new User;
-            $user->setRoles(['ROLE_USER']);
+            $user->setRoles(['ROLE_PATIENT']);
             $user->setEmail($faker->email);
             $user->setIsVerified($faker->numberBetween(0,1));
             $user->setPassword($this->encoder->encodePassword($user, '123456'));
@@ -102,7 +102,7 @@ class UserFixtures extends Fixture
 
         for($i = 21; $i <= 25; $i++){
             $user = new User;
-            $user->setRoles(['ROLE_USER']);
+            $user->setRoles(['ROLE_PATIENT']);
             $user->setEmail($faker->email);
             $user->setIsVerified($faker->numberBetween(0,1));
             $user->setPassword($this->encoder->encodePassword($user, '123456'));

@@ -32,39 +32,39 @@ class HospitalFixtures extends Fixture implements DependentFixtureInterface
 
             if($i == 0){
                 $user = $this->getReference('user_doc_1');
-                $hospital->addDoctor($user);
+                $hospital->addUser($user);
                 $user = $this->getReference('user_doc_2');
-                $hospital->addDoctor($user);
+                $hospital->addUser($user);
                 $manager->persist($hospital);
 
                 for($j = 11; $j <= 15; $j++ ) {
                     $user = $this->getReference('user_'.$j);
-                    $hospital->addDoctor($user);
+                    $hospital->addUser($user);
                     $manager->persist($hospital);
                 }
             }
             elseif($i == 1){
                 $user = $this->getReference('user_doc_3');
-                $hospital->addDoctor($user);
+                $hospital->addUser($user);
                 $manager->persist($hospital);
 
                 for($j = 16; $j <= 20; $j++ ) {
                     $user = $this->getReference('user_'.$j);
-                    $hospital->addDoctor($user);
+                    $hospital->addUser($user);
                     $manager->persist($hospital);
                 }
             }
             else{
                 $user = $this->getReference('user_doc_4');
-                $hospital->addDoctor($user);
+                $hospital->addUser($user);
                 $manager->persist($hospital);
                 $user = $this->getReference('user_doc_5');
-                $hospital->addDoctor($user);
+                $hospital->addUser($user);
                 $manager->persist($hospital);
 
                 for($j = 21; $j <= 25; $j++ ) {
                     $user = $this->getReference('user_'.$j);
-                    $hospital->addDoctor($user);
+                    $hospital->addUser($user);
                     $manager->persist($hospital);
                 }
             }

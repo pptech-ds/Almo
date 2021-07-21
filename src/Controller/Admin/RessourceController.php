@@ -41,12 +41,14 @@ class RessourceController extends AbstractController
 
         $ressources = [];
 
-        foreach($ressourceRepository->findAll() as $ressource){
+        foreach($ressourceRepository->findBy([], ['createdAt' => 'DESC']) as $ressource){
 
             if($ressourceRepository->findOneBy(['id' => $ressource->getId()])->getRessourceCategory()->getName() == $category) {
                 $ressources[] = $ressourceRepository->findOneBy(['id' => $ressource->getId()]);
             } 
         }
+
+        // dd($ressources);
 
         return $this->render('admin/ressource/index_by_category.html.twig', [
             'ressources' => $ressources,
@@ -57,7 +59,7 @@ class RessourceController extends AbstractController
     
     
     /**
-     * @Route("/admin/ressource/add", name="admin_webinar_ressource_add")
+     * @Route("/admin/ressource/add", name="admin_ressource_add")
      */
     public function addRessource(Request $request): Response
     {

@@ -23,8 +23,8 @@
         {% block stylesheets %}
         {% endblock %}
 
-        {% block javascripts %}
-        {% endblock %}
+        {# {% block javascripts %}
+        {% endblock %} #}
 
     </head>
 
@@ -74,7 +74,7 @@
                             <a class="collapse-item" href="{{ path('admin_user_by_role_index', {'role': 'ROLE_ADMIN' }) }}">Lister les admin</a>
                             <a class="collapse-item" href="{{ path('admin_user_by_role_index', {'role': 'ROLE_DOC' }) }}">Lister les médecins</a>
                             <a class="collapse-item" href="{{ path('admin_user_by_role_index', {'role': 'ROLE_PRO' }) }}">Lister les profesionnels</a>
-                            <a class="collapse-item" href="{{ path('admin_user_by_role_index', {'role': 'ROLE_USER' }) }}">Lister les patients</a>
+                            <a class="collapse-item" href="{{ path('admin_user_by_role_index', {'role': 'ROLE_PATIENT' }) }}">Lister les patients</a>
                             <a class="collapse-item" href="{{ path('admin_user_add') }}">Ajouter un utilisateur</a>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                             <a class="collapse-item" href="{{ path('admin_ressource_category_add') }}">Ajouter une catégorie</a>
                             <a class="collapse-item" href="{{ path('admin_ressource_by_category_index', {'category': 'Article'}) }}">Lister les articles</a>
                             <a class="collapse-item" href="{{ path('admin_ressource_by_category_index', {'category': 'Document'}) }}">Lister les documents</a>
-                            <a class="collapse-item" href="{{ path('admin_webinar_ressource_add') }}">Ajouter une ressource</a>
+                            <a class="collapse-item" href="{{ path('admin_ressource_add') }}">Ajouter une ressource</a>
                         </div>
                     </div>
                 </li>
@@ -406,6 +406,10 @@
 
         <!-- Page level custom scripts -->
         <script src="{{ asset('sbadmin2/js/demo/datatables-demo.js') }}"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/axentix@0.5.3/dist/js/axentix.min.js"></script>
+		{% block javascripts %}{% endblock %}
+		<script>
 
     </body>
 
