@@ -20,7 +20,7 @@ class HospitalFixtures extends Fixture implements DependentFixtureInterface
         
         // print('Starting HospitalFixtures ');
 
-        for($i = 0; $i < 3; $i++ ) {
+        for($i = 0; $i < 4; $i++ ) {
 
             $hospital = new Hospital;
             $hospital->setName($faker->name());
