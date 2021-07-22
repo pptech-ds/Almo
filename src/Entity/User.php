@@ -99,6 +99,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $civility;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $details;
+
         
 
 
@@ -378,6 +383,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCivility(string $civility): self
     {
         $this->civility = $civility;
+
+        return $this;
+    }
+
+    public function getDetails(): ?string
+    {
+        return $this->details;
+    }
+
+    public function setDetails(?string $details): self
+    {
+        $this->details = $details;
 
         return $this;
     }

@@ -59,6 +59,7 @@ class UserFixtures extends Fixture
             $user->setCity($faker->city());
             $user->setZipcode($faker->postcode());
             $user->setPhone($faker->phoneNumber());
+            $user->setDetails($faker->realText($maxNbChars = 500, $indexSize = 2));
             $manager->persist($user);
    
         }
@@ -79,6 +80,7 @@ class UserFixtures extends Fixture
             $user->setZipcode($faker->postcode());
             $user->setPhone($faker->phoneNumber());
             $user->setDoctor($this->getReference('user_doc_2'));
+            $user->setDetails($faker->realText($maxNbChars = 500, $indexSize = 2));
             $manager->persist($user);
             $this->addReference('user_' . $i, $user);
    
@@ -99,6 +101,7 @@ class UserFixtures extends Fixture
             $user->setZipcode($faker->postcode());
             $user->setPhone($faker->phoneNumber());
             $user->setDoctor($this->getReference('user_doc_1'));
+            $user->setDetails($faker->realText($maxNbChars = 500, $indexSize = 2));
             $manager->persist($user);
             $this->addReference('user_' . $i, $user);
    
@@ -119,6 +122,7 @@ class UserFixtures extends Fixture
             $user->setZipcode($faker->postcode());
             $user->setPhone($faker->phoneNumber());
             $user->setDoctor($this->getReference('user_doc_3'));
+            $user->setDetails($faker->realText($maxNbChars = 500, $indexSize = 2));
             $manager->persist($user);
             $this->addReference('user_' . $i, $user);
    
