@@ -62,6 +62,12 @@ class Ressource
      */
     private $ressourceCategory;
 
+
+    public function __toString()
+    {
+        return $this->ressourceCategory;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

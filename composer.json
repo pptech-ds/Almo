@@ -15,6 +15,7 @@
         "doctrine/orm": "^2.9",
         "friendsofsymfony/ckeditor-bundle": "^2.3",
         "fzaninotto/faker": "^1.9",
+        "google/apiclient": "^2.0",
         "knplabs/knp-paginator-bundle": "^5.6",
         "knplabs/knp-time-bundle": "^1.16",
         "phpdocumentor/reflection-docblock": "^5.2",
@@ -47,6 +48,7 @@
         "symfony/yaml": "5.3.*",
         "symfonycasts/reset-password-bundle": "^1.9",
         "symfonycasts/verify-email-bundle": "^1.5",
+        "tattali/calendar-bundle": "^1.2",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/string-extra": "^3.3",
         "twig/twig": "^2.12|^3.0"

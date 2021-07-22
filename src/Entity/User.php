@@ -80,24 +80,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $phone;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\ManyToOne(targetEntity=Hospital::class, inversedBy="doctor")
      */
-    private $hospital = [];
+    private $hospital;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="patients")
      */
-    private $doctor = [];
+    private $doctor;
+
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="doctor")
+     */
+    private $patients;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $civility;
+
+        
+
 
     public function __construct()
     {
         $this->ressources = new ArrayCollection();
+        $this->patients = new ArrayCollection();
     }
 
-    // public function __toString()
-    // {
-    //     return $this->roles;
-    // }
+    public function __toString()
+    {
+        return $this->email;
+    }
 
     public function getId(): ?int
     {
@@ -302,27 +316,70 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getHospital(): ?array
+    public function getHospital(): ?Hospital
     {
         return $this->hospital;
     }
 
-    public function setHospital(?array $hospital): self
+    public function setHospital(?Hospital $hospital): self
     {
         $this->hospital = $hospital;
 
         return $this;
     }
 
-    public function getDoctor(): ?array
+    public function getDoctor(): ?self
     {
         return $this->doctor;
     }
 
-    public function setDoctor(?array $doctor): self
+    public function setDoctor(?self $doctor): self
     {
         $this->doctor = $doctor;
 
         return $this;
     }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getPatients(): Collection
+    {
+        return $this->patients;
+    }
+
+    public function addPatient(self $patient): self
+    {
+        if (!$this->patients->contains($patient)) {
+            $this->patients[] = $patient;
+            $patient->setDoctor($this);
+        }
+
+        return $this;
+    }
+
+    public function removePatient(self $patient): self
+    {
+        if ($this->patients->removeElement($patient)) {
+            // set the owning side to null (unless already changed)
+            if ($patient->getDoctor() === $this) {
+                $patient->setDoctor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCivility(): ?string
+    {
+        return $this->civility;
+    }
+
+    public function setCivility(string $civility): self
+    {
+        $this->civility = $civility;
+
+        return $this;
+    }
+
 }

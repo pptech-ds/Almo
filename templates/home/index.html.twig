@@ -3,7 +3,7 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <div style="height: 30rem; background-color: rgba(255,0,0,0.1);">
+    <div style="height: 35rem; background-color: rgba(255,0,0,0.1);">
     </div>
 
     <!-- ======= Services Section ======= -->
@@ -32,7 +32,7 @@
             </div>
 
             <div class="h-100 row align-items-center">
-                <a class="btn btn-primary text-uppercase" href="{{ path('article') }}">Afficher tout les articles</a>
+                <a class="btn btn-primary text-uppercase" href="{{ path('article_index') }}">Afficher tout les articles</a>
             </div>
 
         </div>
@@ -68,10 +68,45 @@
             </div>
 
             <div class="h-100 row align-items-center">
-                <a class="btn btn-primary text-uppercase" href="{{ path('document') }}">Afficher tout les documents</a>
+                <a class="btn btn-primary text-uppercase" href="{{ path('document_index') }}">Afficher tout les documents</a>
+            </div>
+        </div>
+    </section><!-- End Services Section -->
+
+
+     <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+        <div class="container">
+
+            <div class="section-title">
+                <h2>Les Webinars</h2>
+                <p>Les derniers webinars mis à jour</p>
+            </div>
+
+            <div class="row">
+                {% for webinar in webinars %}
+                    <div class="col-lg-4 col-md-6" style="height: 35rem;">
+                        <div class="icon-box">
+                            {# <div class="icon"><i class="fas fa-heartbeat"></i></div> #}
+                            <h4><a href="{{ path('webinar_view', {slug: webinar.slug }) }}">{{webinar.title}}</a></h4>
+                            <img src={{ webinar.image }} alt="" style="width: 100%">
+                            {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
+                            
+                        </div>
+                        <p class="fs-6">Ecrit par {{webinar.user.email}} {{webinar.createdAt | ago}}</p>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+            <div class="h-100 row align-items-center">
+                <a class="btn btn-primary text-uppercase" href="{{ path('webinar_index') }}">Afficher tout les webinars</a>
             </div>
         </div>
     </section><!-- End Services Section -->
 
     
+{% endblock %}
+
+{% block javascripts %}
 {% endblock %}

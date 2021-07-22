@@ -14,12 +14,13 @@ class RessourceFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
-        $concert = 1;
 
-        for($i = 1; $i <= 200; $i++ ) {
+        // print('Starting RessourceFixtures ');
+
+        for($i = 0; $i <= 200; $i++ ) {
             // getting references created in RessourceCategoryFixtures
             $ressourceCategory = $this->getReference('ressourceCategory_' . $faker->numberBetween(0, 1));
-            $user = $this->getReference('user_' . $faker->numberBetween(0, 19));
+            $user = $this->getReference('user_pro_' . $faker->numberBetween(9, 10));
             $ressource = new Ressource;
             $ressource->setRessourceCategory($ressourceCategory);
             $ressource->setTitle($faker->catchPhrase());
