@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AdminUserAdminFormType extends AbstractType
 {
@@ -66,6 +67,7 @@ class AdminUserAdminFormType extends AbstractType
             ->add('city', TextType::class,['label' => 'Ville'])
             ->add('zipcode', TextType::class,['label' => 'Code postal'])
             ->add('phone', TextType::class,['label' => 'Téléphone'])
+            ->add('details', TextareaType::class,['label' => 'Informations complémentaires (500 caractères max)'])
             
             ->add('Enregistrer', SubmitType::class);
     }
