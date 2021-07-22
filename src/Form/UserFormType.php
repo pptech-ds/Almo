@@ -65,19 +65,6 @@ class UserFormType extends AbstractType
             ->add('zipcode', TextType::class)
             ->add('phone', TextType::class)
             
-            
-            // ->add('hospital', EntityType::class, [
-            //     'compound' => true,
-            //     'class' => 'App\Entity\Hospital',
-            //     'placeholder' => 'selectionner l\'hopital',
-            //     'mapped' => false,
-            //     // 'require' => false,
-            //     // 'expanded'  => true,
-            //     // 'multiple' => true,
-            //     'label' => 'Hopital'
-            // ])
-
-
             ->add('hospital', EntityType::class, [
                 'mapped' => false,
                 'class' => Hospital::class,
