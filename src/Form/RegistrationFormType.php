@@ -3,105 +3,125 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Hospital;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
+        ->add('email', EmailType::class)
+        ->add('plainPassword', RepeatedType::class, [
+            'type' => PasswordType::class,
+            'first_options' => [
+                'attr' => ['autocomplete' => 'new-password'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Le mot de passe doit être renseigner',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Votre mot de passe doit etre d\'au moins {{ limit }} caractères',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                ],
+                'label' => 'Mot de passe',
+            ],
+            'second_options' => [
+                'attr' => ['autocomplete' => 'new-password'],
+                'label' => 'Répétez le mot de passe',
+            ],
+            'invalid_message' => 'Les mots de passe de correspondent pas',
+            // Instead of being set onto the object directly,
+            // this is read and encoded in the controller
+            'mapped' => false,
+        ])
+        ->add('civility', ChoiceType::class, [
+            'choices' => [
+                'Mr' => 'Mr',
+                'Mme' => 'Mme',
+                'Dr' => 'Dr'
+            ],
+        'label' => 'Civilité'
+        ])
+        ->add('lastname', TextType::class,['label' => 'Nom'])
+        ->add('firstname', TextType::class,['label' => 'Prénom'])
+        ->add('address', TextType::class,['label' => 'Adresse'])
+        ->add('city', TextType::class,['label' => 'Ville'])
+        ->add('zipcode', TextType::class,['label' => 'Code postal'])
+        ->add('phone', TextType::class,['label' => 'Téléphone'])
+        ->add('hospital', EntityType::class, [
+            'mapped' => false,
+            'class' => Hospital::class,
+            'choice_label' => 'name',
+            'placeholder' => 'Choisir un hopital',
+            'label' => 'Hopital',
+            'required' => false
+        ])
+
+        ->add('doctor', ChoiceType::class, [
+            'placeholder' => 'Choisir un médecin',
+            'required' => false,
+            'label' => 'Médecin Traitant'
+        ])
+
+        ->add('details', TextareaType::class,['label' => 'Informations complémentaires (500 caractères max)'])
+        
+        ->add('Enregistrer', SubmitType::class);
+
+
+        $formModifier = function (FormInterface $form, Hospital $hospital = null) {
+            $usersInHospital = null === $hospital ? [] : $hospital->getUser();
+
+            $doctors = [];
             
-            // ->add('plainPassword', PasswordType::class, [
-            //     // instead of being set onto the object directly,
-            //     // this is read and encoded in the controller
-            //     'mapped' => false,
-            //     'attr' => ['autocomplete' => 'new-password'],
-            //     'constraints' => [
-            //         new NotBlank([
-            //             'message' => 'Please enter a password',
-            //         ]),
-            //         new Length([
-            //             'min' => 6,
-            //             'minMessage' => 'Your password should be at least {{ limit }} characters',
-            //             // max length allowed by Symfony for security reasons
-            //             'max' => 4096,
-            //         ]),
-            //     ],
-            // ])
-            ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'first_options' => [
-                    'attr' => ['autocomplete' => 'new-password'],
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => 'Please enter a password',
-                        ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
-                            // max length allowed by Symfony for security reasons
-                            'max' => 4096,
-                        ]),
-                    ],
-                    'label' => 'Nouveau mot de passe',
-                ],
-                'second_options' => [
-                    'attr' => ['autocomplete' => 'new-password'],
-                    'label' => 'Répétez le mot de passe',
-                ],
-                'invalid_message' => 'The password fields must match.',
-                // Instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-            ])
-            ->add('firstname', TextType::class)
-            ->add('lastname', TextType::class)
-            ->add('address', TextType::class)
-            ->add('city', TextType::class)
-            ->add('zipcode', TextType::class)
-            ->add('phone', TextType::class)
-            ->add('hospital', ChoiceType::class, [
-                'choices' => [
-                    'Hopital 1' => 'Hopital 1',
-                    'Hopital 2' => 'Hopital 2',
-                    'Hopital 3' => 'Hopital 3'
-                ],
-            'expanded'  => true,
-            'multiple' => true,
-            'label' => 'Hopital'
-            ])
-            // ->add('doctor', ChoiceType::class, [
-            //     'choices' => [
-            //         'Doctor 1' => 'Doctor 1',
-            //         'Doctor 2' => 'Doctor 2',
-            //         'Doctor 3' => 'Doctor 3'
-            //     ],
-            // 'expanded'  => true,
-            // 'multiple' => true,
-            // 'label' => 'Doctor'
-            // ])
-            // ->add('agreeTerms', CheckboxType::class, [
-            //     'mapped' => false,
-            //     'constraints' => [
-            //         new IsTrue([
-            //             'message' => 'You should agree to our terms.',
-            //         ]),
-            //     ],
-            // ])
-            ->add('Enregistrer', SubmitType::class)
-        ;
+            foreach($usersInHospital as $userInHospital){
+                if($userInHospital->getRoles()[0] === 'ROLE_DOC'){
+                    $doctors[] = $userInHospital;
+                }
+            };
+            
+
+    
+            $form->add('doctor', EntityType::class, [
+                'class' => User::class,
+                'choices' => $doctors,
+                'required' => false,
+                'choice_label' => 'email',
+                'placeholder' => 'choisir un medecin',
+                'attr' => ['class' => 'custom-select'],
+                'label' => 'medecin'
+            ]);
+        };
+
+
+        $builder->get('hospital')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($formModifier) {
+                $hospital = $event->getForm()->getData();
+                $formModifier($event->getForm()->getParent(), $hospital);
+            }
+        );
+        
     }
 
     public function configureOptions(OptionsResolver $resolver)
