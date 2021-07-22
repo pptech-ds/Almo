@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AdminUserDocFormType extends AbstractType
 {
@@ -74,7 +75,9 @@ class AdminUserDocFormType extends AbstractType
                 'label' => 'Hopital',
                 'required' => false
             ])
-
+            
+            ->add('details', TextareaType::class,['label' => 'Informations complémentaires (500 caractères max)'])
+            
             ->add('Enregistrer', SubmitType::class);
     }
 

@@ -19,20 +19,13 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AdminUserPatientFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // ->add('roles', ChoiceType::class, [
-            //     'choices' => [
-            //         'ROLE_PATIENT' => 'ROLE_PATIENT'
-            //     ],
-            // 'expanded'  => false,
-            // 'multiple' => true,
-            // 'label' => 'Type d\'utilisateur'
-            // ])
             ->add('email', EmailType::class)
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -88,6 +81,8 @@ class AdminUserPatientFormType extends AbstractType
                 'required' => false,
                 'label' => 'Médecin Traitant'
             ])
+
+            ->add('details', TextareaType::class,['label' => 'Informations complémentaires (500 caractères max)'])
             
             ->add('Enregistrer', SubmitType::class);
 
