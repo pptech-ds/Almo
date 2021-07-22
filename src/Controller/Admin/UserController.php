@@ -3,30 +3,20 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Entity\Ressource;
 use App\Form\UserFormType;
-use App\Form\RessourceFormType;
 use App\Security\EmailVerifier;
-use App\Entity\RessourceCategory;
-use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
-use Symfony\Component\Mime\Address;
-use App\Repository\HospitalRepository;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
-use App\Form\RessourceCategoryFormType;
-use App\Repository\RessourceRepository;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use App\Form\Admin\AdminUserDocFormType;
+use App\Form\Admin\AdminUserProFormType;
+use App\Form\Admin\AdminUserAdminFormType;
+use App\Form\Admin\AdminUserPatientFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Repository\RessourceCategoryRepository;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class UserController extends AbstractController
@@ -104,61 +94,124 @@ class UserController extends AbstractController
     /**
      * @Route("/admin/user/add", name="admin_user_add")
      */
-    public function addUser(Request $request, UserPasswordEncoderInterface $passwordEncoder, HospitalRepository $hospitalRepository): Response
+    public function addUser(): Response
     {
+        return $this->render('admin/user/add.html.twig', []);
+    }
 
-        // dd($hospitalRepository->findAll());
 
-        $hostpitals = [];
-
-        foreach ($hospitalRepository->findAll() as $hospital) {
-            // // dd($hospital->getUser());
-            // foreach($hospital->getUser() as $userInHospital){
-            //     dd($userInHospital->getEmail());
-            // }
-
-            $hostpitals[$hospital->getName()] = $hospital;
-        }
-
-        // dd($hostpitals);
-
-        $doctors = [];
-
+    /**
+     * @Route("/admin/user/add_patient", name="admin_user_add_patient")
+     */
+    public function addUserPatient(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
         $user = new User();
-        $form = $this->createForm(UserFormType::class, $user);
-        
-        
-
+        $form = $this->createForm(AdminUserPatientFormType::class, $user);
         $form->handleRequest($request);
-
-        
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // dd($form->get('hospital')->getData());
-
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-            // $currentHospital = $form->get('hospital');
+            $user->setRoles(['ROLE_PATIENT']);
+            $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
             $user->setHospital($form->get('hospital')->getData());
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            
-
-            $this->addFlash('success', 'Le nouvel utilisateur a été enregistré avec succes dans la base de données');
+            $this->addFlash('success', 'Le nouveau patient a été enregistré avec succes dans la base de données');
 
             return $this->redirectToRoute('admin_user_add');
         }
 
-        return $this->render('admin/user/add.html.twig', [
+        return $this->render('admin/user/add_patient.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
+
+    /**
+     * @Route("/admin/user/add_doc", name="admin_user_add_doc")
+     */
+    public function addUserDoc(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $user = new User();
+        $form = $this->createForm(AdminUserDocFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user->setRoles(['ROLE_DOC']);
+            $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
+            $user->setHospital($form->get('hospital')->getData());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le nouveau médecin a été enregistré avec succes dans la base de données');
+
+            return $this->redirectToRoute('admin_user_add');
+        }
+
+        return $this->render('admin/user/add_doc.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/admin/user/add_pro", name="admin_user_add_pro")
+     */
+    public function addUserPro(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $user = new User();
+        $form = $this->createForm(AdminUserProFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user->setRoles(['ROLE_PRO']);
+            $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le nouveau professionel a été enregistré avec succes dans la base de données');
+
+            return $this->redirectToRoute('admin_user_add');
+        }
+
+        return $this->render('admin/user/add_pro.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/admin/user/add_admin", name="admin_user_add_admin")
+     */
+    public function addUserAdmin(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $user = new User();
+        $form = $this->createForm(AdminUserAdminFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user->setRoles(['ROLE_ADMIN']);
+            $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le nouveau administrateur a été enregistré avec succes dans la base de données');
+
+            return $this->redirectToRoute('admin_user_add');
+        }
+
+        return $this->render('admin/user/add_pro.html.twig', [
             'form' => $form->createView(),
         ]);
     }

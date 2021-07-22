@@ -94,7 +94,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $patients;
 
-    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $civility;
+
+        
 
 
     public function __construct()
@@ -365,6 +370,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    
+    public function getCivility(): ?string
+    {
+        return $this->civility;
+    }
+
+    public function setCivility(string $civility): self
+    {
+        $this->civility = $civility;
+
+        return $this;
+    }
 
 }

@@ -1,105 +1,102 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Admin;
 
 use App\Entity\User;
 use App\Entity\Hospital;
-use Doctrine\DBAL\Types\JsonType;
-use Doctrine\DBAL\Types\ArrayType;
-use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Component\Form\FormEvent;
-use App\Repository\HospitalRepository;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
-class UserFormType extends AbstractType
+class AdminUserPatientFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', TextType::class)
+            // ->add('roles', ChoiceType::class, [
+            //     'choices' => [
+            //         'ROLE_PATIENT' => 'ROLE_PATIENT'
+            //     ],
+            // 'expanded'  => false,
+            // 'multiple' => true,
+            // 'label' => 'Type d\'utilisateur'
+            // ])
+            ->add('email', EmailType::class)
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
                     'attr' => ['autocomplete' => 'new-password'],
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Please enter a password',
+                            'message' => 'Le mot de passe doit être renseigner',
                         ]),
                         new Length([
                             'min' => 6,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
+                            'minMessage' => 'Votre mot de passe doit etre d\'au moins {{ limit }} caractères',
                             // max length allowed by Symfony for security reasons
                             'max' => 4096,
                         ]),
                     ],
-                    'label' => 'Nouveau mot de passe',
+                    'label' => 'Mot de passe',
                 ],
                 'second_options' => [
                     'attr' => ['autocomplete' => 'new-password'],
                     'label' => 'Répétez le mot de passe',
                 ],
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'Les mots de passe de correspondent pas',
                 // Instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
             ])
-            ->add('firstname', TextType::class)
-            ->add('lastname', TextType::class)
-            ->add('address', TextType::class)
-            ->add('city', TextType::class)
-            ->add('zipcode', TextType::class)
-            ->add('phone', TextType::class)
-            
-            
-            // ->add('hospital', EntityType::class, [
-            //     'compound' => true,
-            //     'class' => 'App\Entity\Hospital',
-            //     'placeholder' => 'selectionner l\'hopital',
-            //     'mapped' => false,
-            //     // 'require' => false,
-            //     // 'expanded'  => true,
-            //     // 'multiple' => true,
-            //     'label' => 'Hopital'
-            // ])
-
-
+            ->add('civility', ChoiceType::class, [
+                'choices' => [
+                    'Mr' => 'Mr',
+                    'Mme' => 'Mme',
+                    'Dr' => 'Dr'
+                ],
+            'label' => 'Civilité'
+            ])
+            ->add('lastname', TextType::class,['label' => 'Nom'])
+            ->add('firstname', TextType::class,['label' => 'Prénom'])
+            ->add('address', TextType::class,['label' => 'Adresse'])
+            ->add('city', TextType::class,['label' => 'Ville'])
+            ->add('zipcode', TextType::class,['label' => 'Code postal'])
+            ->add('phone', TextType::class,['label' => 'Téléphone'])
             ->add('hospital', EntityType::class, [
                 'mapped' => false,
                 'class' => Hospital::class,
                 'choice_label' => 'name',
-                'placeholder' => 'Hospital',
-                'label' => 'Hospital',
+                'placeholder' => 'Choisir un hopital',
+                'label' => 'Hopital',
                 'required' => false
             ])
 
             ->add('doctor', ChoiceType::class, [
-                'placeholder' => 'choisir un medecin',
-                'required' => false
+                'placeholder' => 'Choisir un médecin',
+                'required' => false,
+                'label' => 'Médecin Traitant'
             ])
             
-            ->add('Envoyer', SubmitType::class);
+            ->add('Enregistrer', SubmitType::class);
 
 
             $formModifier = function (FormInterface $form, Hospital $hospital = null) {
                 $usersInHospital = null === $hospital ? [] : $hospital->getUser();
 
                 $doctors = [];
-
+                
                 foreach($usersInHospital as $userInHospital){
                     if($userInHospital->getRoles()[0] === 'ROLE_DOC'){
                         $doctors[] = $userInHospital;

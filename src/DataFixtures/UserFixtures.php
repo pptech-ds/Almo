@@ -36,16 +36,19 @@ class UserFixtures extends Fixture
                 $user->setRoles(['ROLE_ADMIN']);
                 $user->setEmail('admin@almo.com');
                 $user->setIsVerified(1);
+                $user->setCivility('Mr');
                 $this->addReference('user_admin_' . $i, $user);
             } elseif (($i > 0) && ($i <= 5)) {
                 $user->setRoles(['ROLE_DOC']);
                 $user->setEmail($faker->email);
                 $user->setIsVerified($faker->numberBetween(0,1));
+                $user->setCivility('Dr');
                 $this->addReference('user_doc_' . $i, $user);
             } else {
                 $user->setRoles(['ROLE_PRO']);
                 $user->setEmail($faker->email);
                 $user->setIsVerified($faker->numberBetween(0,1));
+                $user->setCivility('Mme');
                 $this->addReference('user_pro_' . $i, $user);
             } 
 
@@ -67,6 +70,7 @@ class UserFixtures extends Fixture
             $user->setRoles(['ROLE_PATIENT']);
             $user->setEmail($faker->email);
             $user->setIsVerified($faker->numberBetween(0,1));
+            $user->setCivility('M');
             $user->setPassword($this->encoder->encodePassword($user, '123456'));
             $user->setFirstname($faker->firstName());
             $user->setlastname($faker->lastName());
@@ -86,6 +90,7 @@ class UserFixtures extends Fixture
             $user->setRoles(['ROLE_PATIENT']);
             $user->setEmail($faker->email);
             $user->setIsVerified($faker->numberBetween(0,1));
+            $user->setCivility('Mme');
             $user->setPassword($this->encoder->encodePassword($user, '123456'));
             $user->setFirstname($faker->firstName());
             $user->setlastname($faker->lastName());
@@ -105,6 +110,7 @@ class UserFixtures extends Fixture
             $user->setRoles(['ROLE_PATIENT']);
             $user->setEmail($faker->email);
             $user->setIsVerified($faker->numberBetween(0,1));
+            $user->setCivility('M');
             $user->setPassword($this->encoder->encodePassword($user, '123456'));
             $user->setFirstname($faker->firstName());
             $user->setlastname($faker->lastName());

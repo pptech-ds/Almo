@@ -7,15 +7,36 @@
 
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Ajouter un utilisateur</h1>
-        <p class="mb-4">Ajout d'un utilisateur</p>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Ajouter un utilisateur</h6>
+                <a href="{{ path('admin_user_add_patient') }}" class="btn btn-primary btn-icon-split btn-lg">
+                    <span class="icon text-white-50"> 
+                        <i class="fas fa-user-injured"></i>
+                    </span>
+                    <span class="text">Ajouter un patient</span>
+                </a>
+                <a href="{{ path('admin_user_add_doc') }}" class="btn btn-success btn-icon-split btn-lg">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-user-md"></i>
+                    </span>
+                    <span class="text">Ajouter un médecin</span>
+                </a>
+                <a href="{{ path('admin_user_add_pro') }}" class="btn btn-info btn-icon-split btn-lg">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-user-nurse"></i>
+                    </span>
+                    <span class="text">Ajouter un profesionnel</span>
+                </a>
+                <a href="{{ path('admin_user_add_admin') }}" class="btn btn-danger btn-icon-split btn-lg">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-user-cog"></i>
+                    </span>
+                    <span class="text">Ajouter un administrateur</span>
+                </a>
             </div>
-                <h1>Ajouter un utilisateur</h1>
-                {{ form(form) }}
+                
         </div>
 
     </div>
@@ -25,36 +46,6 @@
 
 
 {% block javascripts %}
-    <script>
-        window.onload = () => {
-            // On va chercher la région
-            let hospital = document.querySelector("#user_form_hospital");
-            hospital.addEventListener("change", function(){
-                let form = this.closest("form");
-                // console.log(form);
 
-                let data = this.name + "=" + this.value;
-                
-                fetch(form.action, {
-                    method: form.getAttribute("method"),
-                    body: data,
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded; charset:UTF-8"
-                    }
-                })
-                .then(response => response.text())
-                .then(html => {
-                    let content = document.createElement("html");
-                    content.innerHTML = html;
-                    let nouveauSelect = content.querySelector("#user_form_doctor");
-                    console.log(nouveauSelect);
-                    document.querySelector("#user_form_doctor").replaceWith(nouveauSelect);
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-            });
-        }
-    </script>
 {% endblock %}
     
