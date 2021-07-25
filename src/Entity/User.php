@@ -104,6 +104,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $details;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Disponibility::class, mappedBy="createdBy", orphanRemoval=true)
+     */
+    private $disponibilities;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Disponibility::class, mappedBy="reservedBy", cascade={"persist", "remove"})
+     */
+    private $disponibility;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Speciality::class, inversedBy="users")
+     */
+    private $speciality;
+
         
 
 
@@ -111,6 +126,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->ressources = new ArrayCollection();
         $this->patients = new ArrayCollection();
+        $this->disponibilities = new ArrayCollection();
     }
 
     public function __toString()
@@ -395,6 +411,70 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDetails(?string $details): self
     {
         $this->details = $details;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Disponibility[]
+     */
+    public function getDisponibilities(): Collection
+    {
+        return $this->disponibilities;
+    }
+
+    public function addDisponibility(Disponibility $disponibility): self
+    {
+        if (!$this->disponibilities->contains($disponibility)) {
+            $this->disponibilities[] = $disponibility;
+            $disponibility->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisponibility(Disponibility $disponibility): self
+    {
+        if ($this->disponibilities->removeElement($disponibility)) {
+            // set the owning side to null (unless already changed)
+            if ($disponibility->getCreatedBy() === $this) {
+                $disponibility->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDisponibility(): ?Disponibility
+    {
+        return $this->disponibility;
+    }
+
+    public function setDisponibility(?Disponibility $disponibility): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($disponibility === null && $this->disponibility !== null) {
+            $this->disponibility->setReservedBy(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($disponibility !== null && $disponibility->getReservedBy() !== $this) {
+            $disponibility->setReservedBy($this);
+        }
+
+        $this->disponibility = $disponibility;
+
+        return $this;
+    }
+
+    public function getSpeciality(): ?Speciality
+    {
+        return $this->speciality;
+    }
+
+    public function setSpeciality(?Speciality $speciality): self
+    {
+        $this->speciality = $speciality;
 
         return $this;
     }
