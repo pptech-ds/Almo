@@ -38,6 +38,7 @@ class HomeController extends AbstractController
             6
         );
 
+        // dd($articles);
 
         return $this->render('home/index.html.twig', [
             'documents' => $documents,

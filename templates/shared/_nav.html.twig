@@ -10,6 +10,12 @@
         <li class="dropdown"><a href="#"><span>Mon Compte</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{ path('user_index') }}">Mon Profile</a></li>
+                {% if (is_granted("ROLE_DOC") or is_granted("ROLE_DOC")) %}
+                    <li><a class="nav-link scrollto" href="{{ path('user_disponibility') }}">Mes disponibilités</a></li>
+                {% endif %}
+                {% if (is_granted("ROLE_PATIENT")) %}
+                    <li><a class="nav-link scrollto" href="{{ path('user_reservation') }}">Mes rendez-vous</a></li>
+                {% endif %}
             </ul>
         </li>
         <li class="dropdown"><a href="#"><span>Ressources</span> <i class="bi bi-chevron-down"></i></a>
