@@ -47,6 +47,11 @@ class WebinarCategory
      */
     private $webinars;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
     public function __construct()
     {
         $this->webinarCategories = new ArrayCollection();
@@ -148,6 +153,18 @@ class WebinarCategory
                 $webinar->setWebinarCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use Faker;
+use Faker\Factory;
 use App\Entity\Webinar;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -13,14 +13,14 @@ class WebinarFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $faker = Faker\Factory::create('fr_FR');
+        $faker = Factory::create('fr_FR');
 
         // print('Starting WebinarFixtures ');
 
         for($i = 1; $i <= 200; $i++ ) {
             // getting references created in WebinarCategoryFixtures
             $webinarCategory = $this->getReference('webinarCategory_' . $faker->numberBetween(0, 1));
-            $user = $this->getReference('user_pro_' . $faker->numberBetween(9, 10));
+            $user = $this->getReference('user_pro_' . $faker->numberBetween(11, 15));
             $webinar = new Webinar;
             $webinar->setWebinarCategory($webinarCategory);
             $webinar->setTitle($faker->catchPhrase());
@@ -37,8 +37,9 @@ class WebinarFixtures extends Fixture implements DependentFixtureInterface
     {
         // dependencies
         return [
+            SpecialityFixtures::class,
             WebinarCategoryFixtures::class,
-            UserFixtures::class            
+            UserFixtures::class,         
         ];
     }
 }

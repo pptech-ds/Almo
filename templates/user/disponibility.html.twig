@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gerer mes disponibilités{% endblock %}
+
+{% block body %}
+    <div style="height: 30rem; background-color: rgba(255,0,0,0.1);">
+    </div>
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+        <div class="container">
+
+            <div class="section-title">
+                <h2>Mes dispo</h2>
+            </div>
+            <h1>Ajouter une disponibilité</h1>
+                {{ form(form) }}
+                
+        </div>
+
+    </section>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les disponibilités{% endblock %}
+
+{% block body %}
+
+    <div style="height: 30rem; background-color: rgba(255,0,0,0.1);">
+    </div>
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+        <div class="container">
+
+            <div class="section-title">
+                <h2>Les disponibilités</h2>
+            </div>
+
+            <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Intitulé</th>
+                                <th>Contenu</th>
+                                <th>disponibilités</th>
+                                <th>Medecin</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th hidden>Intitulé</th>
+                                <th hidden>Contenu</th>
+                                <th hidden>disponibilités</th>
+                                <th hidden>Medecin</th>
+                                <th hidden>Action</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for disponibility in disponibilities %}
+                            <tr>
+                                
+                                    <td>{{ disponibility.name }}</td>
+                                    <td>{{ disponibility.content }}</td>
+                                    <td>{{ disponibility.startTime | date }}_{{ disponibility.startTime | date }}</td>
+                                    <td>{{ disponibility.createdBy }}</td>
+                                    <td>
+                                    <a href="#" class="btn btn-primary btn-sm">Reserver</a>
+                                </td>
+                                
+                            </tr>
+                            {% endfor %}
+                                
+                            
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+        </div>
+
+        
+
+    </section><!-- End Services Section -->
+
+
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

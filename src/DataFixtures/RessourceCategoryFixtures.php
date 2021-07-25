@@ -2,19 +2,23 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\RessourceCategory;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class RessourceCategoryFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $RessourceCategories = ['Article', 'Document'];
+        $ressourceCategories = ['Article', 'Document'];
 
-        for($i=0; $i<count($RessourceCategories); $i++) {
+        $faker = Factory::create('fr_FR'); 
+
+        for($i=0; $i<count($ressourceCategories); $i++) {
             $ressourceCategory = new RessourceCategory;
-            $ressourceCategory->setName($RessourceCategories[$i]);
+            $ressourceCategory->setName($ressourceCategories[$i]);
+            $ressourceCategory->setDescription($faker->realText($maxNbChars = 200, $indexSize = 2));
             $manager->persist($ressourceCategory);
 
             // Creating references to get them in ArtitFixtures
