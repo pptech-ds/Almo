@@ -21,7 +21,7 @@ class RessourceFixtures extends Fixture implements DependentFixtureInterface
         for($i = 0; $i <= 200; $i++ ) {
             // getting references created in RessourceCategoryFixtures
             $ressourceCategory = $this->getReference('ressourceCategory_' . $faker->numberBetween(0, 1));
-            $user = $this->getReference('user_pro_' . $faker->numberBetween(11, 15));
+            $user = $this->getReference('user_pro_' . $faker->numberBetween(1, 10));
             $ressource = new Ressource;
             $ressource->setRessourceCategory($ressourceCategory);
             $ressource->setTitle($faker->catchPhrase());

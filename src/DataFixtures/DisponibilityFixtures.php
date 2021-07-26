@@ -34,17 +34,23 @@ class DisponibilityFixtures extends Fixture implements DependentFixtureInterface
         $date1 = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 09:00:00');
         $date2 = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 10:00:00');
 
-        for($i = 0; $i < 50; $i++ ) {
+        for($i = 0; $i<40; $i++ ) {
+            $user = $this->getReference('user_pro_'.$i);
 
-            $disponility = new Disponibility;
-            $user = $this->getReference('user_pro_' . $faker->numberBetween(11, 30));
-            $disponility->setName($faker->name());
-            $disponility->setContent($faker->realText($maxNbChars = 200, $indexSize = 2));
-            $disponility->setStartTime($date1);
-            $disponility->setEndTime($date2);
-            $disponility->setCreatedBy($user);
-            $disponility->setIsVisio($faker->numberBetween(0,1));
-            $manager->persist($disponility);
+            for($j=0; $j<10; $j++){
+                $disponility = new Disponibility;
+                $disponility->setName($faker->name());
+                $disponility->setContent($faker->realText($maxNbChars = 200, $indexSize = 2));
+                $disponility->setStartTime($date1);
+                $disponility->setEndTime($date2);
+                $disponility->setCreatedBy($user);
+                if($j%2==0){
+                    $disponility->setIsVisio(1);
+                } else {
+                    $disponility->setIsVisio(0);
+                }
+                $manager->persist($disponility);
+            }
         }
 
         // print('End HospitalFixtures ');
