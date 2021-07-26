@@ -20,7 +20,7 @@ class WebinarFixtures extends Fixture implements DependentFixtureInterface
         for($i = 1; $i <= 200; $i++ ) {
             // getting references created in WebinarCategoryFixtures
             $webinarCategory = $this->getReference('webinarCategory_' . $faker->numberBetween(0, 1));
-            $user = $this->getReference('user_pro_' . $faker->numberBetween(11, 15));
+            $user = $this->getReference('user_pro_' . $faker->numberBetween(1, 10));
             $webinar = new Webinar;
             $webinar->setWebinarCategory($webinarCategory);
             $webinar->setTitle($faker->catchPhrase());
