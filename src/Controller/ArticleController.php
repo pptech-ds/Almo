@@ -8,7 +8,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use ContainerIfCTfyJ\PaginatorInterface_82dac15;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ArticleController extends AbstractController

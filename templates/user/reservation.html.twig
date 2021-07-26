@@ -16,45 +16,31 @@
             </div>
 
             <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Intitulé</th>
-                                <th>Contenu</th>
-                                <th>disponibilités</th>
-                                <th>Medecin</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th hidden>Intitulé</th>
-                                <th hidden>Contenu</th>
-                                <th hidden>disponibilités</th>
-                                <th hidden>Medecin</th>
-                                <th hidden>Action</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            {% for disponibility in disponibilities %}
-                            <tr>
-                                
-                                    <td>{{ disponibility.name }}</td>
-                                    <td>{{ disponibility.content }}</td>
-                                    <td>{{ disponibility.startTime | date }}_{{ disponibility.startTime | date }}</td>
-                                    <td>{{ disponibility.createdBy }}</td>
-                                    <td>
-                                    <a href="#" class="btn btn-primary btn-sm">Reserver</a>
-                                </td>
-                                
-                            </tr>
-                            {% endfor %}
-                                
-                            
-                            
-                        </tbody>
-                    </table>
-                </div>
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mes rendez-vous</th>
+                        <th>Le spécialiste</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th hidden>Mes rendez-vous</th>
+                        <th hidden>Le spécialiste</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for reservation in reservations %}
+                        {# {{ dump(reservation) }} #}
+                        <tr>
+                            <td><a href="{{path('user_reservation_view', {'id':reservation.id})}}" type="button" class="btn btn-primary">{{ reservation.startTime | date("Y/m/d") }}  {{ reservation.startTime | date('H:i:s') }}  {{ reservation.endTime | date('H:i:s') }}</a></td>
+                            <td>{{ reservation.createdBy }}</td>
+                        </tr>
+                    {% endfor %}
+  
+                </tbody>
+            </table>
+        </div>
 
         </div>
 
