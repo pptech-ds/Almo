@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <div style="height: 30rem; background-color: rgba(255,0,0,0.1);">
+    </div>
+
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        {# {% for userBySpeciality in usersBySpeciality %}
+            {{ dump(userBySpeciality) }}
+            {{ dump(userBySpeciality.disponibilities) }}
+            MLLLLLLLLL 
+            {% if userBySpeciality.disponibilities is defined %}
+                {% for disponibility in userBySpeciality.disponibilities %}
+                    {{ dump(disponibility) }}
+                    OKKKKKKKKKKKKK {{ dump(disponibility.name) }}
+                    OKKKKKKKKKKKKK {{ dump(disponibility.content) }}
+                    OKKKKKKKKKKKKK {{ dump(disponibility.startTime) }}
+                    OKKKKKKKKKKKKK {{ dump(disponibility.endTime) }}
+                    OKKKKKKKKKKKKK {{ dump(disponibility.reservedBy) }}
+                    OKKKKKKKKKKKKK {{ dump(disponibility.isVisio) }}
+                {% endfor %}
+
+            {% endif %}
+        {% endfor %} #}
+
+
+
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Le Spécialiste</th>
+                        <th>Disponibilité en visio</th>
+                        <th>Disponibilité en présentiel</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th hidden>Le Spécialiste</th>
+                        <th hidden>Disponibilité en visio</th>
+                        <th hidden>Disponibilité en présentiel</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for userBySpeciality in usersBySpeciality %}
+                        <tr>
+                            <td>{{ userBySpeciality.email }}</td>
+
+                            {# {{ dump(userBySpeciality.disponibilities) }} #}
+                                {% for disponibility in userBySpeciality.disponibilities %}
+                                {# {{ dump(disponibility) }} #}
+                                    {% if disponibility.isVisio == true %}
+                                        <td><a href="{{path('home')}}" type="button" class="btn btn-primary">{{ disponibility.startTime | date("Y/m/d") }}  {{ disponibility.startTime | date('H:i:s') }}  {{ disponibility.endTime | date('H:i:s') }}</a></td>
+                                        {# <td>HELLO</td> #}
+                                    {% else %}
+                                        <td><a href="{{path('home')}}" type="button" class="btn btn-primary">{{ disponibility.startTime | date("Y/m/d") }}  {{ disponibility.startTime | date('H:i:s') }}  {{ disponibility.endTime | date('H:i:s') }}</a></td>
+                                    {# <a href="{{path('billetterie_form', {'nbPlace':1, 'artist':artists[i].name})}}" type="button" class="btn btn-primary">Réserver une place</a> #}
+                                    {% endif %}
+                                {% endfor %}
+
+                        </tr>
+                    {% endfor %}
+  
+                </tbody>
+            </table>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+
+    
+{% endblock %}

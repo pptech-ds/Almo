@@ -48,6 +48,11 @@ class Disponibility
      */
     private $reservedBy;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVisio;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +126,18 @@ class Disponibility
     public function setReservedBy(?User $reservedBy): self
     {
         $this->reservedBy = $reservedBy;
+
+        return $this;
+    }
+
+    public function getIsVisio(): ?bool
+    {
+        return $this->isVisio;
+    }
+
+    public function setIsVisio(bool $isVisio): self
+    {
+        $this->isVisio = $isVisio;
 
         return $this;
     }

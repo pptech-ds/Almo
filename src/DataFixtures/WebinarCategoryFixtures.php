@@ -19,6 +19,7 @@ class WebinarCategoryFixtures extends Fixture
             $webinarCategory = new WebinarCategory;
             $webinarCategory->setName($webinarCategories[$i]);
             $webinarCategory->setDescription($faker->realText($maxNbChars = 200, $indexSize = 2));
+            $webinarCategory->setImage($faker->imageUrl($width = 640, $height = 480));
             $manager->persist($webinarCategory);
 
             // Creating references to get them in ArtitFixtures
