@@ -110,14 +110,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $disponibilities;
 
     /**
-     * @ORM\OneToOne(targetEntity=Disponibility::class, mappedBy="reservedBy", cascade={"persist", "remove"})
-     */
-    private $disponibility;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Speciality::class, inversedBy="users")
      */
     private $speciality;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Disponibility::class, mappedBy="reservedBy")
+     */
+    private $reservations;
 
         
 
@@ -127,11 +127,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->ressources = new ArrayCollection();
         $this->patients = new ArrayCollection();
         $this->disponibilities = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     public function __toString()
     {
         return $this->email;
+        // return $this->product . ' ' . $this->product_order . ' ' . $this->quantity_order . ' ' . $this->price_order;
     }
 
     public function getId(): ?int
@@ -445,27 +447,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDisponibility(): ?Disponibility
-    {
-        return $this->disponibility;
-    }
-
-    public function setDisponibility(?Disponibility $disponibility): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($disponibility === null && $this->disponibility !== null) {
-            $this->disponibility->setReservedBy(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($disponibility !== null && $disponibility->getReservedBy() !== $this) {
-            $disponibility->setReservedBy($this);
-        }
-
-        $this->disponibility = $disponibility;
-
-        return $this;
-    }
+    
 
     public function getSpeciality(): ?Speciality
     {
@@ -475,6 +457,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSpeciality(?Speciality $speciality): self
     {
         $this->speciality = $speciality;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Disponibility[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Disponibility $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setReservedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Disponibility $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getReservedBy() === $this) {
+                $reservation->setReservedBy(null);
+            }
+        }
 
         return $this;
     }

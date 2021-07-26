@@ -15,7 +15,7 @@
                     <li><a class="nav-link scrollto" href="{{ path('user_disponibility') }}">Mes disponibilités</a></li>
                 {% endif %}
                 {% if (is_granted("ROLE_PATIENT")) %}
-                    <li><a class="nav-link scrollto" href="{{ path('user_reservation') }}">Mes rendez-vous</a></li>
+                    <li><a class="nav-link scrollto" href="{{ path('user_reservation_list') }}">Mes rendez-vous</a></li>
                 {% endif %}
             </ul>
         </li>

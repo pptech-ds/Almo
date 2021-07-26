@@ -34,7 +34,7 @@ class DisponibilityFixtures extends Fixture implements DependentFixtureInterface
         $date1 = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 09:00:00');
         $date2 = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 10:00:00');
 
-        for($i = 0; $i < 20; $i++ ) {
+        for($i = 0; $i < 50; $i++ ) {
 
             $disponility = new Disponibility;
             $user = $this->getReference('user_pro_' . $faker->numberBetween(11, 30));

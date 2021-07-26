@@ -55,10 +55,10 @@
                                 {% for disponibility in userBySpeciality.disponibilities %}
                                 {# {{ dump(disponibility) }} #}
                                     {% if disponibility.isVisio == true %}
-                                        <td><a href="{{path('home')}}" type="button" class="btn btn-primary">{{ disponibility.startTime | date("Y/m/d") }}  {{ disponibility.startTime | date('H:i:s') }}  {{ disponibility.endTime | date('H:i:s') }}</a></td>
+                                        <td><a href="{{path('user_reservation_add', {'id':disponibility.id})}}" type="button" class="btn btn-primary">{{ disponibility.startTime | date("Y/m/d") }}  {{ disponibility.startTime | date('H:i:s') }}  {{ disponibility.endTime | date('H:i:s') }}</a></td>
                                         {# <td>HELLO</td> #}
                                     {% else %}
-                                        <td><a href="{{path('home')}}" type="button" class="btn btn-primary">{{ disponibility.startTime | date("Y/m/d") }}  {{ disponibility.startTime | date('H:i:s') }}  {{ disponibility.endTime | date('H:i:s') }}</a></td>
+                                        <td><a href="{{path('user_reservation_add', {'id':disponibility.id})}}" type="button" class="btn btn-primary">{{ disponibility.startTime | date("Y/m/d") }}  {{ disponibility.startTime | date('H:i:s') }}  {{ disponibility.endTime | date('H:i:s') }}</a></td>
                                     {# <a href="{{path('billetterie_form', {'nbPlace':1, 'artist':artists[i].name})}}" type="button" class="btn btn-primary">Réserver une place</a> #}
                                     {% endif %}
                                 {% endfor %}

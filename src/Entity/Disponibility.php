@@ -44,14 +44,21 @@ class Disponibility
     private $createdBy;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="disponibility", cascade={"persist", "remove"})
-     */
-    private $reservedBy;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $isVisio;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
+     */
+    private $reservedBy;
+
+    public function __toString()
+    {
+        return $this->name;
+        // return $this->product . ' ' . $this->product_order . ' ' . $this->quantity_order . ' ' . $this->price_order;
+    }
+
 
     public function getId(): ?int
     {
@@ -118,18 +125,6 @@ class Disponibility
         return $this;
     }
 
-    public function getReservedBy(): ?User
-    {
-        return $this->reservedBy;
-    }
-
-    public function setReservedBy(?User $reservedBy): self
-    {
-        $this->reservedBy = $reservedBy;
-
-        return $this;
-    }
-
     public function getIsVisio(): ?bool
     {
         return $this->isVisio;
@@ -138,6 +133,18 @@ class Disponibility
     public function setIsVisio(bool $isVisio): self
     {
         $this->isVisio = $isVisio;
+
+        return $this;
+    }
+
+    public function getReservedBy(): ?User
+    {
+        return $this->reservedBy;
+    }
+
+    public function setReservedBy(?User $reservedBy): self
+    {
+        $this->reservedBy = $reservedBy;
 
         return $this;
     }
