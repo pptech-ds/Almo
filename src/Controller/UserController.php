@@ -68,33 +68,7 @@ class UserController extends AbstractController
 
 
 
-    /**
-     * @Route("/user/disponibility", name="user_disponibility")
-     */
-    public function addUserDisponibility(Request $request): Response
-    {
-        // dd($this->getUser()->getEmail());
-        $disponibility = new Disponibility();
-        $form = $this->createForm(DisponibilityFormType::class, $disponibility);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $disponibility->setCreatedBy($this->getUser());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($disponibility);
-            $em->flush();
-
-            $this->addFlash('success', 'Votre disponibilité a été ajouté avec succes !');
-
-            return $this->redirectToRoute('home');
-        }
-
-        return $this->render('user/disponibility.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-
+    
     /**
      * @Route("/user/reservation/list", name="user_reservation_list")
      */

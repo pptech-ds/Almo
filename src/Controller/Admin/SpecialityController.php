@@ -15,24 +15,21 @@ class SpecialityController extends AbstractController
     /**
      * @Route("/admin/speciality", name="admin_speciality_index")
      */
-    public function index(SpecialityRepository $specialityRepository): Response
+    public function listSpecialities(SpecialityRepository $specialityRepository): Response
     {
-        
-        $specialities = $specialityRepository->findAll();
-        
-   
         return $this->render('admin/speciality/index.html.twig', [
-            'specialities' => $specialities,
+            'specialities' => $specialityRepository->findAll(),
         ]);
     }
 
 
     /**
-     * @Route("/admin/speciality/{slug}", name="admin_speciality_view", methods={"GET"})
+     * @Route("/admin/speciality/name/{slug}", name="admin_speciality_by_name")
      */
-    public function view(SpecialityRepository $specialityRepository, Request $request): Response
+    public function disponibilitiesBySpeciality(SpecialityRepository $specialityRepository, Request $request): Response
     {
-        // dd($specialityRepository->findBy(['slug' => $request->get('slug')])[0]->getUsers());
+        
+        // $speciality = $request->get('name');
 
         $usersBySpeciality = $specialityRepository->findBy(['slug' => $request->get('slug')])[0]->getUsers();
 
@@ -50,9 +47,7 @@ class SpecialityController extends AbstractController
             }
         }
 
-        // dd($arrayDispo);
-
-        return $this->render('speciality/view.html.twig', [
+        return $this->render('admin/speciality/disponibility_by_name.html.twig', [
             'usersBySpeciality' => $arrayDispo,
         ]);
     }

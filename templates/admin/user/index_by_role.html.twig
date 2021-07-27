@@ -76,7 +76,18 @@
                                     <td>{{ (user['doctor'] is defined) ? user['doctor'] : '' }}</td>
                                     
                                     <td>
-                                        <a href="{{ path('admin_user_update', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                        {% if (user.roles[0] == 'ROLE_ADMIN') %}
+                                            <a href="{{ path('admin_user_update_admin', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                        {% endif %}
+                                        {% if (user.roles[0] == 'ROLE_DOC') %}
+                                            <a href="{{ path('admin_user_update_doc', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                        {% endif %}
+                                        {% if (user.roles[0] == 'ROLE_PRO') %}
+                                            <a href="{{ path('admin_user_update_pro', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                        {% endif %}
+                                        {% if (user.roles[0] == 'ROLE_PATIENT') %}
+                                            <a href="{{ path('admin_user_update_patient', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                        {% endif %}
                                         <a href="" class="btn btn-danger btn-sm modal-trigger" data-toggle="modal" data-target="#modalDelete" data-id="{{ user.id }}" data-title="{{ user.email }}">Supprimer</a>
                                     </td>
                                 </tr>

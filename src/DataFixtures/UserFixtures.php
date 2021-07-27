@@ -191,6 +191,15 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setDoctor($this->getReference('user_doc_9'));
             }
             $user->setDetails($faker->realText($maxNbChars = 500, $indexSize = 2));
+            if($i%3 == 0){
+                $user->setHospital($this->getReference('hospital_0'));
+            } elseif($i%3 == 1) {
+                $user->setHospital($this->getReference('hospital_1'));
+            } elseif($i%3 == 2) {
+                $user->setHospital($this->getReference('hospital_2'));
+            } else{
+                $user->setHospital($this->getReference('hospital_3'));
+            }
             $manager->persist($user);
             $this->addReference('user_' . $i, $user);
         }

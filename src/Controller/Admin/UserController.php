@@ -99,6 +99,7 @@ class UserController extends AbstractController
         return $this->render('admin/user/add.html.twig', []);
     }
 
+    
 
     /**
      * @Route("/admin/user/add_patient", name="admin_user_add_patient")
@@ -160,6 +161,7 @@ class UserController extends AbstractController
     }
 
 
+
     /**
      * @Route("/admin/user/add_pro", name="admin_user_add_pro")
      */
@@ -218,55 +220,118 @@ class UserController extends AbstractController
 
 
     
+    
+
     /**
-     * @Route("/admin/user/update/{id}", name="admin_user_update", requirements={"id"="\d+"})
+     * @Route("/admin/user/update/patient/{id}", name="admin_user_update_patient", requirements={"id"="\d+"})
      */
-    public function updateUser(User $user, Request $request): Response
+    public function updateUserPatient(User $user, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
-        $form = $this->createForm(UserFormType::class, $user);
-        $form->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'ROLE_USER' => 'ROLE_USER',
-                    'ROLE_DOC' => 'ROLE_DOC',
-                    'ROLE_PRO' => 'ROLE_PRO',
-                    'ROLE_ADMIN' => 'ROLE_ADMIN'
-                ],
-                'expanded'  => true,
-                'multiple' => true,
-                'label' => 'Roles'
-            ])
-            // ->add('hospital', ChoiceType::class, [
-            //     'choices' => [
-            //         'Hopital 1' => 'Hopital 1',
-            //         'Hopital 2' => 'Hopital 2',
-            //         'Hopital 3' => 'Hopital 3'
-            //     ],
-            //     'expanded'  => true,
-            //     'multiple' => true,
-            //     'label' => 'Hopital'
-            // ])
-            // ->add('doctor', ChoiceType::class, [
-            //     'choices' => [
-            //         'Doctor 1' => 'Doctor 1',
-            //         'Doctor 2' => 'Doctor 2',
-            //         'Doctor 3' => 'Doctor 3'
-            //     ],
-            //     'expanded'  => true,
-            //     'multiple' => true,
-            //     'label' => 'Medecin'
-            // ])
-            ->add('Envoyer', SubmitType::class)
-            ;
+        
+        // $user = new User();
+        $form = $this->createForm(AdminUserPatientFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
+            $user->setHospital($form->get('hospital')->getData());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-            $this->addFlash('success', 'Votre utilisateur a été modifié avec succes !');
+            $this->addFlash('success', 'L\'utilisateur a été mis a jour avec succes dans la base de données');
 
-            return $this->redirectToRoute('admin_user_index');
+            return $this->redirectToRoute('admin_home');
+        }
+
+        return $this->render('admin/user/update.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
+
+    /**
+     * @Route("/admin/user/update/doc/{id}", name="admin_user_update_doc", requirements={"id"="\d+"})
+     */
+    public function updateUserDoc(User $user, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        
+        // $user = new User();
+        $form = $this->createForm(AdminUserDocFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
+            $user->setHospital($form->get('hospital')->getData());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'L\'utilisateur a été mis a jour avec succes dans la base de données');
+
+            return $this->redirectToRoute('admin_home');
+        }
+
+        return $this->render('admin/user/update.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
+
+
+    /**
+     * @Route("/admin/user/update/pro/{id}", name="admin_user_update_pro", requirements={"id"="\d+"})
+     */
+    public function updateUserPro(User $user, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        
+        // $user = new User();
+        $form = $this->createForm(AdminUserProFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
+            // $user->setHospital($form->get('hospital')->getData());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'L\'utilisateur a été mis a jour avec succes dans la base de données');
+
+            return $this->redirectToRoute('admin_home');
+        }
+
+        return $this->render('admin/user/update.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/admin/user/update/admin/{id}", name="admin_user_update_admin", requirements={"id"="\d+"})
+     */
+    public function updateUserAdmin(User $user, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        
+        // $user = new User();
+        $form = $this->createForm(AdminUserAdminFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
+            // $user->setHospital($form->get('hospital')->getData());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'L\'utilisateur a été mis a jour avec succes dans la base de données');
+
+            return $this->redirectToRoute('admin_home');
         }
 
         return $this->render('admin/user/update.html.twig', [
