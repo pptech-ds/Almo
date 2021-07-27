@@ -1,36 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Mes disponibilités{% endblock %}
 
 {% block body %}
     <div style="height: 30rem; background-color: rgba(255,0,0,0.1);">
     </div>
 
-    <!-- ======= Breadcrumbs Section ======= -->
-    <section class="breadcrumbs">
-      <div class="container">
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+        <div class="container">
 
-        <div class="table-responsive">
+            <div class="section-title">
+                <h2>Mes disponibilités</h2>
+            </div>
+
+            <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Le Spécialiste</th>
-                        <th>Les Disponibilités</th>
+                        <th>Mes Disponibilités</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th hidden>Le Spécialiste</th>
-                        <th hidden>Les Disponibilités</th>
+                        <th hidden>Mes Disponibilités</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    {% for userBySpeciality in usersBySpeciality %}
+                    {% for disponibility in disponibilities %}
                         <tr>
-                            {# <td>{{ userBySpeciality.email }}</td> #}
-                            <td><a href="{{path('user_profile', {'id':userBySpeciality.id})}}">{{ userBySpeciality.email }}</a></td>
-                                <td>
-                            {% for disponibility in userBySpeciality.disponibilities %}
+                            <td>
                                 {% if (disponibility.reservedBy == null) %}
                                     {% if (disponibility.isVisio == true) %}
                                         <a href="{{path('user_reservation_add', {'id':disponibility.id})}}" type="button" class="btn btn-primary my-1">En visio <br> {{ disponibility.startTime | date("Y/m/d") }} <br> {{ disponibility.startTime | date('H:i:s') }}  {{ disponibility.endTime | date('H:i:s') }}</a>
@@ -38,17 +37,15 @@
                                         <a href="{{path('user_reservation_add', {'id':disponibility.id})}}" type="button" class="btn btn-success my-1">En présentiel <br> {{ disponibility.startTime | date("Y/m/d") }} <br> {{ disponibility.startTime | date('H:i:s') }}  {{ disponibility.endTime | date('H:i:s') }}</a>
                                     {% endif %}
                                 {% endif %}
-                            {% endfor %}
-                                </td>   
+                            </td>   
                         </tr>
                     {% endfor %}
   
                 </tbody>
             </table>
         </div>
+            
+        </div>
+    </section><!-- End Services Section -->
 
-      </div>
-    </section><!-- End Breadcrumbs Section -->
-
-    
 {% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'admin/sbadmin2.html.twig' %}
+
+{% block title %}Liste des pratiques{% endblock %}
+
+
+{% block body %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Liste des pratiques</h1>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+
+                {% for speciality in specialities %}       
+                    <a href="{{ path('admin_speciality_by_name', {'slug':speciality.slug}) }}" class="btn btn-success btn-icon-split btn-lg my-1">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-user-md"></i>
+                        </span>
+                        <span class="text">{{speciality.name}}</span>
+                    </a>
+                {% endfor %}
+            </div>
+                
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+{% endblock %}
+    
