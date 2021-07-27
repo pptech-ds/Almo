@@ -47,7 +47,8 @@
                 <tbody>
                     {% for userBySpeciality in usersBySpeciality %}
                         <tr>
-                            <td>{{ userBySpeciality.email }}</td>
+                            {# <td>{{ userBySpeciality.email }}</td> #}
+                            <td><a href="{{path('user_profile', {'id':userBySpeciality.id})}}">{{ userBySpeciality.email }}</a></td>
                                 <td>
                             {% for disponibility in userBySpeciality.disponibilities %}
                                 {% if (disponibility.reservedBy == null) %}

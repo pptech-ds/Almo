@@ -142,4 +142,21 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_reservation_list');
     }
+
+
+    /**
+     * @Route("/user/profile/{id}", name="user_profile", requirements={"id"="\d+"})
+     */
+    public function userProfile(Request $request, UserRepository $userRepository): Response
+    {
+        // dd($request->get('id'));
+
+        // dd($user);
+
+        // dd($userRepository->findOneBy(['id' => $request->get('id')]));
+
+        return $this->render('user/profile.html.twig', [
+            'user' => $userRepository->findOneBy(['id' => $request->get('id')]),
+        ]);
+    }
 }
