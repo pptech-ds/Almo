@@ -71,6 +71,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setEmail('user_pro@almo.com');
                 $user->setIsVerified(1);
                 $user->setCivility('Mr');
+                $user->setSpeciality($this->getReference('speciality_0'));
                 $user->setPassword($this->encoder->hashPassword($user, '123456'));
                 $user->setFirstname($faker->firstName());
                 $user->setlastname($faker->lastName());
