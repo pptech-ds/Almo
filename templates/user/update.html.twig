@@ -3,8 +3,8 @@
 {% block title %}Mettre a jour mon profil{% endblock %}
 
 {% block body %}
-    <div style="height: 30rem; background-color: rgba(255,0,0,0.1);">
-    </div>
+    {# <div style="height: 30rem; background-color: rgba(255,0,0,0.1);">
+    </div> #}
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services">
@@ -18,4 +18,40 @@
 
     </section>
 
+{% endblock %}
+
+
+
+{% block javascripts %}
+    <script>
+        window.onload = () => {
+            // On va chercher la région
+            let hospital = document.querySelector("#user_form_hospital");
+            hospital.addEventListener("change", function(){
+                let form = this.closest("form");
+                // console.log(form);
+
+                let data = this.name + "=" + this.value;
+                
+                fetch(form.action, {
+                    method: form.getAttribute("method"),
+                    body: data,
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded; charset:UTF-8"
+                    }
+                })
+                .then(response => response.text())
+                .then(html => {
+                    let content = document.createElement("html");
+                    content.innerHTML = html;
+                    let nouveauSelect = content.querySelector("#user_form_doctor");
+                    console.log(nouveauSelect);
+                    document.querySelector("#user_form_doctor").replaceWith(nouveauSelect);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+            });
+        }
+    </script>
 {% endblock %}

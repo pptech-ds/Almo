@@ -68,42 +68,69 @@ class UserController extends AbstractController
 
 
 
+    
     /**
-     * @Route("/user/disponibility", name="user_disponibility")
+     * @Route("/user/reservation/list", name="user_reservation_list")
      */
-    public function addUserDisponibility(Request $request): Response
+    public function listUserReservation(UserInterface $user): Response
     {
-        // dd($this->getUser()->getEmail());
-        $disponibility = new Disponibility();
-        $form = $this->createForm(DisponibilityFormType::class, $disponibility);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $disponibility->setCreatedBy($this->getUser());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($disponibility);
-            $em->flush();
-
-            $this->addFlash('success', 'Votre disponibilité a été ajouté avec succes !');
-
-            return $this->redirectToRoute('home');
-        }
-
-        return $this->render('user/disponibility.html.twig', [
-            'form' => $form->createView(),
+        
+        return $this->render('user/reservation.html.twig', [
+            'reservations' => $user->getReservations(),
         ]);
     }
 
 
     /**
-     * @Route("/user/reservation", name="user_reservation")
+     * @Route("/user/reservation/view/{id}", name="user_reservation_view", requirements={"id"="\d+"})
      */
-    public function addUserReservation(DisponibilityRepository $disponibilityRepository): Response
+    public function viewUserReservation(Request $request, DisponibilityRepository $disponibilityRepository): Response
     {
-        $disponibilities = $disponibilityRepository->findAll();
         
-        return $this->render('user/reservation.html.twig', [
-            'disponibilities' => $disponibilities,
+        return $this->render('user/reservation_view.html.twig', [
+            'reservation' => $disponibilityRepository->findOneBy(['id' => $request->get('id')]),
+        ]);
+    }
+
+
+    /**
+     * @Route("/user/reservation/add/{id}", name="user_reservation_add", requirements={"id"="\d+"})
+     */
+    public function addUserReservation(Request $request, UserInterface $user, DisponibilityRepository $disponibilityRepository): Response
+    {
+        // dd($request->get('id'));
+
+        // dd($user);
+
+        // dd($disponibilityRepository->findOneBy(['id' => $request->get('id')]));
+
+        $user->addReservation($disponibilityRepository->findOneBy(['id' => $request->get('id')]));
+
+        // dd($user);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        $this->addFlash('success', 'Votre reservation a été faite avec success');
+
+        return $this->redirectToRoute('user_reservation_list');
+    }
+
+
+    /**
+     * @Route("/user/profile/{id}", name="user_profile", requirements={"id"="\d+"})
+     */
+    public function userProfile(Request $request, UserRepository $userRepository): Response
+    {
+        // dd($request->get('id'));
+
+        // dd($user);
+
+        // dd($userRepository->findOneBy(['id' => $request->get('id')]));
+
+        return $this->render('user/profile.html.twig', [
+            'user' => $userRepository->findOneBy(['id' => $request->get('id')]),
         ]);
     }
 }

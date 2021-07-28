@@ -1,37 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les webinars{% endblock %}
+{% block title %}Les pratiques{% endblock %}
 
 {% block body %}
     {# <div style="height: 30rem; background-color: rgba(255,0,0,0.1);">
     </div> #}
+
+    <div style="height: 10rem">
+    </div>
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services">
         <div class="container">
 
             <div class="section-title">
-                <h2>Les webinars</h2>
-                <p>Tout les webinars</p>
+                <h2>Les pratiques</h2>
+                <p>Toutes les pratiques</p>
             </div>
 
             <div class="row">
-                {% for webinar in webinars %}
+                {% for speciality in specialities %}
                     <div class="col-lg-4 col-md-6" style="height: 35rem;">
                         <div class="icon-box">
                             {# <div class="icon"><i class="fas fa-heartbeat"></i></div> #}
-                            <h4><a href="{{ path('webinar_view', {slug: webinar.slug }) }}">{{webinar.title}}</a></h4>
-                            <img src={{ webinar.image }} alt="" style="width: 100%">
-                            {# <p>{{webinar.content | u.truncate(150, '...') | raw}}</p> #}
+                            <h4><a href="{{ path('speciality_view', {slug: speciality.slug }) }}">{{speciality.name}}</a></h4>
+                            <img src={{ speciality.image }} alt="" style="width: 100%">
+                            {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
                             
                         </div>
-                        <p class="fs-6">Ecrit par {{webinar.user.email}} {{webinar.createdAt | ago}}</p>
+                        
                     </div>
                 {% endfor %}
 
             </div>
 
-            {{knp_pagination_render(webinars)}}
+            {{knp_pagination_render(specialities)}}
         </div>
     </section><!-- End Services Section -->
 
