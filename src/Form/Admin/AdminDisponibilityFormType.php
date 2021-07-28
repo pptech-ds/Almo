@@ -27,11 +27,11 @@ class AdminDisponibilityFormType extends AbstractType
                 'label' => 'En Visio ?',
                 'required' => false,
                 ])
-            ->add('createdBy', EntityType::class,[
-                'class' => User::class
-            ])
-            // ->add('reservedBy', EntityType::class)
-            ->add('Enregistrer', SubmitType::class);
+            // ->add('createdBy', EntityType::class,[
+            //     'class' => User::class
+            // ])
+            // // ->add('reservedBy', EntityType::class)
+            // ->add('Enregistrer', SubmitType::class);
         ;
     }
 

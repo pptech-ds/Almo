@@ -2,14 +2,18 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\User;
 use App\Entity\Speciality;
 use App\Entity\Disponibility;
+use App\Repository\UserRepository;
 use App\Repository\SpecialityRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Admin\AdminDisponibilityFormType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DisponibilityController extends AbstractController
@@ -17,10 +21,19 @@ class DisponibilityController extends AbstractController
     /**
      * @Route("/admin/disponibility/add", name="admin_disponibility_add")
      */
-    public function addDisponibility(Request $request): Response
+    public function addDisponibility(Request $request, UserRepository $userRepository): Response
     {
+        $usersPro = $userRepository->findByRole('ROLE_PRO');
+        // dd($usersPro);
+
         $disponibility = new Disponibility();
         $form = $this->createForm(AdminDisponibilityFormType::class, $disponibility);
+        $form->add('createdBy', EntityType::class,[
+            'class' => User::class,
+            'choices' => $usersPro
+        ])
+        // ->add('reservedBy', EntityType::class)
+        ->add('Enregistrer', SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
