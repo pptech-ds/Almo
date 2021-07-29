@@ -13,6 +13,7 @@
               <li><a href="{{ path('user_index') }}">Mon Profile</a></li>
                 {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
                     <li><a class="nav-link scrollto" href="{{ path('disponibility_index') }}">Mes disponibilités</a></li>
+                    <li><a class="nav-link scrollto" href="{{ path('user_pro_reservation_list') }}">Mes rendez-vous</a></li>
                 {% endif %}
                 {% if (is_granted("ROLE_PATIENT")) %}
                     <li><a class="nav-link scrollto" href="{{ path('user_reservation_list') }}">Mes rendez-vous</a></li>

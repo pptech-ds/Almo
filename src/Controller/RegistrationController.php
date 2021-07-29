@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Mail;
 use App\Entity\User;
 use App\Security\EmailVerifier;
 use App\Form\RegistrationFormType;
@@ -46,11 +47,15 @@ class RegistrationController extends AbstractController
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('no-reply@almo.com', 'Almo'))
+                    ->from(new Address('almo.prasdev@bbox.fr', 'Almo'))
                     ->to($user->getEmail())
                     ->subject('Merci de confirmer votre email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
+
+            // $mailler = new Mail();
+            // $mailler->send($user->getEmail(), 'Almo', 'Merci de confirmer votre email', $signedUrl);
+
             // do anything else you need here, like send an email
 
             $this->addFlash('success', 'Votre enregistrement a été pris en compte, mais vous devez valider votre email');

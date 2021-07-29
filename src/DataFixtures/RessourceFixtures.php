@@ -26,7 +26,8 @@ class RessourceFixtures extends Fixture implements DependentFixtureInterface
             $ressource->setRessourceCategory($ressourceCategory);
             $ressource->setTitle($faker->catchPhrase());
             $ressource->setContent($faker->realText($maxNbChars = 200, $indexSize = 2));
-            $ressource->setImage($faker->imageUrl($width = 640, $height = 480));
+            // $ressource->setImage($faker->imageUrl($width = 640, $height = 480));
+            $ressource->setImage('img/demo'.rand(1,18).'.jpg');
             $ressource->setActive($faker->numberBetween(0,1));
             $ressource->setUser($user);
             $manager->persist($ressource);

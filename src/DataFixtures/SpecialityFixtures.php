@@ -19,7 +19,8 @@ class SpecialityFixtures extends Fixture
             $speciality = new Speciality;
             $speciality->setName($specialities[$i]);
             $speciality->setDescription($faker->realText($maxNbChars = 200, $indexSize = 2));
-            $speciality->setImage($faker->imageUrl($width = 640, $height = 480));
+            // $speciality->setImage($faker->imageUrl($width = 640, $height = 480));
+            $speciality->setImage('img/demo'.rand(1,18).'.jpg');
             $manager->persist($speciality);
 
             // Creating references to get them in ArtitFixtures
