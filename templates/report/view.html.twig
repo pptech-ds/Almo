@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}compte-rendu{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800">compte-rendu</h1>
+            <p class="mb-4">compte-rendu</p>
+
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">compte-rendu</h6>
+                </div>
+                    <h1>compte-rendu</h1>
+
+                    <p>{{ report | raw }}</p>
+                   
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+{% endblock %}

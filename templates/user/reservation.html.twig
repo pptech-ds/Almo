@@ -11,6 +11,11 @@
     <section id="services" class="services">
         <div class="container">
 
+            <div style="height: 10rem">
+            </div>
+
+            {# {{ dump(reservations) }} #}
+
             <div class="section-title">
                 <h2>Les disponibilités</h2>
             </div>
@@ -19,22 +24,48 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Mes rendez-vous</th>
-                        <th>Le spécialiste</th>
+                        <th>RDV</th>
+                        <th>Personne</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th hidden>Mes rendez-vous</th>
-                        <th hidden>Le spécialiste</th>
+                        <th hidden>RDV</th>
+                        <th hidden>Personne</th>
+                        <th hidden>Actions</th>
                     </tr>
                 </tfoot>
                 <tbody>
                     {% for reservation in reservations %}
-                        {# {{ dump(reservation) }} #}
+                        {# {{ dump(reservation) }}
+                        {{ dump(reservation.report) }} #}
                         <tr>
                             <td><a href="{{path('user_reservation_view', {'id':reservation.id})}}" type="button" class="btn btn-primary">{{ reservation.startTime | date("Y/m/d") }}  {{ reservation.startTime | date('H:i:s') }}  {{ reservation.endTime | date('H:i:s') }}</a></td>
-                            <td>{{ reservation.createdBy }}</td>
+                            <td>
+                                {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                                    {{ reservation.reservedBy }}
+                                {% endif %}
+                                {% if (is_granted("ROLE_PATIENT")) %}
+                                    {{ reservation.createdBy }}
+                                {% endif %}
+                            </td>
+                            <td>
+                            {% if (reservation.report == null) %}
+                                {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                                    <a href="{{path('report_add', {'proId':reservation.createdBy.id, 'patientId': reservation.reservedBy.id,  'disponibilityId': reservation.id})}}" type="button" class="btn btn-primary">Ajouter un compte-rendu</a>
+                                {% endif %}
+                            {% else %}
+                                {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                                    <a href="{{path('report_update', {'id': reservation.id})}}" type="button" class="btn btn-primary">Modifier un compte-rendu</a>
+                                {% endif %}
+
+                                {% if (is_granted("ROLE_PATIENT")) %}
+                                    <a href="{{path('report_view', {'id': reservation.id})}}" type="button" class="btn btn-primary">Lire un compte-rendu</a>
+                                {% endif %}
+                            {% endif %}
+                            </td>
+
                         </tr>
                     {% endfor %}
   

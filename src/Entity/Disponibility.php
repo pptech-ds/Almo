@@ -53,6 +53,11 @@ class Disponibility
      */
     private $reservedBy;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Report::class, mappedBy="disponibility", cascade={"persist", "remove"})
+     */
+    private $report;
+
     public function __toString()
     {
         return $this->name;
@@ -145,6 +150,28 @@ class Disponibility
     public function setReservedBy(?User $reservedBy): self
     {
         $this->reservedBy = $reservedBy;
+
+        return $this;
+    }
+
+    public function getReport(): ?Report
+    {
+        return $this->report;
+    }
+
+    public function setReport(?Report $report): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($report === null && $this->report !== null) {
+            $this->report->setDisponibility(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($report !== null && $report->getDisponibility() !== $this) {
+            $report->setDisponibility($this);
+        }
+
+        $this->report = $report;
 
         return $this;
     }

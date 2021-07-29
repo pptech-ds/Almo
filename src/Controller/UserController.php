@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Report;
 use App\Form\UserFormType;
 use App\Entity\Disponibility;
 use App\Repository\UserRepository;
@@ -77,6 +78,57 @@ class UserController extends AbstractController
         
         return $this->render('user/reservation.html.twig', [
             'reservations' => $user->getReservations(),
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/user/pro/reservation/list", name="user_pro_reservation_list")
+     */
+    public function listUserProReservation(UserInterface $user): Response
+    {
+        $disponibilities = $user->getDisponibilities();
+
+        $disponibilitiesReserved = [];
+
+        foreach ($disponibilities as $disponibility) {
+            if($disponibility->getReservedBy() != null){
+                // dd($disponibility->getReservedBy()->getEmail());
+                $disponibilitiesReserved[] = $disponibility;
+            }
+            
+        }
+        
+        // dd($disponibilitiesReserved);
+
+        return $this->render('user/reservation.html.twig', [
+            'reservations' => $disponibilitiesReserved,
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/user/pro/report/add", name="user_pro_report_add")
+     */
+    public function addProReport(UserInterface $user, Request $request): Response
+    {
+        $report = new Report();
+        $form = $this->createForm(ReportFormType::class, $report);
+
+        // $form->handleRequest($request);
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $webinar->setUser($this->getUser());
+        //     $webinar->setActive(false);
+        //     $em = $this->getDoctrine()->getManager();
+        //     $em->persist($webinar);
+        //     $em->flush();
+        //     return $this->redirectToRoute('admin_ressource_index');
+        // }
+
+        return $this->render('user/pro/add_report.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

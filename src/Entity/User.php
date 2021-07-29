@@ -119,6 +119,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $reservations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="createdBy", orphanRemoval=true)
+     */
+    private $reportCreatedBy;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="patient", orphanRemoval=true)
+     */
+    private $reportPatient;
+
+    
+
         
 
 
@@ -128,6 +140,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->patients = new ArrayCollection();
         $this->disponibilities = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->reportCreatedBy = new ArrayCollection();
+        $this->reportPatient = new ArrayCollection();
     }
 
     public function __toString()
@@ -490,5 +504,67 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Report[]
+     */
+    public function getReportCreatedBy(): Collection
+    {
+        return $this->reportCreatedBy;
+    }
+
+    public function addReportCreatedBy(Report $reportCreatedBy): self
+    {
+        if (!$this->reportCreatedBy->contains($reportCreatedBy)) {
+            $this->reportCreatedBy[] = $reportCreatedBy;
+            $reportCreatedBy->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReportCreatedBy(Report $reportCreatedBy): self
+    {
+        if ($this->reportCreatedBy->removeElement($reportCreatedBy)) {
+            // set the owning side to null (unless already changed)
+            if ($reportCreatedBy->getCreatedBy() === $this) {
+                $reportCreatedBy->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Report[]
+     */
+    public function getReportPatient(): Collection
+    {
+        return $this->reportPatient;
+    }
+
+    public function addReportPatient(Report $reportPatient): self
+    {
+        if (!$this->reportPatient->contains($reportPatient)) {
+            $this->reportPatient[] = $reportPatient;
+            $reportPatient->setPatient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReportPatient(Report $reportPatient): self
+    {
+        if ($this->reportPatient->removeElement($reportPatient)) {
+            // set the owning side to null (unless already changed)
+            if ($reportPatient->getPatient() === $this) {
+                $reportPatient->setPatient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 
 }
