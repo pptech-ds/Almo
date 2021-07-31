@@ -47,12 +47,12 @@ class SpecialityController extends AbstractController
 
         for($j = 0 ; $j< count($usersBySpeciality); $j++){
             
-            // for($i = 0; $i< count($usersBySpeciality[$j]->getDisponibilities()); $i++) {
+            // for($i = 0; $i< count($usersBySpeciality[$j]->getAppointments()); $i++) {
 
-            //     $arrayDispo[] = ($usersBySpeciality[$j]->getDisponibilities()[$i]);
+            //     $arrayDispo[] = ($usersBySpeciality[$j]->getAppointments()[$i]);
             // }
 
-            if(count($usersBySpeciality[$j]->getDisponibilities()) > 0){
+            if(count($usersBySpeciality[$j]->getAppointments()) > 0){
                 $arrayDispo[] = $usersBySpeciality[$j];
             }
         }

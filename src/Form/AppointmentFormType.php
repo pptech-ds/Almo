@@ -21,7 +21,10 @@ class AppointmentFormType extends AbstractType
             ->add('content', TextareaType::class, ['label' => 'Contenu'])
             ->add('startTime', DateTimeType::class, ['label' => 'Heure du début'])
             ->add('endTime', DateTimeType::class, ['label' => 'Heure de fin'])
-            ->add('isVisio', CheckboxType ::class, ['label' => 'En Visio ?'])
+            ->add('isVisio', CheckboxType ::class, [
+                'label' => 'En Visio ?',
+                'required' => false,
+            ])
             // ->add('createdBy', EntityType::class)
             // ->add('reservedBy', EntityType::class)
             ->add('Enregistrer', SubmitType::class);

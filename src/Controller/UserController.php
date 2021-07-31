@@ -41,6 +41,19 @@ class UserController extends AbstractController
     }
 
 
+    /**
+     * @Route("/user/profile", name="user_profile")
+     */
+    public function userProfile(UserRepository $userRepository, UserInterface $user): Response
+    {
+        return $this->render('user/profile.html.twig', [
+            'user' => $userRepository->findOneBy([
+                'id' => $user->getId()
+            ]),
+        ]);
+    }
+
+
     
     /**
      * @Route("/user/update/{id}", name="user_update", requirements={"id"="\d+"})
@@ -170,19 +183,5 @@ class UserController extends AbstractController
     }
 
 
-    /**
-     * @Route("/user/profile/{id}", name="user_profile", requirements={"id"="\d+"})
-     */
-    public function userProfile(Request $request, UserRepository $userRepository): Response
-    {
-        // dd($request->get('id'));
-
-        // dd($user);
-
-        // dd($userRepository->findOneBy(['id' => $request->get('id')]));
-
-        return $this->render('user/profile.html.twig', [
-            'user' => $userRepository->findOneBy(['id' => $request->get('id')]),
-        ]);
-    }
+    
 }

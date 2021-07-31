@@ -30,12 +30,12 @@
                             {# <td>{{ userBySpeciality.email }}</td> #}
                             <td><a href="{{path('user_profile', {'id':userBySpeciality.id})}}">{{ userBySpeciality.email }}</a></td>
                                 <td>
-                            {% for appointment in userBySpeciality.disponibilities %}
+                            {% for appointment in userBySpeciality.appointments %}
                                 {% if (appointment.reservedBy == null) %}
                                     {% if (appointment.isVisio == true) %}
-                                        <a href="{{path('user_reservation_add', {'id':appointment.id})}}" type="button" class="btn btn-primary my-1">En visio <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }}  {{ appointment.endTime | date('H:i:s') }}</a>
+                                        <a href="{{path('appointment_add', {'id':appointment.id})}}" type="button" class="btn btn-primary my-1">En visio <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }}  {{ appointment.endTime | date('H:i:s') }}</a>
                                     {% else %}
-                                        <a href="{{path('user_reservation_add', {'id':appointment.id})}}" type="button" class="btn btn-success my-1">En présentiel <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }}  {{ appointment.endTime | date('H:i:s') }}</a>
+                                        <a href="{{path('appointment_add', {'id':appointment.id})}}" type="button" class="btn btn-success my-1">En présentiel <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }}  {{ appointment.endTime | date('H:i:s') }}</a>
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}

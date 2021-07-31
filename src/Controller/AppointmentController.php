@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Speciality;
 use App\Entity\Appointment;
+use App\Form\AppointmentFormType;
 use App\Repository\SpecialityRepository;
+use App\Repository\AppointmentRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AppointmentController extends AbstractController
@@ -18,11 +21,109 @@ class AppointmentController extends AbstractController
     /**
      * @Route("/appointment", name="appointment_index")
      */
-    public function appointmentIndex(UserInterface $user): Response
+    public function appointmentIndex(UserInterface $user, AppointmentRepository $appointmentRepository): Response
     {
+        // dd($user->getAppointments());
+
         // dd($user->getDisponibilities());
+
+        $reservations = [];
+        $reservationsRender = [];
+        $disponibilities = [];
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            foreach($appointmentRepository->findBy(['createdBy' => $user]) as $appointment){
+                if($appointment->getReservedBy() != null) {
+                    $reservations[] = $appointment;
+                } else {
+                    $disponibilities[] = $appointment;
+                }
+            }
+        } else {
+            $reservations[] = $user->getReservations();
+        }
+
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            $reservationsRender = $reservations;
+        } else {
+            $reservationsRender = $reservations[0];
+        }
+
+
+        // dd($reservations);
+        // dd($disponibilities);
+
         return $this->render('appointment/index.html.twig', [
-            'disponibilities' => $user->getDisponibilities(),
+            'reservations' => $reservationsRender,
+            'disponibilities' => $disponibilities,
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/appointment/view/{id}", name="appointment_view", requirements={"id"="\d+"})
+     */
+    public function appointmentView(Request $request, AppointmentRepository $appointmentRepository): Response
+    {
+        
+        return $this->render('appointment/view.html.twig', [
+            'reservation' => $appointmentRepository->findOneBy(['id' => $request->get('id')]),
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/appointment/add/{id}", name="appointment_add", requirements={"id"="\d+"})
+     */
+    public function appointmentAdd(Request $request, UserInterface $user, AppointmentRepository $appointmentRepository): Response
+    {
+        // dd($request->get('id'));
+
+        // dd($user);
+
+        // dd($appointmentRepository->findOneBy(['id' => $request->get('id')]));
+
+        $user->addReservation($appointmentRepository->findOneBy(['id' => $request->get('id')]));
+
+        // dd($user);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        $this->addFlash('success', 'Votre reservation a été faite avec success');
+
+        return $this->redirectToRoute('appointment_index');
+    }
+
+
+
+    /**
+     * @Route("/appointment/create", name="appointment_create")
+     */
+    public function appointmentCreate(UserInterface $user, AppointmentRepository $appointmentRepository, Request $request): Response
+    {
+        $appointment = new Appointment();
+        $appointment->setCreatedBy($user);
+        $form = $this->createForm(AppointmentFormType::class, $appointment);
+        $form->add('Enregistrer', SubmitType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($appointment);
+            $em->flush();
+
+            $this->addFlash('success', 'La disponibilité a été ajouté avec success');
+
+            return $this->redirectToRoute('appointment_index');
+        }
+
+        return $this->render('appointment/add.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

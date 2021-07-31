@@ -38,7 +38,7 @@ class Appointment
     private $endTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="disponibilities")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="appointments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $createdBy;
