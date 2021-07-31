@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\DisponibilityRepository;
+use App\Repository\AppointmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=DisponibilityRepository::class)
+ * @ORM\Entity(repositoryClass=AppointmentRepository::class)
  */
-class Disponibility
+class Appointment
 {
     /**
      * @ORM\Id
@@ -54,7 +54,7 @@ class Disponibility
     private $reservedBy;
 
     /**
-     * @ORM\OneToOne(targetEntity=Report::class, mappedBy="disponibility", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Report::class, mappedBy="appointment", cascade={"persist", "remove"})
      */
     private $report;
 
@@ -163,12 +163,12 @@ class Disponibility
     {
         // unset the owning side of the relation if necessary
         if ($report === null && $this->report !== null) {
-            $this->report->setDisponibility(null);
+            $this->report->setAppointment(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($report !== null && $report->getDisponibility() !== $this) {
-            $report->setDisponibility($this);
+        if ($report !== null && $report->getAppointment() !== $this) {
+            $report->setAppointment($this);
         }
 
         $this->report = $report;

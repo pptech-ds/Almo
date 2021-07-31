@@ -3,7 +3,7 @@
 namespace App\Form\Admin;
 
 use App\Entity\User;
-use App\Entity\Disponibility;
+use App\Entity\Appointment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -14,13 +14,13 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class AdminDisponibilityAsignFormType extends AbstractType
+class AdminAppointmentAsignFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name', EntityType::class, [
-                'class' => Disponibility::class,
+                'class' => Appointment::class,
                 'label' => 'Disponibilité'
             ])
             ->add('reservedBy', EntityType::class, [
@@ -33,7 +33,7 @@ class AdminDisponibilityAsignFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Disponibility::class,
+            'data_class' => Appointment::class,
         ]);
     }
 }

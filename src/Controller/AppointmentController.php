@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Speciality;
-use App\Entity\Disponibility;
+use App\Entity\Appointment;
 use App\Repository\SpecialityRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,15 +13,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class DisponibilityController extends AbstractController
+class AppointmentController extends AbstractController
 {
     /**
-     * @Route("/disponibility", name="disponibility_index")
+     * @Route("/appointment", name="appointment_index")
      */
-    public function disponibilityIndex(UserInterface $user): Response
+    public function appointmentIndex(UserInterface $user): Response
     {
         // dd($user->getDisponibilities());
-        return $this->render('disponibility/index.html.twig', [
+        return $this->render('appointment/index.html.twig', [
             'disponibilities' => $user->getDisponibilities(),
         ]);
     }
@@ -29,11 +29,11 @@ class DisponibilityController extends AbstractController
 
 
     /**
-     * @Route("/disponibility/update/{id}", name="disponibility_update", requirements={"id"="\d+"})
+     * @Route("/appointment/update/{id}", name="appointment_update", requirements={"id"="\d+"})
      */
-    public function disponibilityUpdate(Disponibility $disponibility, Request $request): Response
+    public function appointmentUpdate(Appointment $appointment, Request $request): Response
     {
-        $form = $this->createForm(DisponibilityFormType::class, $disponibility);
+        $form = $this->createForm(AppointmentFormType::class, $appointment);
         // $form->add('Envoyer', SubmitType::class)
             // ;
         $form->handleRequest($request);

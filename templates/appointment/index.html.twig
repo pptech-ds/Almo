@@ -30,14 +30,14 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    {% for disponibility in disponibilities %}
+                    {% for appointment in disponibilities %}
                         <tr>
                             <td>
-                                {% if (disponibility.reservedBy == null) %}
-                                    {% if (disponibility.isVisio == true) %}
-                                        <a href="{{path('user_reservation_add', {'id':disponibility.id})}}" type="button" class="btn btn-primary my-1">En visio <br> {{ disponibility.startTime | date("Y/m/d") }} <br> {{ disponibility.startTime | date('H:i:s') }}  {{ disponibility.endTime | date('H:i:s') }}</a>
+                                {% if (appointment.reservedBy == null) %}
+                                    {% if (appointment.isVisio == true) %}
+                                        <a href="{{path('user_reservation_add', {'id':appointment.id})}}" type="button" class="btn btn-primary my-1">En visio <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }}  {{ appointment.endTime | date('H:i:s') }}</a>
                                     {% else %}
-                                        <a href="{{path('user_reservation_add', {'id':disponibility.id})}}" type="button" class="btn btn-success my-1">En présentiel <br> {{ disponibility.startTime | date("Y/m/d") }} <br> {{ disponibility.startTime | date('H:i:s') }}  {{ disponibility.endTime | date('H:i:s') }}</a>
+                                        <a href="{{path('user_reservation_add', {'id':appointment.id})}}" type="button" class="btn btn-success my-1">En présentiel <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }}  {{ appointment.endTime | date('H:i:s') }}</a>
                                     {% endif %}
                                 {% endif %}
                             </td>   

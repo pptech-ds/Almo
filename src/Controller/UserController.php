@@ -5,11 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Report;
 use App\Form\UserFormType;
-use App\Entity\Disponibility;
+use App\Entity\Appointment;
 use App\Repository\UserRepository;
-use App\Form\DisponibilityFormType;
+use App\Form\AppointmentFormType;
 use App\Repository\RessourceRepository;
-use App\Repository\DisponibilityRepository;
+use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -92,10 +92,10 @@ class UserController extends AbstractController
 
         $disponibilitiesReserved = [];
 
-        foreach ($disponibilities as $disponibility) {
-            if($disponibility->getReservedBy() != null){
-                // dd($disponibility->getReservedBy()->getEmail());
-                $disponibilitiesReserved[] = $disponibility;
+        foreach ($disponibilities as $appointment) {
+            if($appointment->getReservedBy() != null){
+                // dd($appointment->getReservedBy()->getEmail());
+                $disponibilitiesReserved[] = $appointment;
             }
             
         }
@@ -136,11 +136,11 @@ class UserController extends AbstractController
     /**
      * @Route("/user/reservation/view/{id}", name="user_reservation_view", requirements={"id"="\d+"})
      */
-    public function viewUserReservation(Request $request, DisponibilityRepository $disponibilityRepository): Response
+    public function viewUserReservation(Request $request, AppointmentRepository $appointmentRepository): Response
     {
         
         return $this->render('user/reservation_view.html.twig', [
-            'reservation' => $disponibilityRepository->findOneBy(['id' => $request->get('id')]),
+            'reservation' => $appointmentRepository->findOneBy(['id' => $request->get('id')]),
         ]);
     }
 
@@ -148,15 +148,15 @@ class UserController extends AbstractController
     /**
      * @Route("/user/reservation/add/{id}", name="user_reservation_add", requirements={"id"="\d+"})
      */
-    public function addUserReservation(Request $request, UserInterface $user, DisponibilityRepository $disponibilityRepository): Response
+    public function addUserReservation(Request $request, UserInterface $user, AppointmentRepository $appointmentRepository): Response
     {
         // dd($request->get('id'));
 
         // dd($user);
 
-        // dd($disponibilityRepository->findOneBy(['id' => $request->get('id')]));
+        // dd($appointmentRepository->findOneBy(['id' => $request->get('id')]));
 
-        $user->addReservation($disponibilityRepository->findOneBy(['id' => $request->get('id')]));
+        $user->addReservation($appointmentRepository->findOneBy(['id' => $request->get('id')]));
 
         // dd($user);
         

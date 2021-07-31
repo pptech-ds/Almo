@@ -47,7 +47,7 @@ class SpecialityController extends AbstractController
             }
         }
 
-        return $this->render('admin/speciality/disponibility_by_name.html.twig', [
+        return $this->render('admin/speciality/appointment_by_name.html.twig', [
             'usersBySpeciality' => $arrayDispo,
         ]);
     }

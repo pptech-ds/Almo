@@ -53,7 +53,7 @@
                             <td>
                             {% if (reservation.report == null) %}
                                 {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
-                                    <a href="{{path('report_add', {'proId':reservation.createdBy.id, 'patientId': reservation.reservedBy.id,  'disponibilityId': reservation.id})}}" type="button" class="btn btn-primary">Ajouter un compte-rendu</a>
+                                    <a href="{{path('report_add', {'proId':reservation.createdBy.id, 'patientId': reservation.reservedBy.id,  'appointmentId': reservation.id})}}" type="button" class="btn btn-primary">Ajouter un compte-rendu</a>
                                 {% endif %}
                             {% else %}
                                 {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}

@@ -48,9 +48,9 @@ class Report
     private $slug;
 
     /**
-     * @ORM\OneToOne(targetEntity=Disponibility::class, inversedBy="report", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Appointment::class, inversedBy="report", cascade={"persist", "remove"})
      */
-    private $disponibility;
+    private $appointment;
 
     /**
      * @ORM\Column(type="text")
@@ -127,14 +127,14 @@ class Report
         return $this;
     }
 
-    public function getDisponibility(): ?Disponibility
+    public function getAppointment(): ?Appointment
     {
-        return $this->disponibility;
+        return $this->appointment;
     }
 
-    public function setDisponibility(?Disponibility $disponibility): self
+    public function setAppointment(?Appointment $appointment): self
     {
-        $this->disponibility = $disponibility;
+        $this->appointment = $appointment;
 
         return $this;
     }
