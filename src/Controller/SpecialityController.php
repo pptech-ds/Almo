@@ -57,7 +57,7 @@ class SpecialityController extends AbstractController
             }
         }
 
-        // dd($arrayDispo);
+        // dd($arrayDispo[0]);
 
         return $this->render('speciality/view.html.twig', [
             'usersBySpeciality' => $arrayDispo,
