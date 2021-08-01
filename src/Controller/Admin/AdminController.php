@@ -31,28 +31,4 @@ class AdminController extends AbstractController
         ]);
     }
 
-
-
-    /**
-     * @Route("/test_hospital", name="test_hospital")
-     */
-    public function testHospital(HospitalRepository $hospitalRepository): Response
-    {
-        // dd($hospitalRepository->findAll());
-
-        $doctors = [];
-
-        foreach($hospitalRepository->findAll() as $hospital) {
-            // dd($hospital->getUser());
-            foreach($hospital->getUser() as $user){
-                // dd($user->getRoles()[0]);
-                if($user->getRoles()[0] === 'ROLE_DOC'){
-                    $doctors[$user->getEmail()] = $user->getEmail();
-                }
-            }
-        }
-
-        dd($doctors);
-    }
-
 }

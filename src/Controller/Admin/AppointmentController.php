@@ -4,32 +4,32 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Entity\Speciality;
-use App\Entity\Disponibility;
+use App\Entity\Appointment;
 use App\Repository\UserRepository;
 use App\Repository\SpecialityRepository;
-use App\Repository\DisponibilityRepository;
+use App\Repository\AppointmentRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\Admin\AdminDisponibilityFormType;
+use App\Form\Admin\AdminAppointmentFormType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Form\Admin\AdminDisponibilityAsignFormType;
+use App\Form\Admin\AdminAppointmentAsignFormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class DisponibilityController extends AbstractController
+class AppointmentController extends AbstractController
 {
     /**
-     * @Route("/admin/disponibility/add", name="admin_disponibility_add")
+     * @Route("/admin/appointment/add", name="admin_appointment_add")
      */
-    public function addDisponibility(Request $request, UserRepository $userRepository): Response
+    public function appointmentAdd(Request $request, UserRepository $userRepository): Response
     {
         $usersPro = $userRepository->findByRole('ROLE_PRO');
         // dd($usersPro);
 
-        $disponibility = new Disponibility();
-        $form = $this->createForm(AdminDisponibilityFormType::class, $disponibility);
+        $appointment = new Appointment();
+        $form = $this->createForm(AdminAppointmentFormType::class, $appointment);
         $form->add('createdBy', EntityType::class,[
             'class' => User::class,
             'choices' => $usersPro
@@ -39,18 +39,18 @@ class DisponibilityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $disponibility->setUser($this->getUser());
+            // $appointment->setUser($this->getUser());
             // $webinar->setActive(false);
             $em = $this->getDoctrine()->getManager();
-            $em->persist($disponibility);
+            $em->persist($appointment);
             $em->flush();
 
             $this->addFlash('success', 'La disponibilité a été ajouté avec success');
 
-            return $this->redirectToRoute('admin_disponibility_add');
+            return $this->redirectToRoute('admin_appointment_add');
         }
 
-        return $this->render('admin/disponibility/add.html.twig', [
+        return $this->render('admin/appointment/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -58,20 +58,20 @@ class DisponibilityController extends AbstractController
 
 
     /**
-     * @Route("/admin/disponibility/update/{id}", name="admin_disponibility_update")
+     * @Route("/admin/appointment/update/{id}", name="admin_appointment_update")
      */
-    public function updateDisponibility(Disponibility $disponibility,Request $request): Response
+    public function appointmentUpdate(Appointment $appointment,Request $request): Response
     {
-        // $disponibility = new Disponibility();
-        $form = $this->createForm(AdminDisponibilityFormType::class, $disponibility);
+        // $appointment = new Appointment();
+        $form = $this->createForm(AdminAppointmentFormType::class, $appointment);
         $form->add('Enregistrer', SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $disponibility->setUser($this->getUser());
+            // $appointment->setUser($this->getUser());
             // $webinar->setActive(false);
             $em = $this->getDoctrine()->getManager();
-            $em->persist($disponibility);
+            $em->persist($appointment);
             $em->flush();
 
             $this->addFlash('success', 'La disponibilité a été mis à jour avec success');
@@ -79,28 +79,28 @@ class DisponibilityController extends AbstractController
             return $this->redirectToRoute('admin_home');
         }
 
-        return $this->render('admin/disponibility/update.html.twig', [
+        return $this->render('admin/appointment/update.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
 
     /**
-     * @Route("/admin/disponibility/asign", name="admin_disponibility_asign")
+     * @Route("/admin/appointment/asign", name="admin_appointment_asign")
      */
-    public function asignDisponibility(DisponibilityRepository $disponibilityRepository,UserRepository $userRepository, Request $request): Response
+    public function appointmentAsign(AppointmentRepository $appointmentRepository,UserRepository $userRepository, Request $request): Response
     {
         // $usersPro = $userRepository->findByRole('ROLE_PRO');
         $usersPatient = $userRepository->findByRole('ROLE_PATIENT');
 
-        $disponibilities = $disponibilityRepository->findBy([
+        $disponibilities = $appointmentRepository->findBy([
             'reservedBy' => null
         ]);
         
-        // $disponibility = new Disponibility();
-        $form = $this->createForm(AdminDisponibilityAsignFormType::class);
+        // $appointment = new Appointment();
+        $form = $this->createForm(AdminAppointmentAsignFormType::class);
         $form->add('name', EntityType::class, [
-            'class' => Disponibility::class,
+            'class' => Appointment::class,
             'choices' => $disponibilities,
             'label' => 'Disponibilité'
         ])
@@ -115,12 +115,12 @@ class DisponibilityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $disponibility = $form->get('name')->getData();
+            $appointment = $form->get('name')->getData();
             $patient = $form->get('reservedBy')->getData();
-            $disponibility->setReservedBy($patient);
+            $appointment->setReservedBy($patient);
             // $webinar->setActive(false);
             $em = $this->getDoctrine()->getManager();
-            $em->persist($disponibility);
+            $em->persist($appointment);
             $em->flush();
 
             $this->addFlash('success', 'La disponibilité a été asignée avec success');
@@ -128,7 +128,7 @@ class DisponibilityController extends AbstractController
             return $this->redirectToRoute('admin_home');
         }
 
-        return $this->render('admin/disponibility/asign.html.twig', [
+        return $this->render('admin/appointment/asign.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -137,9 +137,9 @@ class DisponibilityController extends AbstractController
 
 
     /**
-     * @Route("/admin/speciality/name/{slug}", name="admin_speciality_by_name")
+     * @Route("/admin/appointment/speciality/{slug}", name="admin_appointment_by_speciality")
      */
-    public function disponibilitiesBySpeciality(SpecialityRepository $specialityRepository, Request $request): Response
+    public function appointmentBySpeciality(SpecialityRepository $specialityRepository, AppointmentRepository $appointmentRepository, Request $request): Response
     {
         
         // $speciality = $request->get('name');
@@ -155,15 +155,17 @@ class DisponibilityController extends AbstractController
             //     $arrayDispo[] = ($usersBySpeciality[$j]->getDisponibilities()[$i]);
             // }
 
-            if(count($usersBySpeciality[$j]->getDisponibilities()) > 0){
+            if(count($usersBySpeciality[$j]->getAppointments()) > 0){
                 $arrayDispo[] = $usersBySpeciality[$j];
             }
         }
 
-        return $this->render('admin/speciality/disponibility_by_name.html.twig', [
+        return $this->render('admin/appointment/by_speciality.html.twig', [
             'usersBySpeciality' => $arrayDispo,
         ]);
+    
     }
+    
 
 
 

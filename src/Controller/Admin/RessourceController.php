@@ -20,7 +20,7 @@ class RessourceController extends AbstractController
     /**
      * @Route("/admin/ressource", name="admin_ressource_index")
      */
-    public function indexRessource(RessourceRepository $ressourceRepository): Response
+    public function ressourceIndex(RessourceRepository $ressourceRepository): Response
     {
         $ressources = $ressourceRepository->findAll();
 
@@ -31,19 +31,19 @@ class RessourceController extends AbstractController
 
 
     /**
-     * @Route("/admin/ressource/category/{category}", name="admin_ressource_by_category_index")
+     * @Route("/admin/ressource/category/{slug}", name="admin_ressource_by_category_index")
      */
-    public function indexRessourceByCategory(RessourceRepository $ressourceRepository, Request $request): Response
+    public function ressourceByCategoryIndex(RessourceRepository $ressourceRepository, Request $request): Response
     {
         
-        $category = $request->get('category');
+        $category = $request->get('slug');
 
 
         $ressources = [];
 
         foreach($ressourceRepository->findBy([], ['createdAt' => 'DESC']) as $ressource){
 
-            if($ressourceRepository->findOneBy(['id' => $ressource->getId()])->getRessourceCategory()->getName() == $category) {
+            if($ressourceRepository->findOneBy(['id' => $ressource->getId()])->getRessourceCategory()->getSlug() == $category) {
                 $ressources[] = $ressourceRepository->findOneBy(['id' => $ressource->getId()]);
             } 
         }
@@ -61,7 +61,7 @@ class RessourceController extends AbstractController
     /**
      * @Route("/admin/ressource/add", name="admin_ressource_add")
      */
-    public function addRessource(Request $request): Response
+    public function ressourceAdd(Request $request): Response
     {
         $webinar = new Ressource();
         $form = $this->createForm(RessourceFormType::class, $webinar);
@@ -87,8 +87,10 @@ class RessourceController extends AbstractController
     /**
      * @Route("/admin/ressource/update/{id}", name="admin_ressource_update", requirements={"id"="\d+"})
      */
-    public function updateRessource(Ressource $ressource, Request $request): Response
+    public function ressourceUpdate(Ressource $ressource, Request $request): Response
     {
+        // dd($ressource->getRessourceCategory()->getName());
+
         $form = $this->createForm(RessourceFormType::class, $ressource);
         $form->handleRequest($request);
 
@@ -99,7 +101,7 @@ class RessourceController extends AbstractController
 
             $this->addFlash('success', 'Votre ressource a été modifié avec succes !');
 
-            return $this->redirectToRoute('admin_ressource_index');
+            return $this->redirectToRoute('admin_ressource_by_category_index', ['slug' => $ressource->getRessourceCategory()->getSlug()]);
         }
 
         return $this->render('admin/ressource/update.html.twig', [
@@ -111,7 +113,7 @@ class RessourceController extends AbstractController
     /**
      * @Route("/admin/ressource/activate/{id}", name="admin_ressource_activate", requirements={"id"="\d+"})
      */
-    public function activateRessource(Ressource $ressource): Response
+    public function ressourceActivate(Ressource $ressource): Response
     {
         // dd($ressource);
         $ressource->setActive( ($ressource->getActive()) ?  false : true );
@@ -128,7 +130,7 @@ class RessourceController extends AbstractController
     /**
      * @Route("/admin/ressource/delete/{id}", name="admin_ressource_delete", requirements={"id"="\d+"})
      */
-    public function deleteRessource(Ressource $ressource): Response
+    public function ressourceDelete(Ressource $ressource): Response
     {
         // dd($ressource);
         // $ressource->setActive( ($ressource->getActive()) ?  false : true );

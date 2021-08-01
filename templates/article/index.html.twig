@@ -24,8 +24,8 @@
                         <div class="icon-box">
                             {# <div class="icon"><i class="fas fa-heartbeat"></i></div> #}
                             <h4><a href="{{ path('article_view', {slug: article.slug }) }}">{{article.title}}</a></h4>
-                            {# <img src={{ article.image }} alt="" style="width: 100%"> #}
-                            <img src='{{ asset('img/demo.jpg') }}' alt="" style="width: 100%">
+                            <img src={{ article.image }} alt="" style="width: 100%">
+                            {# <img src='{{ asset('img/demo.jpg') }}' alt="" style="width: 100%"> #}
                             {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
                             
                         </div>

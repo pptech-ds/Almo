@@ -105,9 +105,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $details;
 
     /**
-     * @ORM\OneToMany(targetEntity=Disponibility::class, mappedBy="createdBy", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="createdBy", orphanRemoval=true)
      */
-    private $disponibilities;
+    private $appointments;
 
     /**
      * @ORM\ManyToOne(targetEntity=Speciality::class, inversedBy="users")
@@ -115,7 +115,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $speciality;
 
     /**
-     * @ORM\OneToMany(targetEntity=Disponibility::class, mappedBy="reservedBy")
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="reservedBy")
      */
     private $reservations;
 
@@ -138,7 +138,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->ressources = new ArrayCollection();
         $this->patients = new ArrayCollection();
-        $this->disponibilities = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->reportCreatedBy = new ArrayCollection();
         $this->reportPatient = new ArrayCollection();
@@ -432,29 +432,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|Disponibility[]
+     * @return Collection|Appointment[]
      */
-    public function getDisponibilities(): Collection
+    public function getAppointments(): Collection
     {
-        return $this->disponibilities;
+        return $this->appointments;
     }
 
-    public function addDisponibility(Disponibility $disponibility): self
+    public function addAppointment(Appointment $appointment): self
     {
-        if (!$this->disponibilities->contains($disponibility)) {
-            $this->disponibilities[] = $disponibility;
-            $disponibility->setCreatedBy($this);
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments[] = $appointment;
+            $appointment->setCreatedBy($this);
         }
 
         return $this;
     }
 
-    public function removeDisponibility(Disponibility $disponibility): self
+    public function removeAppointment(Appointment $appointment): self
     {
-        if ($this->disponibilities->removeElement($disponibility)) {
+        if ($this->appointments->removeElement($appointment)) {
             // set the owning side to null (unless already changed)
-            if ($disponibility->getCreatedBy() === $this) {
-                $disponibility->setCreatedBy(null);
+            if ($appointment->getCreatedBy() === $this) {
+                $appointment->setCreatedBy(null);
             }
         }
 
@@ -476,14 +476,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|Disponibility[]
+     * @return Collection|Appointment[]
      */
     public function getReservations(): Collection
     {
         return $this->reservations;
     }
 
-    public function addReservation(Disponibility $reservation): self
+    public function addReservation(Appointment $reservation): self
     {
         if (!$this->reservations->contains($reservation)) {
             $this->reservations[] = $reservation;
@@ -493,7 +493,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeReservation(Disponibility $reservation): self
+    public function removeReservation(Appointment $reservation): self
     {
         if ($this->reservations->removeElement($reservation)) {
             // set the owning side to null (unless already changed)
