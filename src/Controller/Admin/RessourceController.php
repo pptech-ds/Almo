@@ -17,19 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class RessourceController extends AbstractController
 {
     
-    /**
-     * @Route("/admin/ressource", name="admin_ressource_index")
-     */
-    public function ressourceIndex(RessourceRepository $ressourceRepository): Response
-    {
-        $ressources = $ressourceRepository->findAll();
-
-        return $this->render('admin/ressource/index.html.twig', [
-            'ressources' => $ressources,
-        ]);
-    }
-
-
+    
     /**
      * @Route("/admin/ressource/category/{slug}", name="admin_ressource_by_category_index")
      */
@@ -63,17 +51,18 @@ class RessourceController extends AbstractController
      */
     public function ressourceAdd(Request $request): Response
     {
-        $webinar = new Ressource();
-        $form = $this->createForm(RessourceFormType::class, $webinar);
+        $ressource = new Ressource();
+        $form = $this->createForm(RessourceFormType::class, $ressource);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $webinar->setUser($this->getUser());
-            $webinar->setActive(false);
+            $form->get('ressourceCategory')->getData();
+            $ressource->setUser($this->getUser());
+            $ressource->setActive(false);
             $em = $this->getDoctrine()->getManager();
-            $em->persist($webinar);
+            $em->persist($ressource);
             $em->flush();
-            return $this->redirectToRoute('admin_ressource_index');
+            return $this->redirectToRoute('admin_home',);
         }
 
         return $this->render('admin/ressource/add.html.twig', [
@@ -141,6 +130,6 @@ class RessourceController extends AbstractController
 
         $this->addFlash('success', 'Votre ressource a été supprimé avec succes !');
 
-        return $this->redirectToRoute('admin_ressource_index');
+        return $this->redirectToRoute('admin_home');
     }
 }

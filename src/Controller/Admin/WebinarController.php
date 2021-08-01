@@ -59,31 +59,7 @@ class WebinarController extends AbstractController
 
 
 
-    /**
-     * @Route("/admin/webinar/ressource/add", name="admin_webinar_ressource_add")
-     */
-    public function addWebinarRessource(Request $request): Response
-    {
-        $webinar = new Ressource();
-        $form = $this->createForm(RessourceFormType::class, $webinar);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $webinar->setUser($this->getUser());
-            $webinar->setActive(false);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($webinar);
-            $em->flush();
-            return $this->redirectToRoute('admin_ressource_index');
-        }
-
-        return $this->render('admin/ressource/add.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-
-
+    
     /**
      * @Route("/admin/webinar/update/{id}", name="admin_webinar_update", requirements={"id"="\d+"})
      */
