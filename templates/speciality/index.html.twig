@@ -3,26 +3,22 @@
 {% block title %}Les pratiques{% endblock %}
 
 {% block body %}
-    {# <div style="height: 30rem; background-color: rgba(255,0,0,0.1);">
-    </div> #}
+    <div class="container">
+    
+        <div style="height: 10rem">
+        </div>
 
-    <div style="height: 10rem">
-    </div>
-
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
-        <div class="container">
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services">
 
             <div class="section-title">
                 <h2>Les pratiques</h2>
-                <p>Toutes les pratiques</p>
             </div>
 
             <div class="row">
                 {% for speciality in specialities %}
                     <div class="col-lg-4 col-md-6" style="height: 35rem;">
                         <div class="icon-box">
-                            {# <div class="icon"><i class="fas fa-heartbeat"></i></div> #}
                             <h4><a href="{{ path('speciality_view', {slug: speciality.slug }) }}">{{speciality.name}}</a></h4>
                             <img src={{ speciality.image }} alt="" style="width: 100%">
                             {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
@@ -31,11 +27,11 @@
                         
                     </div>
                 {% endfor %}
-
             </div>
-
-            {{knp_pagination_render(specialities)}}
-        </div>
-    </section><!-- End Services Section -->
+            
+        </section><!-- End Services Section -->
+    
+        {{knp_pagination_render(specialities)}}
+    </div>
 
 {% endblock %}
