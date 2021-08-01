@@ -91,8 +91,8 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="{{ path('admin_ressource_category_index') }}">Lister les catégories</a>
                             <a class="collapse-item" href="{{ path('admin_ressource_category_add') }}">Ajouter une catégorie</a>
-                            <a class="collapse-item" href="{{ path('admin_ressource_by_category_index', {'category': 'Article'}) }}">Lister les articles</a>
-                            <a class="collapse-item" href="{{ path('admin_ressource_by_category_index', {'category': 'Document'}) }}">Lister les documents</a>
+                            <a class="collapse-item" href="{{ path('admin_ressource_by_category_index', {'slug': 'article'}) }}">Lister les articles</a>
+                            <a class="collapse-item" href="{{ path('admin_ressource_by_category_index', {'slug': 'document'}) }}">Lister les documents</a>
                             <a class="collapse-item" href="{{ path('admin_ressource_add') }}">Ajouter une ressource</a>
                         </div>
                     </div>

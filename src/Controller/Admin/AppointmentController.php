@@ -23,7 +23,7 @@ class AppointmentController extends AbstractController
     /**
      * @Route("/admin/appointment/add", name="admin_appointment_add")
      */
-    public function addAppointment(Request $request, UserRepository $userRepository): Response
+    public function appointmentAdd(Request $request, UserRepository $userRepository): Response
     {
         $usersPro = $userRepository->findByRole('ROLE_PRO');
         // dd($usersPro);
@@ -60,7 +60,7 @@ class AppointmentController extends AbstractController
     /**
      * @Route("/admin/appointment/update/{id}", name="admin_appointment_update")
      */
-    public function updateAppointment(Appointment $appointment,Request $request): Response
+    public function appointmentUpdate(Appointment $appointment,Request $request): Response
     {
         // $appointment = new Appointment();
         $form = $this->createForm(AdminAppointmentFormType::class, $appointment);
@@ -88,7 +88,7 @@ class AppointmentController extends AbstractController
     /**
      * @Route("/admin/appointment/asign", name="admin_appointment_asign")
      */
-    public function asignAppointment(AppointmentRepository $appointmentRepository,UserRepository $userRepository, Request $request): Response
+    public function appointmentAsign(AppointmentRepository $appointmentRepository,UserRepository $userRepository, Request $request): Response
     {
         // $usersPro = $userRepository->findByRole('ROLE_PRO');
         $usersPatient = $userRepository->findByRole('ROLE_PATIENT');
@@ -137,9 +137,9 @@ class AppointmentController extends AbstractController
 
 
     /**
-     * @Route("/admin/speciality/name/{slug}", name="admin_speciality_by_name")
+     * @Route("/admin/appointment/speciality/{slug}", name="admin_appointment_by_speciality")
      */
-    public function disponibilitiesBySpeciality(SpecialityRepository $specialityRepository, Request $request): Response
+    public function appointmentBySpeciality(SpecialityRepository $specialityRepository, AppointmentRepository $appointmentRepository, Request $request): Response
     {
         
         // $speciality = $request->get('name');
@@ -155,15 +155,17 @@ class AppointmentController extends AbstractController
             //     $arrayDispo[] = ($usersBySpeciality[$j]->getDisponibilities()[$i]);
             // }
 
-            if(count($usersBySpeciality[$j]->getDisponibilities()) > 0){
+            if(count($usersBySpeciality[$j]->getAppointments()) > 0){
                 $arrayDispo[] = $usersBySpeciality[$j];
             }
         }
 
-        return $this->render('admin/speciality/appointment_by_name.html.twig', [
+        return $this->render('admin/appointment/by_speciality.html.twig', [
             'usersBySpeciality' => $arrayDispo,
         ]);
+    
     }
+    
 
 
 
