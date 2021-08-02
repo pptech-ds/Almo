@@ -152,8 +152,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString()
     {
-        return $this->email;
+        // return $this->email;
         // return $this->product . ' ' . $this->product_order . ' ' . $this->quantity_order . ' ' . $this->price_order;
+        return $this->civility.' '.$this->firstname.' '.$this->lastname;
     }
 
     public function getId(): ?int

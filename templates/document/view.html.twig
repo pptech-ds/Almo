@@ -23,7 +23,7 @@
         </section><!-- End Breadcrumbs Section -->
 
         <section class="inner-page">
-            <p style="height: 100%; background-color: rgba(255,0,0,0.1);">{{document.content | raw}} </p>
+            <p style="height: 100%; ">{{document.content | raw}} </p>
             <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':document.user.id})}}">{{document.user.civility}} {{document.user.firstname}} {{document.user.lastname}}</a> {{document.createdAt | ago}}</p>
         </section>
     </div>
