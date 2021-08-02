@@ -15,7 +15,7 @@
         <section id="services" class="services">
 
             <div class="section-title">
-                <h2>Biographie de {{user.civility}} {{user.firstname}} {{user.lastname}}</h2>
+                <h2>{{user.civility}} {{user.firstname}} {{user.lastname}}</h2>
             </div>
 
             <div class="row">
@@ -30,22 +30,24 @@
             <div style="height: 2rem">
             </div>
 
-            <div class="section-title">
-                <h2>Ses disponibilités</h2>
-            </div>
-
-            <div class="row">
-                <div class="justify-content-center">
-                    {# {{ dump(disponibilities) }} #}
-                    {% for disponibility in disponibilities %}
-                        {% if (disponibility.isVisio == true) %}
-                            <a href="{{path('appointment_add', {'id':disponibility.id})}}" type="button" class="btn btn-primary my-1">En visio <br> {{ disponibility.startTime | date("Y/m/d") }} <br> {{ disponibility.startTime | date('H:i:s') }}</a>
-                        {% else %}
-                            <a href="{{path('appointment_add', {'id':disponibility.id})}}" type="button" class="btn btn-success my-1">En présentiel <br> {{ disponibility.startTime | date("Y/m/d") }} <br> {{ disponibility.startTime | date('H:i:s') }}</a>
-                        {% endif %}
-                    {% endfor %}
+            {% if (is_granted("ROLE_PATIENT")) %}
+                <div class="section-title">
+                    <h2>Ses disponibilités</h2>
                 </div>
-            </div>
+
+                <div class="row">
+                    <div class="justify-content-center">
+                        {# {{ dump(disponibilities) }} #}
+                        {% for disponibility in disponibilities %}
+                            {% if (disponibility.isVisio == true) %}
+                                <a href="{{path('appointment_add', {'id':disponibility.id})}}" type="button" class="btn btn-primary my-1">En visio <br> {{ disponibility.startTime | date("Y/m/d") }} <br> {{ disponibility.startTime | date('H:i:s') }}</a>
+                            {% else %}
+                                <a href="{{path('appointment_add', {'id':disponibility.id})}}" type="button" class="btn btn-success my-1">En présentiel <br> {{ disponibility.startTime | date("Y/m/d") }} <br> {{ disponibility.startTime | date('H:i:s') }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
 
         </section><!-- End Services Section -->
 

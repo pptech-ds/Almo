@@ -3,24 +3,26 @@
 {% block title %}Réinitialiser le mot de passe{% endblock %}
 
 {% block body %}
-    <div style="height: 10rem">
-    </div>
+    <div class="container">
 
-    <!-- ======= Appointment Section ======= -->
-    <section id="appointment" class="appointment section-bg">
-      <div class="container">
-
-        <div class="my-5">
-
-            <h1>Réinitialisez votre mot de passe</h1>
-
-            {{ form_start(resetForm) }}
-                {{ form_row(resetForm.plainPassword) }}
-                <button class="btn btn-lg btn-primary my-3">Envoyer</button>
-            {{ form_end(resetForm) }}
-            
+        <div style="height: 10rem">
         </div>
 
-      </div>
-    </section><!-- End Appointment Section -->
+        <!-- ======= Appointment Section ======= -->
+        <section id="appointment" class="appointment section-bg">
+
+            <div class="my-5">
+
+                <h1>Réinitialisez votre mot de passe</h1>
+
+                {{ form_start(resetForm) }}
+                    {{ form_row(resetForm.plainPassword) }}
+                    <button class="btn btn-lg btn-primary my-3">Envoyer</button>
+                {{ form_end(resetForm) }}
+                
+            </div>
+
+        </section><!-- End Appointment Section -->
+        
+    </div>
 {% endblock %}

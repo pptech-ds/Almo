@@ -38,11 +38,11 @@ class ReportController extends AbstractController
     {
 
         // dd($disonibilityRepository->findOneBy([
-        //     'id' => $request->get('id')])->getReport()->getReportPatient());
+        //     'id' => $request->get('id')])->getReport());
 
         return $this->render('report/view.html.twig', [
             'report' => $disonibilityRepository->findOneBy([
-                'id' => $request->get('id')])->getReport()->getReportPatient(),
+                'id' => $request->get('id')])->getReport(),
         ]);
     }
 
@@ -87,7 +87,7 @@ class ReportController extends AbstractController
 
             $this->addFlash('success', 'Votre rapport a été ajouter avec success !');
 
-            return $this->redirectToRoute('user_reservation_list');
+            return $this->redirectToRoute('appointment_index');
         }
 
         return $this->render('report/add.html.twig', [
