@@ -22,11 +22,11 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Nom</th>
+                                <th>Prenom</th>
                                 <th>Email</th>
                                 <th>Roles</th>
                                 <th>Validé</th>
-                                <th>Nom</th>
-                                <th>Prenom</th>
                                 <th>Adresse</th>
                                 <th>Code Postal</th>
                                 <th>Ville</th>
@@ -39,11 +39,11 @@
                         <tfoot>
                             <tr>
                                 <th hidden>Id</th>
+                                <th hidden>Nom</th>
+                                <th hidden>Prenom</th>
                                 <th hidden>Email</th>
                                 <th hidden>Roles</th>
                                 <th hidden>Validé</th>
-                                <th hidden>Nom</th>
-                                <th hidden>Prenom</th>
                                 <th hidden>Adresse</th>
                                 <th hidden>Code Postal</th>
                                 <th hidden>Ville</th>
@@ -58,6 +58,8 @@
                             {% for user in users %}
                                 <tr>
                                     <td>{{user.id}}</td>
+                                    <td>{{ (user.lastname is defined) ? user.lastname : '' }}</td>
+                                    <td>{{ (user.firstname is defined) ? user.firstname : '' }}</td>
                                     <td>{{user.email}}</td>
                                     <td>{{user.roles[0]}}</td>
                                     <td>
@@ -66,29 +68,17 @@
                                             <label class="custom-control-label" for="customSwitch{{ user.id }}"></label>
                                         </div>
                                     </td>
-                                    <td>{{ (user.lastname is defined) ? user.lastname : '' }}</td>
-                                    <td>{{ (user.firstname is defined) ? user.firstname : '' }}</td>
                                     <td>{{ (user.address is defined) ? user.address : '' }}</td>
                                     <td>{{ (user.zipcode is defined) ? user.zipcode : '' }}</td>
                                     <td>{{ (user.city is defined) ? user.city : '' }}</td>
                                     <td>{{ (user.phone is defined) ? user.phone : '' }}</td>
-                                    <td>{{ (user['hospital'] is defined) ? user['hospital'] : '' }}</td>
-                                    <td>{{ (user['doctor'] is defined) ? user['doctor'] : '' }}</td>
+                                    <td>{{ (user.hospital.name is defined) ? user.hospital.name : '' }}</td>
+                                    <td>{{ (user.doctor is defined) ? user.doctor : '' }}</td>
                                     
                                     <td>
-                                        {% if (user.roles[0] == 'ROLE_ADMIN') %}
-                                            <a href="{{ path('admin_user_update_admin', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
-                                        {% endif %}
-                                        {% if (user.roles[0] == 'ROLE_DOC') %}
-                                            <a href="{{ path('admin_user_update_doc', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
-                                        {% endif %}
-                                        {% if (user.roles[0] == 'ROLE_PRO') %}
-                                            <a href="{{ path('admin_user_update_pro', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
-                                        {% endif %}
-                                        {% if (user.roles[0] == 'ROLE_PATIENT') %}
-                                            <a href="{{ path('admin_user_update_patient', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
-                                        {% endif %}
-                                        <a href="" class="btn btn-danger btn-sm modal-trigger" data-toggle="modal" data-target="#modalDelete" data-id="{{ user.id }}" data-title="{{ user.email }}">Supprimer</a>
+            
+                                        <a href="{{ path('admin_user_update', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                        <a href="{{ path('admin_user_by_role_index', {'role': user.roles[0] }) }}" class="btn btn-danger btn-sm modal-trigger" data-toggle="modal" data-target="#modalDelete" data-id="{{ user.id }}" data-title="{{ user.email }}">Supprimer</a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -116,7 +106,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                <a href="" class="btn btn-primary">Supprimer</a>
+                <a href="admin_home" class="btn btn-primary">Supprimer</a>
             </div>
             </div>
         </div>

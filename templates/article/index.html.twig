@@ -3,40 +3,37 @@
 {% block title %}Les Articles{% endblock %}
 
 {% block body %}
-    {# <div style="height: 30rem; background-color: rgba(255,0,0,0.1);">
-    </div> #}
+    
+    <div class="container">
 
-    <div style="height: 10rem">
-    </div>
+        <div style="height: 10rem">
+        </div>
 
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
-        <div class="container">
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services">
 
             <div class="section-title">
                 <h2>Les articles</h2>
-                <p>Tout les articles</p>
             </div>
 
             <div class="row">
                 {% for article in articles %}
                     <div class="col-lg-4 col-md-6" style="height: 35rem;">
                         <div class="icon-box">
-                            {# <div class="icon"><i class="fas fa-heartbeat"></i></div> #}
                             <h4><a href="{{ path('article_view', {slug: article.slug }) }}">{{article.title}}</a></h4>
-                            {# <img src={{ article.image }} alt="" style="width: 100%"> #}
-                            <img src='{{ asset('img/demo.jpg') }}' alt="" style="width: 100%">
+                            <img src={{ article.image }} alt="" style="width: 100%">
                             {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
                             
                         </div>
-                        <p class="fs-6">Ecrit par {{article.user.email}} {{article.createdAt | ago}}</p>
+                        <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':article.user.id})}}">{{article.user.civility}} {{article.user.firstname}} {{article.user.lastname}}</a> {{article.createdAt | ago}}</p>
                     </div>
                 {% endfor %}
 
             </div>
 
-            {{knp_pagination_render(articles)}}
-        </div>
-    </section><!-- End Services Section -->
+        </section><!-- End Services Section -->
 
+        {{knp_pagination_render(articles)}}
+    
+    </div>
 {% endblock %}

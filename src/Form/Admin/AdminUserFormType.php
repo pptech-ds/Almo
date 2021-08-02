@@ -21,7 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class AdminUserDocFormType extends AbstractType
+class AdminUserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -66,19 +66,19 @@ class AdminUserDocFormType extends AbstractType
             ->add('address', TextType::class,['label' => 'Adresse'])
             ->add('city', TextType::class,['label' => 'Ville'])
             ->add('zipcode', TextType::class,['label' => 'Code postal'])
-            ->add('phone', TextType::class,['label' => 'Téléphone'])
-            ->add('hospital', EntityType::class, [
-                'mapped' => false,
-                'class' => Hospital::class,
-                'choice_label' => 'name',
-                'placeholder' => 'Choisir un hopital',
-                'label' => 'Hopital',
-                'required' => false
-            ])
+            ->add('phone', TextType::class,['label' => 'Téléphone']);
+            // ->add('hospital', EntityType::class, [
+            //     'mapped' => false,
+            //     'class' => Hospital::class,
+            //     'choice_label' => 'name',
+            //     'placeholder' => 'Choisir un hopital',
+            //     'label' => 'Hopital',
+            //     'required' => false
+            // ])
             
-            ->add('details', TextareaType::class,['label' => 'Informations complémentaires (500 caractères max)'])
+            // ->add('details', TextareaType::class,['label' => 'Informations complémentaires (500 caractères max)'])
             
-            ->add('Enregistrer', SubmitType::class);
+            // ->add('Enregistrer', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

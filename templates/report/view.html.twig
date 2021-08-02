@@ -4,24 +4,27 @@
 
 {% block body %}
     <div class="container">
-        <div class="container-fluid">
 
-            <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">compte-rendu</h1>
-            <p class="mb-4">compte-rendu</p>
+        <div style="height: 10rem">
+        </div>
+        
+        <!-- ======= Breadcrumbs Section ======= -->
+        <section class="breadcrumbs">
 
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">compte-rendu</h6>
-                </div>
-                    <h1>compte-rendu</h1>
-
-                    <p>{{ report | raw }}</p>
-                   
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="fw-bold">{{report.name}}</h2>
+                <ol>
+                    <li><a href="{{path('appointment_index')}}">Retour à ma liste de RDV</a></li>
+                    <li>{{report.name}}</li>
+                </ol>
             </div>
 
-        </div>
-        <!-- /.container-fluid -->
+        </section><!-- End Breadcrumbs Section -->
+
+        <section class="inner-page">
+            <p style="height: 100%; ">{{report.reportPatient | raw}} </p>
+            <p class="fs-6">Ecrit par {{report.createdBy.civility}} {{report.createdBy.firstname}} {{report.createdBy.lastname}}</p>
+        </section>
+
     </div>
 {% endblock %}

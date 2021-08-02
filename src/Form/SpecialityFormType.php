@@ -2,38 +2,40 @@
 
 namespace App\Form;
 
-use App\Entity\WebinarCategory;
+use App\Entity\Speciality;
 use Symfony\Component\Form\AbstractType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class WebinarCategoryFormType extends AbstractType
+class SpecialityFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name', TextType::class, [
-                "label" => "Nom du webinar",
+                'label' => 'Nom'
             ])
-            ->add('description', TextareaType::class,[
-                'label' => 'Description de la catégorie'
+            ->add('description', CKEditorType::class, [
+                "label" => "Contenu",
             ])
             ->add('image', TextType::class, [
-                "label" => "Image",
+                'label' => 'Image'
             ])
-            /*->add('slug')*/
-            ->add('parent')
-            ->add('Valider', SubmitType::class)
+            // ->add('slug')
+            ->add('professionName', TextType::class, [
+                'label' => 'Nom de profession'
+            ])
+            ->add('Enregistrer', SubmitType::class)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => WebinarCategory::class,
+            'data_class' => Speciality::class,
         ]);
     }
 }

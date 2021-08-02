@@ -7,7 +7,7 @@ use App\Entity\Report;
 use App\Form\ReportFormType;
 use App\Repository\UserRepository;
 use App\Repository\ReportRepository;
-use App\Repository\DisponibilityRepository;
+use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,15 +34,15 @@ class ReportController extends AbstractController
     /**
      * @Route("/report/view/{id}", name="report_view", requirements={"id"="\d+"})
      */
-    public function viewReport(Request $request, disponibilityRepository $disonibilityRepository): Response
+    public function viewReport(Request $request, appointmentRepository $disonibilityRepository): Response
     {
 
         // dd($disonibilityRepository->findOneBy([
-        //     'id' => $request->get('id')])->getReport()->getReportPatient());
+        //     'id' => $request->get('id')])->getReport());
 
         return $this->render('report/view.html.twig', [
             'report' => $disonibilityRepository->findOneBy([
-                'id' => $request->get('id')])->getReport()->getReportPatient(),
+                'id' => $request->get('id')])->getReport(),
         ]);
     }
 
@@ -51,7 +51,7 @@ class ReportController extends AbstractController
     /**
      * @Route("/report/add", name="report_add")
      */
-    public function addReport(UserInterface $user, UserRepository $userRepository, DisponibilityRepository $disponibilityRepository, Request $request): Response
+    public function addReport(UserInterface $user, UserRepository $userRepository, AppointmentRepository $appointmentRepository, Request $request): Response
     {
 
 
@@ -61,8 +61,8 @@ class ReportController extends AbstractController
         $report->setCreatedBy($user);
         $report->setPatient($userRepository->findOneBy([
             'id' => $request->get('patientId')]));
-        $report->setDisponibility($disponibilityRepository->findOneBy([
-            'id' => $request->get('disponibilityId')]));
+        $report->setAppointment($appointmentRepository->findOneBy([
+            'id' => $request->get('appointmentId')]));
         $form = $this->createForm(ReportFormType::class, $report);
         // $form->add('createdBy', EntityType::class, [
         //     'class' => User::class,
@@ -87,7 +87,7 @@ class ReportController extends AbstractController
 
             $this->addFlash('success', 'Votre rapport a été ajouter avec success !');
 
-            return $this->redirectToRoute('user_reservation_list');
+            return $this->redirectToRoute('appointment_index');
         }
 
         return $this->render('report/add.html.twig', [
@@ -101,7 +101,7 @@ class ReportController extends AbstractController
     /**
      * @Route("/report/update/{id}", name="report_update", requirements={"id"="\d+"})
      */
-    public function updateReport(disponibilityRepository $disonibilityRepository, Request $request): Response
+    public function updateReport(appointmentRepository $disonibilityRepository, Request $request): Response
     {
 
         $report = $disonibilityRepository->findOneBy([

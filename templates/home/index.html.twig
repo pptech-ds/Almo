@@ -4,61 +4,43 @@
 
 {% block body %}
     
-
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
-        <div class="container">
-
-            <div style="height: 35rem; background-color: rgba(255,0,0,0.1);">
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <h1>Lorem Ipsum</h1>
-                        "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
-                        "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."
-
-
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut consectetur iaculis justo at tristique. Phasellus eget auctor risus. Sed vel nibh massa. Nam at neque a lacus rutrum placerat sed aliquam diam. Nam eu facilisis nisi, et lacinia mauris. Morbi hendrerit dui eget sem varius feugiat. Nam venenatis, sem non sollicitudin ultrices, odio lacus posuere ligula, ut cursus risus leo in sapien. Nullam sed sem risus. Vivamus congue leo eget lectus fringilla, sit amet sagittis ante volutpat. Nulla facilisi. Vestibulum at augue nulla. In massa mi, lacinia sit amet semper a, blandit quis neque. Aliquam a commodo dolor.
-
-                        Ut odio leo, commodo quis ullamcorper nec, congue id sapien. Nam dignissim ut dolor et lacinia. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi condimentum placerat ex, ac consequat nisl sodales ut. Duis vel sem id elit vehicula interdum vel vitae orci. Sed a augue aliquet, rhoncus tellus quis, imperdiet sem. Suspendisse ut sapien arcu. Nam vehicula quam at lacus ornare tincidunt. Fusce euismod quam eget nisi blandit viverra. Sed vestibulum vitae dui tempus rhoncus. Donec sed nibh a mi elementum porta.
-
-            </div>
-
-
+    <div class="container">
+        <div style="height: 10rem">
         </div>
 
-        
-
-    </section><!-- End Services Section -->
-
-
-    {% if is_granted("ROLE_USER") %}
         <section id="services" class="services">
-            <div class="container">
+            <div style="height: 100%;">
+                <h1 class="text-center" style="color:#224F9D; font-weight: bold;">Almo</h1>
+                <br>
+                <p class="text-center" style="color:#224F9D; font-weight: bold;">Almo est une platforme en ligne dédiée à la santé mentale des personnes atteintes de cancer</p>
+                <p class="text-center" style="color:#224F9D; font-weight: bold;">______________</p>
+                <br>
+                <p style="color:#224F9D;">
+                    Grâce à Almo, où que vous soyez en France, vous pouvez accéder 24h/24 et 7j/7 à des réponses concrètes, 
+                    adaptées et personnalisées. Avec nos coaches et praticiens, profitez des bienfaits de l’hypnose, de l’EMDR, de la 
+                    méditation de pleine conscience, du yoga thérapeutique, de la sexologie… ou de simples consultations de 
+                    psychologie pour vous ou vos proches.
+                </p>    
+            </div>
+        </section><!-- End Services Section -->
+
+    
+        {% if is_granted("ROLE_USER") %}
+            <section id="services" class="services">
+                
                 <div class="section-title">
-                    <h2>Les articles</h2>
-                    <p>Les derniers articles postés</p>
+                    <h2>Nos derniers articles</h2>
                 </div>
 
                 <div class="row">
                     {% for article in articles %}
                         <div class="col-lg-4 col-md-6" style="height: 35rem;">
                             <div class="icon-box">
-                                {# <div class="icon"><i class="fas fa-heartbeat"></i></div> #}
                                 <h4><a href="{{ path('article_view', {slug: article.slug }) }}">{{article.title}}</a></h4>
                                 <img src={{ article.image }} alt="" style="width: 100%">
-                                {# <img src='{{ asset('img/demo.jpg') }}' alt="" style="width: 100%"> #}
                                 {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
-                                
                             </div>
-                            <p class="fs-6">Ecrit par {{article.user.email}} {{article.createdAt | ago}}</p>
+                            <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':article.user.id})}}">{{article.user.civility}} {{article.user.firstname}} {{article.user.lastname}}</a> {{article.createdAt | ago}}</p>
                         </div>
                     {% endfor %}
 
@@ -67,30 +49,26 @@
                 <div class="h-100 row align-items-center">
                     <a class="btn btn-primary text-uppercase" href="{{ path('article_index') }}">Afficher tout les articles</a>
                 </div>
-            </div>
-        </section><!-- End Services Section -->
+            
+            </section><!-- End Services Section -->
 
-        <!-- ======= Services Section ======= -->
-        <section id="services" class="services">
-            <div class="container">
-
+            <!-- ======= Services Section ======= -->
+            <section id="services" class="services">
+                
                 <div class="section-title">
-                    <h2>Les documents</h2>
-                    <p>Les derniers documents mis à jour</p>
+                    <h2>Nos derniers documents</h2>
                 </div>
 
                 <div class="row">
                     {% for document in documents %}
                         <div class="col-lg-4 col-md-6" style="height: 35rem;">
                             <div class="icon-box">
-                                {# <div class="icon"><i class="fas fa-heartbeat"></i></div> #}
                                 <h4><a href="{{ path('document_view', {slug: document.slug }) }}">{{document.title}}</a></h4>
                                 <img src={{ document.image }} alt="" style="width: 100%">
-                                {# <img src='{{ asset('img/demo.jpg') }}' alt="" style="width: 100%"> #}
                                 {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
                                 
                             </div>
-                            <p class="fs-6">Ecrit par {{document.user.email}} {{document.createdAt | ago}}</p>
+                            <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':document.user.id})}}">{{document.user.civility}} {{document.user.firstname}} {{document.user.lastname}}</a> {{document.createdAt | ago}}</p>
                         </div>
                     {% endfor %}
 
@@ -99,31 +77,27 @@
                 <div class="h-100 row align-items-center">
                     <a class="btn btn-primary text-uppercase" href="{{ path('document_index') }}">Afficher tout les documents</a>
                 </div>
-            </div>
-        </section><!-- End Services Section -->
+                
+            </section><!-- End Services Section -->
 
 
-        <!-- ======= Services Section ======= -->
-        <section id="services" class="services">
-            <div class="container">
+            <!-- ======= Services Section ======= -->
+            <section id="services" class="services">
 
                 <div class="section-title">
-                    <h2>Les Webinars</h2>
-                    <p>Les derniers webinars mis à jour</p>
+                    <h2>Nos derniers webinars</h2>
                 </div>
 
                 <div class="row">
                     {% for webinar in webinars %}
                         <div class="col-lg-4 col-md-6" style="height: 35rem;">
                             <div class="icon-box">
-                                {# <div class="icon"><i class="fas fa-heartbeat"></i></div> #}
                                 <h4><a href="{{ path('webinar_view', {slug: webinar.slug }) }}">{{webinar.title}}</a></h4>
                                 <img src={{ webinar.image }} alt="" style="width: 100%">
-                                {# <img src='{{ asset('img/demo.jpg') }}' alt="" style="width: 100%"> #}
                                 {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
                                 
                             </div>
-                            <p class="fs-6">Ecrit par {{webinar.user.email}} {{webinar.createdAt | ago}}</p>
+                            <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':webinar.user.id})}}">{{webinar.user.civility}} {{webinar.user.firstname}} {{webinar.user.lastname}}</a> {{webinar.createdAt | ago}}</p>
                         </div>
                     {% endfor %}
 
@@ -132,9 +106,11 @@
                 <div class="h-100 row align-items-center">
                     <a class="btn btn-primary text-uppercase" href="{{ path('webinar_index') }}">Afficher tout les webinars</a>
                 </div>
-            </div>
-        </section><!-- End Services Section -->
-    {% endif %}
+                
+            </section><!-- End Services Section -->
+        {% endif %}
+
+    </div>
 
     
 {% endblock %}

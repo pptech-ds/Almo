@@ -1,22 +1,25 @@
-{% extends 'admin/sbadmin2.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Ajout d'un utilisateur{% endblock %}
+{% block title %}Mettre à jour ma disponibilité{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-
-        <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Ajouter un patient</h1>
-
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                {{ form(form) }}
-            </div>                
+    <div class="container">
+    
+        <div style="height: 10rem">
         </div>
 
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services">
+
+            <div class="section-title">
+                <h2>Mettre à jour ma disponibilité</h2>
+            </div>
+                
+            {{ form(form) }}
+
+        </section>
     </div>
-    <!-- /.container-fluid -->
+
 {% endblock %}
 
 
@@ -25,7 +28,7 @@
     <script>
         window.onload = () => {
             // On va chercher la région
-            let hospital = document.querySelector("#admin_user_patient_form_hospital");
+            let hospital = document.querySelector("#user_form_hospital");
             hospital.addEventListener("change", function(){
                 let form = this.closest("form");
                 // console.log(form);
@@ -43,9 +46,9 @@
                 .then(html => {
                     let content = document.createElement("html");
                     content.innerHTML = html;
-                    let nouveauSelect = content.querySelector("#admin_user_patient_form_doctor");
+                    let nouveauSelect = content.querySelector("#user_form_doctor");
                     console.log(nouveauSelect);
-                    document.querySelector("#admin_user_patient_form_doctor").replaceWith(nouveauSelect);
+                    document.querySelector("#user_form_doctor").replaceWith(nouveauSelect);
                 })
                 .catch(error => {
                     console.log(error);
@@ -54,4 +57,3 @@
         }
     </script>
 {% endblock %}
-    

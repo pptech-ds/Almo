@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Speciality;
+use App\Form\SpecialityFormType;
 use App\Repository\SpecialityRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ class SpecialityController extends AbstractController
     /**
      * @Route("/admin/speciality", name="admin_speciality_index")
      */
-    public function listSpecialities(SpecialityRepository $specialityRepository): Response
+    public function specialityIndex(SpecialityRepository $specialityRepository): Response
     {
         return $this->render('admin/speciality/index.html.twig', [
             'specialities' => $specialityRepository->findAll(),
@@ -24,31 +25,27 @@ class SpecialityController extends AbstractController
 
 
     /**
-     * @Route("/admin/speciality/name/{slug}", name="admin_speciality_by_name")
+     * @Route("/admin/speciality/add", name="admin_speciality_add")
      */
-    public function disponibilitiesBySpeciality(SpecialityRepository $specialityRepository, Request $request): Response
+    public function specialityAdd(Request $request): Response
     {
-        
-        // $speciality = $request->get('name');
+        $ressource = new Speciality();
+        $form = $this->createForm(SpecialityFormType::class, $ressource);
 
-        $usersBySpeciality = $specialityRepository->findBy(['slug' => $request->get('slug')])[0]->getUsers();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($ressource);
+            $em->flush();
 
-        $arrayDispo = [];
+            $this->addFlash('success', 'Votre specialité a été modifié avec succes !');
 
-        for($j = 0 ; $j< count($usersBySpeciality); $j++){
-            
-            // for($i = 0; $i< count($usersBySpeciality[$j]->getDisponibilities()); $i++) {
-
-            //     $arrayDispo[] = ($usersBySpeciality[$j]->getDisponibilities()[$i]);
-            // }
-
-            if(count($usersBySpeciality[$j]->getDisponibilities()) > 0){
-                $arrayDispo[] = $usersBySpeciality[$j];
-            }
+            return $this->redirectToRoute('admin_speciality_index',);
         }
 
-        return $this->render('admin/speciality/disponibility_by_name.html.twig', [
-            'usersBySpeciality' => $arrayDispo,
+        return $this->render('admin/speciality/add.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
+
 }

@@ -19,7 +19,8 @@ class RessourceCategoryFixtures extends Fixture
             $ressourceCategory = new RessourceCategory;
             $ressourceCategory->setName($ressourceCategories[$i]);
             $ressourceCategory->setDescription($faker->realText($maxNbChars = 200, $indexSize = 2));
-            $ressourceCategory->setImage($faker->imageUrl($width = 640, $height = 480));
+            // $ressourceCategory->setImage($faker->imageUrl($width = 640, $height = 480));
+            $ressourceCategory->setImage('img/demo'.rand(1,18).'.jpg');
             $manager->persist($ressourceCategory);
 
             // Creating references to get them in ArtitFixtures

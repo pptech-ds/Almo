@@ -17,25 +17,16 @@ class HomeController extends AbstractController
      */
     public function index(RessourceRepository $ressourceRepository, WebinarRepository $webinarRepository): Response
     {
-        
-        // $documentCategory = new RessourceCategory();
-        // $documentCategory->setName('Document');
-        // $documents = $ressourceRepository->findBy(
-        //     ['ressourceCategory' => $ressource->setRessourceCategory($documentCategory)],
-        //     ['createdAt' => 'desc'],
-        //     3
-        // );
-
-        $documents = $ressourceRepository->findLastRessourcesByCategory('Document', 6);
+        $documents = $ressourceRepository->findLastRessourcesByCategory('Document', 3);
         // dd($documents);
 
-        $articles = $ressourceRepository->findLastRessourcesByCategory('Article', 6);
+        $articles = $ressourceRepository->findLastRessourcesByCategory('Article', 3);
         // dd($articles);
 
         $webinars = $webinarRepository->findBy(
             [],
             ['createdAt' => 'desc'],
-            6
+            3
         );
 
         // dd($articles);
@@ -46,6 +37,8 @@ class HomeController extends AbstractController
             'webinars' => $webinars,
         ]);
     }
+
+
 
     /**
      * @Route("/error_405", name="error_405")

@@ -14,7 +14,7 @@
             <div class="card-header py-3">
 
                 {% for speciality in specialities %}       
-                    <a href="{{ path('admin_speciality_by_name', {'slug':speciality.slug}) }}" class="btn btn-success btn-icon-split btn-lg my-1">
+                    <a href="{{ path('admin_appointment_by_speciality', {'slug':speciality.slug}) }}" class="btn btn-success btn-icon-split btn-lg my-1">
                         <span class="icon text-white-50">
                             <i class="fas fa-user-md"></i>
                         </span>

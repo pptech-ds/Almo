@@ -24,7 +24,7 @@ class WebinarFixtures extends Fixture implements DependentFixtureInterface
             $webinar = new Webinar;
             $webinar->setWebinarCategory($webinarCategory);
             $webinar->setTitle($faker->catchPhrase());
-            $webinar->setContent($faker->realText($maxNbChars = 200, $indexSize = 2));
+            $webinar->setContent($faker->realText($maxNbChars = 10000, $indexSize = 2));
             // $webinar->setImage($faker->imageUrl($width = 640, $height = 480));
             $webinar->setImage('img/demo'.rand(1,18).'.jpg');
             $webinar->setActive($faker->numberBetween(0,1));

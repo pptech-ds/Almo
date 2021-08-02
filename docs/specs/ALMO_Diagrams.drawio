@@ -1244,7 +1244,7 @@
         <mxCell id="Z3TGR_GgPMp7fBFcXkFp-77" value="0..*" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="1502" y="415" width="22" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="Z3TGR_GgPMp7fBFcXkFp-78" value="disponibility" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+        <mxCell id="Z3TGR_GgPMp7fBFcXkFp-78" value="appointment" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
           <mxGeometry x="1560" y="16" width="180" height="110" as="geometry" />
         </mxCell>
         <mxCell id="Z3TGR_GgPMp7fBFcXkFp-79" value="+ id: int&#xa;+ DateHour: datetime&#xa;+ serviceName: varchar 255&#xa;+ serviceContent: longtext" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Z3TGR_GgPMp7fBFcXkFp-78" vertex="1">
@@ -1655,7 +1655,7 @@
         <mxCell id="WpTMb0PjgPMh6Vc9hxhS-70" value="0..*" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="V4yBMs7fp20xGWD95cax-1">
           <mxGeometry x="1502" y="415" width="22" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="WpTMb0PjgPMh6Vc9hxhS-71" value="disponibility" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="V4yBMs7fp20xGWD95cax-1">
+        <mxCell id="WpTMb0PjgPMh6Vc9hxhS-71" value="appointment" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="V4yBMs7fp20xGWD95cax-1">
           <mxGeometry x="1560" y="16" width="180" height="110" as="geometry" />
         </mxCell>
         <mxCell id="WpTMb0PjgPMh6Vc9hxhS-72" value="+ id: int&#xa;+ DateHour: datetime&#xa;+ serviceName: varchar 255&#xa;+ serviceContent: longtext" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="WpTMb0PjgPMh6Vc9hxhS-71">

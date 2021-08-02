@@ -5,12 +5,12 @@ namespace App\DataFixtures;
 use DateTime;
 use Faker\Factory;
 use App\Entity\Hospital;
-use App\Entity\Disponibility;
+use App\Entity\Appointment;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class DisponibilityFixtures extends Fixture implements DependentFixtureInterface
+class AppointmentFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -38,12 +38,12 @@ class DisponibilityFixtures extends Fixture implements DependentFixtureInterface
             $user = $this->getReference('user_pro_'.$i);
 
             for($j=0; $j<10; $j++){
-                $disponility = new Disponibility;
-                $disponility->setName($faker->name());
+                $disponility = new Appointment;
                 $disponility->setContent($faker->realText($maxNbChars = 200, $indexSize = 2));
                 $disponility->setStartTime($date1);
                 $disponility->setEndTime($date2);
                 $disponility->setCreatedBy($user);
+                $disponility->setName($user->getCivility().' '.$user->getFirstname().' '.$user->getLastname().' '.$date1->format('Y-m-d H:i:s'));
                 if($j%2==0){
                     $disponility->setIsVisio(1);
                 } else {

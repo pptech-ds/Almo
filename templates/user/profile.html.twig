@@ -1,18 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profile utilisateur{% endblock %}
+{% block title %}{{user.civility}} {{user.firstname}} {{user.lastname}}{% endblock %}
 
 {% block body %}
 
-    {# <div style="height: 30rem; background-color: rgba(255,0,0,0.1);">
-    </div> #}
+    {# {{dump(user)}} #}
 
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
-        <div class="container">
+    <div class="container">
+    
+        <div style="height: 10rem">
+        </div>
+
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services">
 
             <div class="section-title">
-                <h2>Profil utilisateur</h2>
+                <h2>Profil utilisateur de {{user.civility}} {{user.firstname}} {{user.lastname}}</h2>
             </div>
 
             <div class="table-responsive">
@@ -50,15 +53,22 @@
                         <tr>
                             <td>Téléphone : {{ (user.phone is defined) ? user.phone : '' }}</td>
                         </tr>
+                        {% if (is_granted("ROLE_PATIENT") or is_granted("ROLE_DOC")) %}
+                            <tr>
+                                <td>Hopital : {{ (user.hospital.name is defined) ? user.hospital.name : '' }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if (is_granted("ROLE_PATIENT")) %}
+                            <tr>
+                                <td>Medecin Traitant : {{ (user.doctor.civility is defined) ? user.doctor.civility : '' }} {{ (user.doctor.firstname is defined) ? user.doctor.firstname : '' }} {{ (user.doctor.lastname is defined) ? user.doctor.lastname : '' }}</td>
+                            </tr>
+                        {% endif %}
                         <tr>
-                            <td>Hopital : {{ (user.hospital[0] is defined) ? user.hospital[0] : '' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Medecin Traitant : {{ (user.doctor[0] is defined) ? user.doctor[0] : '' }}</td>
+                            <td>Détails :{{ (user.details is defined) ? (user.details | raw) : '' }}</td>
                         </tr>
                         <tr>
                             <td>
-                                <a href="{{ path('user_update', {id: user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                <a href="{{ path('user_update') }}" class="btn btn-primary btn-sm">Modifier</a>
                             </td>
                         </tr>
                             
@@ -68,13 +78,11 @@
                 </table>
             </div>
 
-        </div>
 
-        
-
-    </section><!-- End Services Section -->
+        </section><!-- End Services Section -->
 
 
+    </div>
 
 
 {% endblock %}

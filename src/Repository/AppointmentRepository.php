@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Disponibility;
+use App\Entity\Appointment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Disponibility|null find($id, $lockMode = null, $lockVersion = null)
- * @method Disponibility|null findOneBy(array $criteria, array $orderBy = null)
- * @method Disponibility[]    findAll()
- * @method Disponibility[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Appointment|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Appointment|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Appointment[]    findAll()
+ * @method Appointment[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DisponibilityRepository extends ServiceEntityRepository
+class AppointmentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Disponibility::class);
+        parent::__construct($registry, Appointment::class);
     }
 
     // /**
-    //  * @return Disponibility[] Returns an array of Disponibility objects
+    //  * @return Appointment[] Returns an array of Appointment objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class DisponibilityRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Disponibility
+    public function findOneBySomeField($value): ?Appointment
     {
         return $this->createQueryBuilder('d')
             ->andWhere('d.exampleField = :val')
