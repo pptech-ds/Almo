@@ -132,7 +132,7 @@ class AppointmentController extends AbstractController
     /**
      * @Route("/appointment/update/{id}", name="appointment_update", requirements={"id"="\d+"})
      */
-    public function appointmentUpdate(Appointment $appointment, Request $request): Response
+    public function appointmentUpdate(UserInterface $user, Appointment $appointment, Request $request): Response
     {
         $form = $this->createForm(AppointmentFormType::class, $appointment);
         // $form->add('Envoyer', SubmitType::class)
@@ -146,11 +146,29 @@ class AppointmentController extends AbstractController
 
             $this->addFlash('success', 'Votre utilisateur a été modifié avec succes !');
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('appointment_index');
         }
 
-        return $this->render('user/update.html.twig', [
+        return $this->render('appointment/update.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+
+    /**
+     * @Route("/appointment/delete/{id}", name="appointment_delete", requirements={"id"="\d+"})
+     */
+    public function appointmentDelete(Appointment $appointment): Response
+    {
+        // dd($ressource);
+        // $ressource->setActive( ($ressource->getActive()) ?  false : true );
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($appointment);
+        $em->flush();
+
+        $this->addFlash('success', 'Votre disponibilité a été supprimé avec succes !');
+
+        return $this->redirectToRoute('appointment_index');
     }
 }

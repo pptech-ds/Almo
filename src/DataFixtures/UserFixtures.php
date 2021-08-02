@@ -45,7 +45,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setCity($faker->city());
                 $user->setZipcode($faker->postcode());
                 $user->setPhone($faker->phoneNumber());
-                $user->setDetails($faker->realText($maxNbChars = 500, $indexSize = 2));
+                $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
                 $manager->persist($user);
                 $this->addReference('user_admin', $user);
             } elseif($i === 1){
@@ -61,7 +61,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setCity($faker->city());
                 $user->setZipcode($faker->postcode());
                 $user->setPhone($faker->phoneNumber());
-                $user->setDetails($faker->realText($maxNbChars = 500, $indexSize = 2));
+                $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
                 $user->setHospital($this->getReference('hospital_0'));
                 $manager->persist($user);
                 $this->addReference('user_doc', $user);
@@ -79,7 +79,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setCity($faker->city());
                 $user->setZipcode($faker->postcode());
                 $user->setPhone($faker->phoneNumber());
-                $user->setDetails($faker->realText($maxNbChars = 500, $indexSize = 2));
+                $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
                 $manager->persist($user);
                 $this->addReference('user_pro', $user);
             } elseif($i === 3){
@@ -95,8 +95,9 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setCity($faker->city());
                 $user->setZipcode($faker->postcode());
                 $user->setPhone($faker->phoneNumber());
-                $user->setDetails($faker->realText($maxNbChars = 500, $indexSize = 2));
+                $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
                 $user->setHospital($this->getReference('hospital_1'));
+                $user->setDoctor($this->getReference('user_doc'));
                 $manager->persist($user);
                 $this->addReference('user_patient', $user);
             } elseif (($i > 3) && ($i <= 10)) {
@@ -113,7 +114,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setCity($faker->city());
                 $user->setZipcode($faker->postcode());
                 $user->setPhone($faker->phoneNumber());
-                $user->setDetails($faker->realText($maxNbChars = 500, $indexSize = 2));
+                $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
                 if($i%3 == 0){
                     $user->setHospital($this->getReference('hospital_0'));
                 } elseif($i%3 == 1) {
@@ -150,7 +151,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                         $user->setCity($faker->city());
                         $user->setZipcode($faker->postcode());
                         $user->setPhone($faker->phoneNumber());
-                        $user->setDetails($faker->realText($maxNbChars = 500, $indexSize = 2));
+                        $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
                         $manager->persist($user);
                         // print('user_pro_'.($count));
                         $this->addReference('user_pro_'.($count), $user);
@@ -190,7 +191,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             } elseif($i%6 == 5) {
                 $user->setDoctor($this->getReference('user_doc_9'));
             }
-            $user->setDetails($faker->realText($maxNbChars = 500, $indexSize = 2));
+            $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
             if($i%3 == 0){
                 $user->setHospital($this->getReference('hospital_0'));
             } elseif($i%3 == 1) {

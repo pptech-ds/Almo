@@ -46,6 +46,11 @@ class Speciality
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $professionName;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -135,6 +140,18 @@ class Speciality
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getProfessionName(): ?string
+    {
+        return $this->professionName;
+    }
+
+    public function setProfessionName(string $professionName): self
+    {
+        $this->professionName = $professionName;
 
         return $this;
     }

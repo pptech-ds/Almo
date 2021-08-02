@@ -129,6 +129,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $reportPatient;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Webinar::class, mappedBy="reservedBy")
+     */
+    private $webinarReservations;
+
     
 
         
@@ -142,6 +147,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->reservations = new ArrayCollection();
         $this->reportCreatedBy = new ArrayCollection();
         $this->reportPatient = new ArrayCollection();
+        $this->webinarReservations = new ArrayCollection();
     }
 
     public function __toString()
@@ -560,6 +566,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($reportPatient->getPatient() === $this) {
                 $reportPatient->setPatient(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Webinar[]
+     */
+    public function getWebinarReservations(): Collection
+    {
+        return $this->webinarReservations;
+    }
+
+    public function addWebinarReservation(Webinar $webinarReservation): self
+    {
+        if (!$this->webinarReservations->contains($webinarReservation)) {
+            $this->webinarReservations[] = $webinarReservation;
+            $webinarReservation->addReservedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWebinarReservation(Webinar $webinarReservation): self
+    {
+        if ($this->webinarReservations->removeElement($webinarReservation)) {
+            $webinarReservation->removeReservedBy($this);
         }
 
         return $this;

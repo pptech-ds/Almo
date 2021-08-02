@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Entity\WebinarCategory;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\WebinarRepository;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -62,6 +64,16 @@ class Webinar
      * @ORM\JoinColumn(nullable=false)
      */
     private $webinarCategory;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="webinarReservations")
+     */
+    private $reservedBy;
+
+    public function __construct()
+    {
+        $this->reservedBy = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -146,6 +158,30 @@ class Webinar
     public function setWebinarCategory(?WebinarCategory $webinarCategory): self
     {
         $this->webinarCategory = $webinarCategory;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getReservedBy(): Collection
+    {
+        return $this->reservedBy;
+    }
+
+    public function addReservedBy(User $reservedBy): self
+    {
+        if (!$this->reservedBy->contains($reservedBy)) {
+            $this->reservedBy[] = $reservedBy;
+        }
+
+        return $this;
+    }
+
+    public function removeReservedBy(User $reservedBy): self
+    {
+        $this->reservedBy->removeElement($reservedBy);
 
         return $this;
     }

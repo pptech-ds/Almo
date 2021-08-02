@@ -4,14 +4,15 @@
 
 {% block body %}
 
-    <div style="height: 10rem">
-    </div>
+    <div class="container">
 
-    <!-- ======= Appointment Section ======= -->
-    <section id="appointment" class="appointment section-bg">
-      <div class="container">
+        <div style="height: 10rem">
+        </div>
 
-        <div class="my-5">
+        <!-- ======= Appointment Section ======= -->
+        <section id="appointment" class="appointment section-bg">
+
+            <div class="my-5">
 
                 {% for flashError in app.flashes('reset_password_error') %}
                     <div class="alert alert-danger" role="alert">{{ flashError }}</div>
@@ -28,10 +29,11 @@
 
                     <button class="btn btn-lg btn-primary my-3">Envoyer</button>
                 {{ form_end(requestForm) }}
-                
+                    
             </div>
 
-      </div>
-    </section><!-- End Appointment Section -->
+        </section><!-- End Appointment Section -->
+        
+    </div>
     
 {% endblock %}
