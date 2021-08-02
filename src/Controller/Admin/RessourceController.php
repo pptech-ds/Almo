@@ -62,6 +62,9 @@ class RessourceController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($ressource);
             $em->flush();
+
+            $this->addFlash('success', 'Votre ressource a été ajouté avec succes !');
+            
             return $this->redirectToRoute('admin_home',);
         }
 

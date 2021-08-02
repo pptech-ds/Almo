@@ -39,11 +39,11 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
 
             for($j=0; $j<10; $j++){
                 $disponility = new Appointment;
-                $disponility->setName($faker->name());
                 $disponility->setContent($faker->realText($maxNbChars = 200, $indexSize = 2));
                 $disponility->setStartTime($date1);
                 $disponility->setEndTime($date2);
                 $disponility->setCreatedBy($user);
+                $disponility->setName($user->getCivility().' '.$user->getFirstname().' '.$user->getLastname().' '.$date1->format('Y-m-d H:i:s'));
                 if($j%2==0){
                     $disponility->setIsVisio(1);
                 } else {

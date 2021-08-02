@@ -122,7 +122,8 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix"
                         aria-expanded="true" aria-controls="collapseSix">
-                        <i class="fas fa-hospital-user fa-cog"></i>
+                        {# <i class="fas fa-hospital-user fa-cog"></i> #}
+                        <i class="fas fa-calendar-alt"></i>
                         <span>Disponibilités</span>
                     </a>
                     <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -130,7 +131,7 @@
                             <a class="collapse-item" href="{{ path('admin_speciality_index') }}">Lister les pratiques</a>
                             <a class="collapse-item" href="{{ path('admin_appointment_add') }}">Ajouter une disponibilité</a>
                             <a class="collapse-item" href="{{ path('admin_appointment_asign') }}">Asigner un RDV</a>
-                            <a class="collapse-item" href="#">Ajouter une pratique</a>
+                            <a class="collapse-item" href="{{ path('admin_speciality_add') }}">Ajouter une pratique</a>
                         </div>
                     </div>
                 </li>

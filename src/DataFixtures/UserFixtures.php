@@ -39,8 +39,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setIsVerified(1);
                 $user->setCivility('Mr');
                 $user->setPassword($this->encoder->hashPassword($user, '123456'));
-                $user->setFirstname($faker->firstName());
-                $user->setlastname($faker->lastName());
+                $user->setFirstname('Admin');
+                $user->setlastname('Almo');
                 $user->setAddress($faker->streetAddress());
                 $user->setCity($faker->city());
                 $user->setZipcode($faker->postcode());
@@ -55,8 +55,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setIsVerified(1);
                 $user->setCivility('Dr');
                 $user->setPassword($this->encoder->hashPassword($user, '123456'));
-                $user->setFirstname($faker->firstName());
-                $user->setlastname($faker->lastName());
+                $user->setFirstname('User');
+                $user->setlastname('Doc');
                 $user->setAddress($faker->streetAddress());
                 $user->setCity($faker->city());
                 $user->setZipcode($faker->postcode());
@@ -73,8 +73,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setCivility('Mr');
                 $user->setSpeciality($this->getReference('speciality_0'));
                 $user->setPassword($this->encoder->hashPassword($user, '123456'));
-                $user->setFirstname($faker->firstName());
-                $user->setlastname($faker->lastName());
+                $user->setFirstname('User');
+                $user->setlastname('Pro');
                 $user->setAddress($faker->streetAddress());
                 $user->setCity($faker->city());
                 $user->setZipcode($faker->postcode());
@@ -89,8 +89,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setIsVerified(1);
                 $user->setCivility('Mr');
                 $user->setPassword($this->encoder->hashPassword($user, '123456'));
-                $user->setFirstname($faker->firstName());
-                $user->setlastname($faker->lastName());
+                $user->setFirstname('User');
+                $user->setlastname('Patient');
                 $user->setAddress($faker->streetAddress());
                 $user->setCity($faker->city());
                 $user->setZipcode($faker->postcode());
