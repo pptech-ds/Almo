@@ -36,7 +36,7 @@
                         {% for userBySpeciality in usersBySpeciality %}
                             <tr>
                                 {# <td>{{ userBySpeciality.email }}</td> #}
-                                <td><a href="{{path('user_profile', {'id':userBySpeciality.id})}}">{{ userBySpeciality.email }}</a></td>
+                                <td><a href="{{path('user_biography', {'id':userBySpeciality.id})}}">{{ userBySpeciality.civility }} {{ userBySpeciality.firstname }} {{ userBySpeciality.lastname }}</a></td>
                                     <td>
                                 {% for appointment in userBySpeciality.appointments %}
                                     {% if (appointment.reservedBy == null) %}
