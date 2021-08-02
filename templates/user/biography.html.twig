@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{user.civility}} {{user.firstname}} {{user.lastname}}{% endblock %}
+
+{% block body %}
+
+    {# {{dump(user)}} #}
+
+    <div class="container">
+    
+        <div style="height: 10rem">
+        </div>
+
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services">
+
+            <div class="section-title">
+                <h2>Biographie de {{user.civility}} {{user.firstname}} {{user.lastname}}</h2>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    {{ (user.details is defined) ? (user.details | raw) : '' }}
+                </div>
+                {# <div class="col-2">
+                    <a href="#" class="btn btn-primary btn-sm">Ses disponibilités</a>
+                </div> #}
+            </div>
+
+            <div style="height: 2rem">
+            </div>
+
+            <div class="section-title">
+                <h2>Ses disponibilités</h2>
+            </div>
+
+            <div class="row">
+                <div class="justify-content-center">
+                    {# {{ dump(disponibilities) }} #}
+                    {% for disponibility in disponibilities %}
+                        {% if (disponibility.isVisio == true) %}
+                            <a href="{{path('appointment_add', {'id':disponibility.id})}}" type="button" class="btn btn-primary my-1">En visio <br> {{ disponibility.startTime | date("Y/m/d") }} <br> {{ disponibility.startTime | date('H:i:s') }}</a>
+                        {% else %}
+                            <a href="{{path('appointment_add', {'id':disponibility.id})}}" type="button" class="btn btn-success my-1">En présentiel <br> {{ disponibility.startTime | date("Y/m/d") }} <br> {{ disponibility.startTime | date('H:i:s') }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+        </section><!-- End Services Section -->
+
+
+    </div>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

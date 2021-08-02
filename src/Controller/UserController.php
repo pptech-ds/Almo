@@ -27,25 +27,27 @@ class UserController extends AbstractController
     /**
      * @Route("/user/profile", name="user_profile")
      */
-    public function userProfile(UserRepository $userRepository, UserInterface $user): Response
+    public function userProfile(UserInterface $user): Response
     {
+        // dd($user->getFullName());
+
+        // dd($user->setFullName($user->getCivility(), $user->getFirstname(), $user->getLastname()));
+
+
+
         return $this->render('user/profile.html.twig', [
-            'user' => $userRepository->findOneBy([
-                'id' => $user->getId()
-            ]),
+            'user' => $user,
         ]);
     }
 
 
     
     /**
-     * @Route("/user/update/{id}", name="user_update", requirements={"id"="\d+"})
+     * @Route("/user/update", name="user_update")
      */
-    public function updateUser(User $user, Request $request): Response
+    public function userUpdate(UserInterface $user, Request $request): Response
     {
         $form = $this->createForm(UserFormType::class, $user);
-        $form->add('Envoyer', SubmitType::class)
-            ;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -55,11 +57,36 @@ class UserController extends AbstractController
 
             $this->addFlash('success', 'Votre utilisateur a été modifié avec succes !');
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('user_profile');
         }
 
         return $this->render('user/update.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/user/biography/{id}", name="user_biography", requirements={"id"="\d+"})
+     */
+    public function userBio(UserRepository $userRepository, AppointmentRepository $appointmentRepository, Request $request): Response
+    {
+        $user = $userRepository->findOneBy(array('id' => $request->get('id')));
+
+        $disponibilities = [];
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            foreach($appointmentRepository->findBy(['createdBy' => $user]) as $appointment){
+                if($appointment->getReservedBy() == null) {
+                    $disponibilities[] = $appointment;
+                } 
+            }
+        } 
+
+        return $this->render('user/biography.html.twig', [
+            'user' => $user,
+            'disponibilities' => $disponibilities
         ]);
     }
 

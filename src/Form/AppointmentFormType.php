@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Appointment;
 use Symfony\Component\Form\AbstractType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,7 +19,7 @@ class AppointmentFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Nom'])
-            ->add('content', TextareaType::class, ['label' => 'Contenu'])
+            ->add('content', CKEditorType::class, ['label' => 'Contenu'])
             ->add('startTime', DateTimeType::class, ['label' => 'Heure du début'])
             ->add('endTime', DateTimeType::class, ['label' => 'Heure de fin'])
             ->add('isVisio', CheckboxType ::class, [

@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -84,7 +85,7 @@ class RegistrationFormType extends AbstractType
             'label' => 'Médecin Traitant'
         ])
 
-        ->add('details', TextareaType::class,['label' => 'Informations complémentaires (500 caractères max)'])
+        ->add('details', CKEditorType::class,['label' => 'Informations complémentaires (500 caractères max)'])
         
         ->add('Enregistrer', SubmitType::class);
 
