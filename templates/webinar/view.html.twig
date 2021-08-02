@@ -23,7 +23,7 @@
 
         <section class="inner-page">
             <p style="height: 100%; background-color: rgba(255,0,0,0.1);">{{webinar.content | raw}} </p>
-            <p class="fs-6">Crée par {{webinar.user.email}} {{webinar.createdAt | ago}}</p>
+            <p class="fs-6">Crée par <a href="{{path('user_biography', {'id':webinar.user.id})}}">{{webinar.user.civility}} {{webinar.user.firstname}} {{webinar.user.lastname}}</a> {{webinar.createdAt | ago}}</p>
         </section>
     
     </div>

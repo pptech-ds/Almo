@@ -8,18 +8,6 @@
     {% else %}
         {# <li><a class="nav-link scrollto" href="{{ path('user_index') }}">Mon Compte</a></li> #}
         <li><a href="{{ path('speciality_index') }}">Les Pratiques</a></li>
-        <li class="dropdown"><a href="#"><span>Mon Compte</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="{{ path('user_profile') }}">Mon Profile</a></li>
-                {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
-                    <li><a class="nav-link scrollto" href="{{ path('appointment_create') }}">Mes disponibilités</a></li>
-                    <li><a class="nav-link scrollto" href="{{ path('appointment_index') }}">Mes rendez-vous</a></li>
-                {% endif %}
-                {% if (is_granted("ROLE_PATIENT")) %}
-                    <li><a class="nav-link scrollto" href="{{ path('appointment_index') }}">Mes rendez-vous</a></li>
-                {% endif %}
-            </ul>
-        </li>
         <li class="dropdown"><a href="#"><span>Ressources</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{ path('article_index') }}">Articles</a></li>
@@ -27,10 +15,22 @@
               <li><a href="{{ path('webinar_index') }}">Webinars</a></li>
             </ul>
         </li>
+        <li class="dropdown"><a href="#"><span>Mon Compte</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+                <li><a href="{{ path('user_profile') }}">Mon Profile</a></li>
+                {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                    <li><a class="nav-link scrollto" href="{{ path('appointment_create') }}">Ajouter des disponibilités</a></li>
+                    <li><a class="nav-link scrollto" href="{{ path('appointment_index') }}">Mes rendez-vous / Mes Disponibilités</a></li>
+                {% endif %}
+                {% if (is_granted("ROLE_PATIENT")) %}
+                    <li><a class="nav-link scrollto" href="{{ path('appointment_index') }}">Mes rendez-vous</a></li>
+                {% endif %}
+                <li><a class="nav-link scrollto" href="{{ path('app_logout') }}">Deconnexion</a></li>
+            </ul>
+        </li>
         {% if is_granted("ROLE_ADMIN") %}
             <li><a class="nav-link scrollto" href="{{ path('admin_home') }}">Administration</a></li>
         {% endif %}
-        <li><a class="nav-link scrollto" href="{{ path('app_logout') }}">Deconnexion</a></li>
     {% endif %}
 
     </ul>
