@@ -1,0 +1,136 @@
+body {
+    font-family: "Arial", sans-serif;
+    color: #000000;
+    background: #FAE6D5;
+}
+
+a {
+    color: #224F9D;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #38AAE0;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Arial", sans-serif;
+}
+
+p {
+    font-family: "Arial", sans-serif;
+}
+
+#header {
+    background: #FAE6D5;
+    transition: all 0.5s;
+    z-index: 997;
+    padding: 15px 0;
+    top: 0px;
+    box-shadow: 0px 2px 15px rgba(25, 119, 204, 0.1);
+}
+
+#header.header-scrolled {
+    top: 0;
+}
+
+#header .logo {
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-family: "Arial", sans-serif;
+}
+
+#header .logo a {
+    color: #2c4964;
+}
+
+#header .logo img {
+    max-height: 40px;
+}
+
+.almo-font {
+    font-family: "Arial", sans-serif;
+    color: #224F9D;
+}
+
+.almo-intro1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #224F9D;
+}
+
+.almo-intro2 {
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    color: #224F9D;
+}
+
+.almo-navbar {
+    font-weight: bold;
+    color: #224F9D;
+}
+
+.almo-nav-link {
+    font-weight: bold;
+    color: #224F9D;
+}
+
+.almo-nav-link:hover {
+    font-weight: bold;
+    color: #38AAE0;
+}
+
+.almo-background-color {
+    color: #FAE6D5;
+}
+
+.almo-color-white {
+    color: #FFFFFF;
+}
+
+.almo-color-light-brown {
+    color: #FAE6D5;
+}
+
+.almo-color-blue {
+    color: #224F9D;
+}
+
+.almo-color-light-blue {
+    color: #38AAE0;
+}
+
+.almo-color-dark-blue {
+    color: #00075F;
+}
+
+.almo-color-purple {
+    color: #28225B;
+}
+
+.almo-color-grey {
+    color: #707070;
+}
+
+.almo-color-yellow {
+    color: #FBE910;
+}
+
+.btn-primary {
+    background-color: #38AAE0;
+}
+
+.btn-secondary {
+    background-color: #28225B;
+}

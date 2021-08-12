@@ -134,6 +134,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $webinarReservations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Information::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $information;
+
     
 
         
@@ -148,6 +153,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->reportCreatedBy = new ArrayCollection();
         $this->reportPatient = new ArrayCollection();
         $this->webinarReservations = new ArrayCollection();
+        $this->information = new ArrayCollection();
     }
 
     public function __toString()
@@ -594,6 +600,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->webinarReservations->removeElement($webinarReservation)) {
             $webinarReservation->removeReservedBy($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Information[]
+     */
+    public function getInformation(): Collection
+    {
+        return $this->information;
+    }
+
+    public function addInformation(Information $information): self
+    {
+        if (!$this->information->contains($information)) {
+            $this->information[] = $information;
+            $information->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInformation(Information $information): self
+    {
+        if ($this->information->removeElement($information)) {
+            // set the owning side to null (unless already changed)
+            if ($information->getUser() === $this) {
+                $information->setUser(null);
+            }
         }
 
         return $this;

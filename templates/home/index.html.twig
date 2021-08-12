@@ -8,21 +8,7 @@
         <div style="height: 10rem">
         </div>
 
-        <section id="services" class="services">
-            <div style="height: 100%;">
-                <h1 class="text-center" style="color:#224F9D; font-weight: bold;">Almo</h1>
-                <br>
-                <p class="text-center" style="color:#224F9D; font-weight: bold;">Almo est une platforme en ligne dédiée à la santé mentale des personnes atteintes de cancer</p>
-                <p class="text-center" style="color:#224F9D; font-weight: bold;">______________</p>
-                <br>
-                <p style="color:#224F9D;">
-                    Grâce à Almo, où que vous soyez en France, vous pouvez accéder 24h/24 et 7j/7 à des réponses concrètes, 
-                    adaptées et personnalisées. Avec nos coaches et praticiens, profitez des bienfaits de l’hypnose, de l’EMDR, de la 
-                    méditation de pleine conscience, du yoga thérapeutique, de la sexologie… ou de simples consultations de 
-                    psychologie pour vous ou vos proches.
-                </p>    
-            </div>
-        </section><!-- End Services Section -->
+        
 
     
         {% if is_granted("ROLE_USER") %}
@@ -107,6 +93,23 @@
                     <a class="btn btn-primary text-uppercase" href="{{ path('webinar_index') }}">Afficher tout les webinars</a>
                 </div>
                 
+            </section><!-- End Services Section -->
+        {% else %}
+            <section id="services" class="services">
+                <div class="text-center">
+                    <img  src="{{ asset('almo/img/logo_home.png') }}">
+                </div>
+                <div>
+                    <div class="text-center almo-intro1">
+                        <br>
+                        <p>{{ almo_intro_1.content | raw }}</p>
+                        <p>______________</p>
+                        <br>
+                    </div>
+                    <div class="text-left almo-intro2" >
+                        <p>{{ almo_intro_2.content | raw }}</p>    
+                    </div>
+                </div>
             </section><!-- End Services Section -->
         {% endif %}
 

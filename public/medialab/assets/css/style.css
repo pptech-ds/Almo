@@ -279,7 +279,8 @@ h6 {
     align-items: center;
     justify-content: space-between;
     font-size: 14px;
-    color: #2c4964;
+    font-weight: bold;
+    color: #224F9D;
     white-space: nowrap;
     transition: 0.3s;
     border-bottom: 2px solid #FAE6D5;

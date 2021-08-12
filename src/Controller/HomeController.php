@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Ressource;
 use App\Entity\RessourceCategory;
+use App\Repository\InformationRepository;
 use App\Repository\WebinarRepository;
 use App\Repository\RessourceRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(RessourceRepository $ressourceRepository, WebinarRepository $webinarRepository): Response
+    public function index(RessourceRepository $ressourceRepository, WebinarRepository $webinarRepository, InformationRepository $informationRepository): Response
     {
         $documents = $ressourceRepository->findLastRessourcesByCategory('Document', 3);
         // dd($documents);
@@ -29,12 +30,22 @@ class HomeController extends AbstractController
             3
         );
 
-        // dd($articles);
+        $almo_intro_1 = $informationRepository->findOneBy([
+            'title' => 'almo_intro_1'
+        ]);
+
+        $almo_intro_2 = $informationRepository->findOneBy([
+            'title' => 'almo_intro_2'
+        ]);
+
+        // dd($almo_intro_1);
 
         return $this->render('home/index.html.twig', [
             'documents' => $documents,
             'articles' => $articles,
             'webinars' => $webinars,
+            'almo_intro_1' => $almo_intro_1,
+            'almo_intro_2' => $almo_intro_2,
         ]);
     }
 
