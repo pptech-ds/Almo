@@ -49,7 +49,19 @@ class HomeController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/experiment", name="experiment")
+     */
+    public function experiment(RessourceRepository $ressourceRepository, WebinarRepository $webinarRepository, InformationRepository $informationRepository): Response
+    {
+        $almo_experiment = $informationRepository->findOneBy([
+            'title' => 'almo_experiment'
+        ]);
 
+        return $this->render('home/experiment.html.twig', [
+            'experiment' => $almo_experiment,
+        ]);
+    }
 
     /**
      * @Route("/error_405", name="error_405")

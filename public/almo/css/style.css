@@ -1,7 +1,7 @@
 body {
     font-family: "Arial", sans-serif;
     color: #000000;
-    background: #FAE6D5;
+    /* background: #FAE6D5; */
 }
 
 a {
@@ -58,6 +58,13 @@ p {
     max-height: 40px;
 }
 
+.almo-chatbot-p {
+    font-family: "Arial", sans-serif;
+    color: #224F9D;
+    font-size: 12px;
+    font-weight: bold;
+}
+
 .almo-font {
     font-family: "Arial", sans-serif;
     color: #224F9D;
@@ -68,6 +75,88 @@ p {
     font-size: 20px;
     font-weight: bold;
     color: #224F9D;
+}
+
+.almo-image-align-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.almo-card-title {
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #28225B;
+}
+
+.almo-card-border {
+    border: 2px solid #224F9D;
+    border-radius: 25px;
+    /* padding: 10px; */
+    /* margin: 20px; */
+}
+
+.almo-card-quick-access {
+    text-align: center;
+    color: #28225B;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #224F9D;
+    border-radius: 25px;
+    height: 200px;
+}
+
+.almo-card-quick-access:hover {
+    background-color: #38AAE0;
+}
+
+.almo-card-title-experiment {
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #FBE910;
+}
+
+.almo-card-p-experiment {
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.almo-card-experiment {
+    text-align: center;
+    color: #28225B;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #224F9D;
+    border-radius: 25px;
+    height: 200px;
+    background-color: #28225B;
+}
+
+.almo-card-experiment:hover {
+    background-color: #38AAE0;
+}
+
+.almo-card-article {
+    text-align: center;
+    color: #28225B;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #224F9D;
+    border-radius: 5px;
+    height: 450px;
+}
+
+.almo-card-article:hover {
+    background-color: #38AAE0;
 }
 
 .almo-intro2 {
@@ -92,7 +181,11 @@ p {
 }
 
 .almo-background-color {
-    color: #FAE6D5;
+    background-color: #FAE6D5;
+}
+
+.almo-background-color-article {
+    background-color: #ffffff;
 }
 
 .almo-color-white {

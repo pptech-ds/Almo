@@ -3,99 +3,117 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
+    {% if is_granted("ROLE_USER") %}
     
-    <div class="container">
-        <div style="height: 10rem">
+        <div class="almo-background-color">
+            <div style="height: 15rem">
+            </div>
+
+            <div class="container">
+            
+                <div class="row mb-5">
+                    <div class="col-lg-3 col-md-6 mb-2">
+                        <a href="{{ path('appointment_index') }}">
+                            <div class="card almo-card-quick-access">
+                                <div class="card-body">
+                                    <h5 class="card-title almo-card-title">Mes rendez-vous et mes activités prévus</h5>
+                                    <img src="{{ asset('almo/img/calendar.png') }}">
+                                    
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="col-lg-3 col-md-6 mb-2">
+                        <a href="{{ path('webinar_index') }}">
+                            <div class="card almo-card-quick-access">
+                                <div class="card-body">
+                                    <h5 class="card-title almo-card-title">Les webinars à venir</h5>
+                                    <img src="{{ asset('almo/img/webinar.png') }}">
+                                    <p>Poser des questions</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="col-lg-3 col-md-6 mb-2">
+                        <a href="{{ path('appointment_index') }}">
+                            <div class="card almo-card-quick-access">
+                                <div class="card-body">
+                                    <h5 class="card-title almo-card-title">Mes rendez-vous et mes activités passés</h5>
+                                    <img src="{{ asset('almo/img/rdv.png') }}">
+                                    <p>Donner mon avis</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="col-lg-3 col-md-6 mb-2">
+                        <a href="{{ path('home') }}">
+                            <div class="card almo-card-experiment">
+                                <div class="card-body">
+                                    <h5 class="card-title almo-card-title-experiment">Tout savoir sur l’expérimentation</h5>
+                                    <p class="almo-card-p-experiment">A quoi ça sert ?<br> Qui participe ?<br> Comment ça marche ?<br> …</p>
+                                    
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+                {# <div style="height: 5rem">
+                </div>    #}
+            </div>
         </div>
 
-        
-
-    
-        {% if is_granted("ROLE_USER") %}
-            <section id="services" class="services">
-                
-                <div class="section-title">
-                    <h2>Nos derniers articles</h2>
-                </div>
-
+        <div class="almo-background-color-article">            
+            <div class="container">
+                <div style="height: 2rem">
+                </div>   
                 <div class="row">
-                    {% for article in articles %}
-                        <div class="col-lg-4 col-md-6" style="height: 35rem;">
-                            <div class="icon-box">
-                                <h4><a href="{{ path('article_view', {slug: article.slug }) }}">{{article.title}}</a></h4>
-                                <img src={{ article.image }} alt="" style="width: 100%">
-                                {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
+                    
+                    <div class="section-title">
+                        <h2>Nos derniers articles</h2>
+                    </div>
+
+                    
+                        {% for article in articles %}
+                            <div class="col-lg-4 col-md-6 mb-2">
+                                <a href="{{ path('article_view', {slug: article.slug }) }}">
+                                    <div class="card almo-card-article">
+                                        <div class="card-body">
+                                            <img src={{ article.image }} alt="" style="width: 100%">
+                                            <h5 class="card-title almo-card-title">{{article.title}}</h5>
+                                            <p class="card-text">{{ article.content | u.truncate(100, '...') | raw }}</p>
+                                        </div>
+                                        {# <div class="card-body">
+                                            <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':article.user.id})}}">{{article.user.civility}} {{article.user.firstname}} {{article.user.lastname}}</a> {{article.createdAt | ago}}</p>
+                                        </div> #}
+                                    </div>
+                                </a>
                             </div>
-                            <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':article.user.id})}}">{{article.user.civility}} {{article.user.firstname}} {{article.user.lastname}}</a> {{article.createdAt | ago}}</p>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
 
-                </div>
+                    
 
-                <div class="h-100 row align-items-center">
-                    <a class="btn btn-primary text-uppercase" href="{{ path('article_index') }}">Afficher tout les articles</a>
+                    <div class="d-flex justify-content-center my-5">
+                        <a class="btn btn-primary text-uppercase" href="{{ path('article_index') }}">Afficher tout les articles</a>
+                    </div>
+                    {# <div style="height: 5rem">
+                    </div> #}
                 </div>
+            </div>
+        </div>
+
             
-            </section><!-- End Services Section -->
-
-            <!-- ======= Services Section ======= -->
-            <section id="services" class="services">
-                
-                <div class="section-title">
-                    <h2>Nos derniers documents</h2>
-                </div>
-
-                <div class="row">
-                    {% for document in documents %}
-                        <div class="col-lg-4 col-md-6" style="height: 35rem;">
-                            <div class="icon-box">
-                                <h4><a href="{{ path('document_view', {slug: document.slug }) }}">{{document.title}}</a></h4>
-                                <img src={{ document.image }} alt="" style="width: 100%">
-                                {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
-                                
-                            </div>
-                            <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':document.user.id})}}">{{document.user.civility}} {{document.user.firstname}} {{document.user.lastname}}</a> {{document.createdAt | ago}}</p>
-                        </div>
-                    {% endfor %}
-
-                </div>
-
-                <div class="h-100 row align-items-center">
-                    <a class="btn btn-primary text-uppercase" href="{{ path('document_index') }}">Afficher tout les documents</a>
-                </div>
-                
-            </section><!-- End Services Section -->
-
-
-            <!-- ======= Services Section ======= -->
-            <section id="services" class="services">
-
-                <div class="section-title">
-                    <h2>Nos derniers webinars</h2>
-                </div>
-
-                <div class="row">
-                    {% for webinar in webinars %}
-                        <div class="col-lg-4 col-md-6" style="height: 35rem;">
-                            <div class="icon-box">
-                                <h4><a href="{{ path('webinar_view', {slug: webinar.slug }) }}">{{webinar.title}}</a></h4>
-                                <img src={{ webinar.image }} alt="" style="width: 100%">
-                                {# <p>{{article.content | u.truncate(150, '...') | raw}}</p> #}
-                                
-                            </div>
-                            <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':webinar.user.id})}}">{{webinar.user.civility}} {{webinar.user.firstname}} {{webinar.user.lastname}}</a> {{webinar.createdAt | ago}}</p>
-                        </div>
-                    {% endfor %}
-
-                </div>
-
-                <div class="h-100 row align-items-center">
-                    <a class="btn btn-primary text-uppercase" href="{{ path('webinar_index') }}">Afficher tout les webinars</a>
-                </div>
-                
-            </section><!-- End Services Section -->
-        {% else %}
-            <section id="services" class="services">
+    {% else %}
+        <div class="almo-background-color">
+            <div style="height: 15rem">
+            </div>
+            <div class="container">
                 <div class="text-center">
                     <img  src="{{ asset('almo/img/logo_home.png') }}">
                 </div>
@@ -110,10 +128,10 @@
                         <p>{{ almo_intro_2.content | raw }}</p>    
                     </div>
                 </div>
-            </section><!-- End Services Section -->
-        {% endif %}
+            </div>
+        </div>
+    {% endif %}
 
-    </div>
 
     
 {% endblock %}
