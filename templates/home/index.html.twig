@@ -10,62 +10,109 @@
             </div>
 
             <div class="container">
-            
-                <div class="row mb-5">
-                    <div class="col-lg-3 col-md-6 mb-2">
-                        <a href="{{ path('appointment_index') }}">
-                            <div class="card almo-card-quick-access">
-                                <div class="card-body">
-                                    <h5 class="card-title almo-card-title">Mes rendez-vous et mes activités prévus</h5>
-                                    <img src="{{ asset('almo/img/calendar.png') }}">
-                                    
+
+                {% if (is_granted("ROLE_PATIENT") or is_granted("ROLE_ADMIN")) %}
+                    <div class="row mb-5">
+                        
+                        <div class="col-lg-3 col-md-6 mb-2">
+                            <a href="{{ path('appointment_index') }}">
+                                <div class="card almo-card-quick-access">
+                                    <div class="card-body">
+                                        <h5 class="card-title almo-card-title">Mes rendez-vous et mes activités prévus</h5>
+                                        <img src="{{ asset('almo/img/calendar.png') }}">
+                                        
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
 
 
-                    <div class="col-lg-3 col-md-6 mb-2">
-                        <a href="{{ path('webinar_index') }}">
-                            <div class="card almo-card-quick-access">
-                                <div class="card-body">
-                                    <h5 class="card-title almo-card-title">Les webinars à venir</h5>
-                                    <img src="{{ asset('almo/img/webinar.png') }}">
-                                    <p>Poser des questions</p>
+                        <div class="col-lg-3 col-md-6 mb-2">
+                            <a href="{{ path('webinar_index') }}">
+                                <div class="card almo-card-quick-access">
+                                    <div class="card-body">
+                                        <h5 class="card-title almo-card-title">Les webinars à venir</h5>
+                                        <img src="{{ asset('almo/img/webinar.png') }}">
+                                        <p>Poser des questions</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
 
 
-                    <div class="col-lg-3 col-md-6 mb-2">
-                        <a href="{{ path('appointment_index') }}">
-                            <div class="card almo-card-quick-access">
-                                <div class="card-body">
-                                    <h5 class="card-title almo-card-title">Mes rendez-vous et mes activités passés</h5>
-                                    <img src="{{ asset('almo/img/rdv.png') }}">
-                                    <p>Donner mon avis</p>
+                        <div class="col-lg-3 col-md-6 mb-2">
+                            <a href="{{ path('appointment_index') }}">
+                                <div class="card almo-card-quick-access">
+                                    <div class="card-body">
+                                        <h5 class="card-title almo-card-title">Mes rendez-vous et mes activités passés</h5>
+                                        <img src="{{ asset('almo/img/rdv.png') }}">
+                                        <p>Donner mon avis</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
 
 
-                    <div class="col-lg-3 col-md-6 mb-2">
-                        <a href="{{ path('home') }}">
-                            <div class="card almo-card-experiment">
-                                <div class="card-body">
-                                    <h5 class="card-title almo-card-title-experiment">Tout savoir sur l’expérimentation</h5>
-                                    <p class="almo-card-p-experiment">A quoi ça sert ?<br> Qui participe ?<br> Comment ça marche ?<br> …</p>
-                                    
+                        <div class="col-lg-3 col-md-6 mb-2">
+                            <a href="{{ path('home') }}">
+                                <div class="card almo-card-experiment">
+                                    <div class="card-body">
+                                        <h5 class="card-title almo-card-title-experiment">Tout savoir sur l’expérimentation</h5>
+                                        <p class="almo-card-p-experiment">A quoi ça sert ?<br> Qui participe ?<br> Comment ça marche ?<br> …</p>
+                                        
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
 
-                </div>
-                {# <div style="height: 5rem">
-                </div>    #}
+                    </div>
+                {% endif %}
+
+
+                {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO") or is_granted("ROLE_ADMIN")) %}
+                    <div class="row mb-5">
+                        
+                        <div class="col-lg-4 col-md-6 mb-2">
+                            <a href="{{ path('appointment_index') }}">
+                                <div class="card almo-card-quick-access">
+                                    <div class="card-body">
+                                        <h5 class="card-title almo-card-title">Mes rendez-vous</h5>
+                                        <img src="{{ asset('almo/img/calendar.png') }}">
+                                        
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+
+                        <div class="col-lg-4 col-md-6 mb-2">
+                            <a href="{{ path('appointment_create') }}">
+                                <div class="card almo-card-quick-access">
+                                    <div class="card-body">
+                                        <h5 class="card-title almo-card-title">Mes disponibilités</h5>
+                                        <img src="{{ asset('almo/img/calendar.png') }}">
+                                        <p>Gerer mes disponibilités</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+
+                        <div class="col-lg-4 col-md-6 mb-2">
+                            <a href="{{ path('appointment_index') }}">
+                                <div class="card almo-card-quick-access">
+                                    <div class="card-body">
+                                        <h5 class="card-title almo-card-title">Mes rendez-vous passés</h5>
+                                        <img src="{{ asset('almo/img/rdv.png') }}">
+                                        <p>Gerer mes comptes rendus</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                {% endif %}
+                
             </div>
         </div>
 

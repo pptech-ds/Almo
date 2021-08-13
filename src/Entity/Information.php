@@ -44,7 +44,7 @@ class Information
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="information")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private $createdBy;
 
     public function getId(): ?int
     {
@@ -99,14 +99,14 @@ class Information
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getCreatedBy(): ?User
     {
-        return $this->user;
+        return $this->createdBy;
     }
 
-    public function setUser(?User $user): self
+    public function setCreatedBy(?User $createdBy): self
     {
-        $this->user = $user;
+        $this->createdBy = $createdBy;
 
         return $this;
     }
