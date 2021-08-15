@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\User;
 use App\Entity\Speciality;
 use App\Entity\Appointment;
@@ -56,6 +57,128 @@ class AppointmentController extends AbstractController
 
         return $this->render('appointment/index.html.twig', [
             'reservations' => $reservationsRender,
+            'disponibilities' => $disponibilities,
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/appointment/future", name="appointment_future")
+     */
+    public function appointmentFuture(UserInterface $user, AppointmentRepository $appointmentRepository): Response
+    {
+        // dd($user->getAppointments());
+
+        // dd($user->getDisponibilities());
+
+        $reservations = [];
+        $reservationsRender = [];
+        $disponibilities = [];
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            foreach($appointmentRepository->findBy(['createdBy' => $user]) as $appointment){
+                if($appointment->getReservedBy() != null) {
+                    $reservations[] = $appointment;
+                } else {
+                    $disponibilities[] = $appointment;
+                }
+            }
+        } else {
+            $reservations[] = $user->getReservations();
+        }
+
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            $reservationsRender = $reservations;
+        } else {
+            $reservationsRender = $reservations[0];
+        }
+
+
+        $reservationsFuture = [];
+        $currentDate = new DateTime(date('Y-m-d H:m:s'));
+
+        foreach($reservationsRender as $reservationRender){
+            $interval = $currentDate->diff($reservationRender->getStartTime());
+            if($interval->format('%R%a') > 0){
+                $reservationsFuture[] = $reservationRender;
+            }
+        }
+
+        return $this->render('appointment/future.html.twig', [
+            'reservations' => $reservationsFuture,
+            'disponibilities' => $disponibilities,
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/appointment/past", name="appointment_past")
+     */
+    public function appointmentPast(UserInterface $user, AppointmentRepository $appointmentRepository): Response
+    {
+        // dd($user->getAppointments());
+
+        // dd($user->getDisponibilities());
+
+        $reservations = [];
+        $reservationsRender = [];
+        $disponibilities = [];
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            foreach($appointmentRepository->findBy(['createdBy' => $user]) as $appointment){
+                if($appointment->getReservedBy() != null) {
+                    $reservations[] = $appointment;
+                } else {
+                    $disponibilities[] = $appointment;
+                }
+            }
+        } else {
+            $reservations[] = $user->getReservations();
+        }
+
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            $reservationsRender = $reservations;
+        } else {
+            $reservationsRender = $reservations[0];
+        }
+
+        // $origin = new DateTime('2009-10-11');
+        // $target = new DateTime('2009-10-13');
+        // $interval = $origin->diff($target);
+        // echo $interval->format('%R%a days');
+
+        // dd($reservations[0][0]->getStartTime());
+        // dd($interval->format('%R%a days'));
+        // dd(date('Y-m-d H:m:s'));
+
+        // $origin = new DateTime(date('Y-m-d H:m:s'));
+        // // $target = new DateTime('2009-10-13');
+        // $interval = $origin->diff($reservationsRender[0]->getStartTime());
+
+        // dd($interval->format('%R%a'));
+
+        // if($interval->format('%R%a') < 0) {
+        //     dd($interval->format('%R%a'));
+        // } else {
+        //     dd('over 0');
+        // }
+
+        $reservationsPast = [];
+        $currentDate = new DateTime(date('Y-m-d H:m:s'));
+
+        foreach($reservationsRender as $reservationRender){
+            $interval = $currentDate->diff($reservationRender->getStartTime());
+            if($interval->format('%R%a') < 0){
+                $reservationsPast[] = $reservationRender;
+            }
+        }
+
+        return $this->render('appointment/past.html.twig', [
+            'reservations' => $reservationsPast,
             'disponibilities' => $disponibilities,
         ]);
     }

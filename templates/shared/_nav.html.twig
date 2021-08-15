@@ -11,8 +11,8 @@
                 <li class="dropdown"><a class="nav-link scrollto" href="#"><span>MES RV & ACTIVITES</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a class="nav-link scrollto" href="{{ path('speciality_index') }}">PRENDRE RV</a></li>
-                        <li><a class="nav-link scrollto" href="{{ path('appointment_index') }}">MES RV ET ACTIVITES PREVUS</a></li>
-                        <li><a class="nav-link scrollto" href="{{ path('appointment_index') }}">MES RV ET ACTIVITES PASSES</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('appointment_future') }}">MES RV ET ACTIVITES PREVUS</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('appointment_past') }}">MES RV ET ACTIVITES PASSES</a></li>
                     </ul>
                 </li>
             {% endif %}
@@ -20,8 +20,8 @@
                 <li class="dropdown"><a class="nav-link scrollto" href="#"><span>MES RV</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a class="nav-link scrollto" href="{{ path('appointment_create') }}">CREER UNE DISPO</a></li>
-                        <li><a class="nav-link scrollto" href="{{ path('appointment_index') }}">MES RV PREVUS</a></li>
-                        <li><a class="nav-link scrollto" href="{{ path('appointment_index') }}">MES RV PASSES</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('appointment_future') }}">MES RV PREVUS</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('appointment_past') }}">MES RV PASSES</a></li>
                     </ul>
                 </li>
             {% endif %}

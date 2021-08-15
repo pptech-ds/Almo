@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes rendez-vous et mes disponibilités{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div style="height: 10rem">
+        </div>
+
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services">
+
+            {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                <div class="section-title">
+                    <h2>Mes disponibilités</h2>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th hidden>RDV</th>
+                                <th hidden>Actions</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th hidden>RDV</th>
+                                <th hidden>Actions</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for disponibility in disponibilities %}
+                                {# {{ dump(disponibility) }} #}
+                                <tr>
+                                    <td>
+                                        Ma disponibilité {{ disponibility.name }} du {{ disponibility.startTime | date("Y/m/d") }} à {{ disponibility.startTime | date('H:i:s') }}
+                                    </td>
+                                    <td>
+                                        <a href="{{path('appointment_update', {'id':disponibility.id})}}" type="button" class="btn btn-primary">Modifier</a>
+                                        <a href="" class="btn btn-danger modal-trigger" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="{{ disponibility.id }}" data-name="{{ disponibility.name }}">Supprimer</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+        
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+
+            <div class="section-title">
+                <h2>Mes rendez-vous</h2>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th hidden>RDV</th>
+                            <th hidden>Actions</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th hidden>RDV</th>
+                            <th hidden>Actions</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for reservation in reservations %}
+                            {# {{ dump(reservation) }}
+                            {{ dump(reservation.report) }} #}
+                            <tr>
+                                <td> 
+                                    Mon rendez-vous {{ reservation.createdBy.speciality.name }} 
+                                    {% if (reservation.isVisio == true) %}
+                                        en visio 
+                                    {% else %}
+                                        en présentiel 
+                                    {% endif %}
+                                    {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                                        {# avec {{ reservation.reservedBy.civility }} {{ reservation.reservedBy.firstname }} {{ reservation.reservedBy.lastname }} #}
+                                        avec <a href="{{path('user_biography', {'id':reservation.reservedBy.id})}}">{{ reservation.reservedBy.civility }} {{ reservation.reservedBy.firstname }} {{ reservation.reservedBy.lastname }}</a>
+                                    {% endif %}
+                                    {% if (is_granted("ROLE_PATIENT")) %}
+                                        avec <a href="{{path('user_biography', {'id':reservation.createdBy.id})}}">{{ reservation.createdBy.civility }} {{ reservation.createdBy.firstname }} {{ reservation.createdBy.lastname }}</a>
+                                    {% endif %}
+                                    le {{ reservation.startTime | date("Y/m/d") }} à {{ reservation.startTime | date('H:i:s') }}
+                                    
+                                </td>
+                                <td>
+                                <a href="{{path('appointment_view', {'id':reservation.id})}}" type="button" class="btn btn-primary">Voir des détails du RDV</a>
+                                {# {{ dump(reservation) }} #}
+                                {% if (reservation.report == null) %}
+                                    {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                                        <a href="{{path('report_add', {'proId':reservation.createdBy.id, 'patientId': reservation.reservedBy.id,  'appointmentId': reservation.id})}}" type="button" class="btn btn-primary">Ajouter un compte-rendu</a>
+                                    {% endif %}
+                                {% else %}
+                                    {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                                        <a href="{{path('report_update', {'id': reservation.id})}}" type="button" class="btn btn-primary">Modifier un compte-rendu</a>
+                                    {% endif %}
+
+                                    {% if (is_granted("ROLE_PATIENT")) %}
+                                        <a href="{{path('report_view', {'id': reservation.id})}}" type="button" class="btn btn-primary">Lire un compte-rendu</a>
+                                    {% endif %}
+                                {% endif %}
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+    
+                    </tbody>
+                </table>
+            </div>
+
+        </section><!-- End Services Section -->
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Supprimer une disponibilité</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <a href="" class="btn btn-primary">Supprimer</a>
+                </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        window.onload = () => {
+            
+            let btdeletes = document.querySelectorAll(".modal-trigger")
+            for(let btdelete of btdeletes) {
+                btdelete.addEventListener("click", function(){
+                    console.log(`${this.dataset}`)
+                    document.querySelector(".modal-footer a").href=`/appointment/delete/${this.dataset.id}`
+                    document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer cette ressource "${this.dataset.name}"`
+                })
+            }
+        }
+    </script>
+{% endblock %}
