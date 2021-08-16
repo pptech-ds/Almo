@@ -177,6 +177,15 @@ class AppointmentController extends AbstractController
             }
         }
 
+        // setlocale(LC_TIME, 'fr_FR.UTF8', 'fr.UTF8', 'fr_FR.UTF-8', 'fr.UTF-8');
+
+        // // $dateString = $reservationsPast[0]->getStartTime()->format('Y-m-d H:m:s');
+        // $dateString = $reservationsPast[0]->getStartTime();
+        // $timestamp = $dateString->getTimestamp();
+        // $dateformatee = strftime('%A %d %B %Y',$timestamp);
+
+        // dd($dateformatee);
+
         return $this->render('appointment/past.html.twig', [
             'reservations' => $reservationsPast,
             'disponibilities' => $disponibilities,

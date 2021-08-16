@@ -27,6 +27,11 @@ p {
     font-family: "Arial", sans-serif;
 }
 
+hr {
+    width: 100%;
+    border-top: 2px solid #28225B!important;
+}
+
 #header {
     background: #FAE6D5;
     transition: all 0.5s;
@@ -56,6 +61,26 @@ p {
 
 #header .logo img {
     max-height: 40px;
+}
+
+.almo-title-section {
+    font-family: "Arial", sans-serif;
+    color: #28225B;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.almo-rdv-datetime {
+    font-family: "Arial", sans-serif;
+    color: #28225B;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.almo-rdv-content {
+    font-family: "Arial", sans-serif;
+    color: #28225B;
+    font-size: 16px;
 }
 
 .almo-chatbot-p {
@@ -221,9 +246,13 @@ p {
 }
 
 .btn-primary {
-    background-color: #38AAE0;
+    background-color: #38AAE0!important;
+    border-radius: 24px!important;
+    border-color: #38AAE0!important;
 }
 
 .btn-secondary {
-    background-color: #28225B;
+    background-color: #28225B!important;
+    border-radius: 24px!important;
+    border-color: #28225B!important;
 }

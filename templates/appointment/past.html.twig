@@ -4,123 +4,67 @@
 
 {% block body %}
 
-    <div class="container">
-
+    <div class="almo-background-color-article">
         <div style="height: 15rem">
         </div>
-
-        <!-- ======= Services Section ======= -->
-        <section id="services" class="services">
-
-            {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
-                <div class="section-title">
-                    <h2>Mes disponibilités</h2>
-                </div>
-
-                
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th hidden>RDV</th>
-                                <th hidden>Actions</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th hidden>RDV</th>
-                                <th hidden>Actions</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            {% for disponibility in disponibilities %}
-                                {# {{ dump(disponibility) }} #}
-                                <tr>
-                                    <td>
-                                        Ma disponibilité {{ disponibility.name }} du {{ disponibility.startTime | date("Y/m/d") }} à {{ disponibility.startTime | date('H:i:s') }}
-                                    </td>
-                                    <td>
-                                        <a href="{{path('appointment_update', {'id':disponibility.id})}}" type="button" class="btn btn-primary">Modifier</a>
-                                        <a href="" class="btn btn-danger modal-trigger" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="{{ disponibility.id }}" data-name="{{ disponibility.name }}">Supprimer</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-        
-                        </tbody>
-                    </table>
-                </div>
-            {% endif %}
-
-            <div class="section-title">
-                <h2>Mes rendez-vous</h2>
+        <div class="container"> 
+            <div class="row">
+                    <div class="almo-title-section">
+                        <img src="{{ asset('almo/img/rdv.png') }}" height="50%"> Mes rendez-vous et activités passées
+                    </div>
             </div>
 
-            {# {{ "now"|date("m/d/Y H:m:s") }} #}
+            {% for reservation in reservations %}
+                <div class="row">
+                    <div class="col-2 almo-rdv-datetime">
+                        {# {{ reservation.startTime | date("l dS F") }} #}
+                        {{ reservation.startTime | format_datetime(locale='fr',pattern="EEEE dd MMMM") | capitalize}}
+                    </div>
+                    <div class="col-1 almo-rdv-datetime">
+                        {{ reservation.startTime | date("H") }} h {{ reservation.startTime | date("m") }}
+                        {# {{ reservation.startTime | localizeddate("H") }} h {{ reservation.startTime | date("m") }} #}
+                    </div>
+                    <div class="col-2 almo-rdv-content">
+                        {{ reservation.name }}
+                    </div>
+                    <div class="col-3 almo-rdv-content">
+                        {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.reservedBy.id})}}">{{ reservation.reservedBy.civility }} {{ reservation.reservedBy.firstname }} {{ reservation.reservedBy.lastname }}</a>
+                        {% endif %}
+                        {% if (is_granted("ROLE_PATIENT")) %}
+                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.createdBy.id})}}">{{ reservation.createdBy.civility }} {{ reservation.createdBy.firstname }} {{ reservation.createdBy.lastname }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-2 almo-rdv-content">
+                        {% if (reservation.isVisio == true) %}
+                            Téléconsultation 
+                        {% else %}
+                            En présentiel 
+                        {% endif %}
+                    </div>
+                    <div class="col-2">
+                        {% if (reservation.report == null) %}
+                            {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                                <a href="{{path('report_add', {'proId':reservation.createdBy.id, 'patientId': reservation.reservedBy.id,  'appointmentId': reservation.id})}}" type="button" class="btn btn-primary">Ajouter un compte-rendu</a>
+                            {% endif %}
+                        {% else %}
+                            {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                                <a href="{{path('report_update', {'id': reservation.id})}}" type="button" class="btn btn-primary">Modifier un compte-rendu</a>
+                            {% endif %}
 
-
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th hidden>RDV</th>
-                            <th hidden>Actions</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th hidden>RDV</th>
-                            <th hidden>Actions</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        {% for reservation in reservations %}
-                            {# {{ dump(reservation) }}
-                            {{ dump(reservation.report) }} #}
-                            <tr>
-                                <td> 
-                                    Mon rendez-vous {{ reservation.createdBy.speciality.name }} 
-                                    {% if (reservation.isVisio == true) %}
-                                        en visio 
-                                    {% else %}
-                                        en présentiel 
-                                    {% endif %}
-                                    {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
-                                        {# avec {{ reservation.reservedBy.civility }} {{ reservation.reservedBy.firstname }} {{ reservation.reservedBy.lastname }} #}
-                                        avec <a href="{{path('user_biography', {'id':reservation.reservedBy.id})}}">{{ reservation.reservedBy.civility }} {{ reservation.reservedBy.firstname }} {{ reservation.reservedBy.lastname }}</a>
-                                    {% endif %}
-                                    {% if (is_granted("ROLE_PATIENT")) %}
-                                        avec <a href="{{path('user_biography', {'id':reservation.createdBy.id})}}">{{ reservation.createdBy.civility }} {{ reservation.createdBy.firstname }} {{ reservation.createdBy.lastname }}</a>
-                                    {% endif %}
-                                    le {{ reservation.startTime | date("Y/m/d") }} à {{ reservation.startTime | date('H:i:s') }}
-                                    
-                                </td>
-                                <td>
-                                <a href="{{path('appointment_view', {'id':reservation.id})}}" type="button" class="btn btn-primary">Voir des détails du RDV</a>
-                                {# {{ dump(reservation) }} #}
-                                {% if (reservation.report == null) %}
-                                    {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
-                                        <a href="{{path('report_add', {'proId':reservation.createdBy.id, 'patientId': reservation.reservedBy.id,  'appointmentId': reservation.id})}}" type="button" class="btn btn-primary">Ajouter un compte-rendu</a>
-                                    {% endif %}
-                                {% else %}
-                                    {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
-                                        <a href="{{path('report_update', {'id': reservation.id})}}" type="button" class="btn btn-primary">Modifier un compte-rendu</a>
-                                    {% endif %}
-
-                                    {% if (is_granted("ROLE_PATIENT")) %}
-                                        <a href="{{path('report_view', {'id': reservation.id})}}" type="button" class="btn btn-primary">Lire un compte-rendu</a>
-                                    {% endif %}
-                                {% endif %}
-                                </td>
-
-                            </tr>
-                        {% endfor %}
+                            {% if (is_granted("ROLE_PATIENT")) %}
+                                <a href="{{path('report_view', {'id': reservation.id})}}" type="button" class="btn btn-primary">Lire un compte-rendu</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>  
+            {% endfor %}
+        </div>
+  </div>
+            
+        </div>
     
-                    </tbody>
-                </table>
-            </div>
-
-        </section><!-- End Services Section -->
-
 
 
         <!-- Modal -->
