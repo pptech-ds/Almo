@@ -54,7 +54,7 @@
 
 
                         <div class="col-lg-3 col-md-6 mb-2">
-                            <a href="{{ path('home') }}">
+                            <a href="{{ path('experiment') }}">
                                 <div class="card almo-card-experiment">
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title-experiment">Tout savoir sur l’expérimentation</h5>
@@ -72,33 +72,19 @@
                 {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO") or is_granted("ROLE_ADMIN")) %}
                     <div class="row mb-5">
                         
-                        <div class="col-lg-4 col-md-6 mb-2">
+                        <div class="col-lg-3 col-md-6 mb-2">
                             <a href="{{ path('appointment_future') }}">
                                 <div class="card almo-card-quick-access">
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Mes rendez-vous à venir</h5>
                                         <img src="{{ asset('almo/img/calendar.png') }}">
-                                        
+                                        <p>Contacter les patients si besoin</p>
                                     </div>
                                 </div>
                             </a>
                         </div>
 
-
-                        <div class="col-lg-4 col-md-6 mb-2">
-                            <a href="{{ path('appointment_create') }}">
-                                <div class="card almo-card-quick-access">
-                                    <div class="card-body">
-                                        <h5 class="card-title almo-card-title">Mes disponibilités</h5>
-                                        <img src="{{ asset('almo/img/calendar.png') }}">
-                                        <p>Gerer mes disponibilités</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="col-lg-4 col-md-6 mb-2">
+                        <div class="col-lg-3 col-md-6 mb-2">
                             <a href="{{ path('appointment_past') }}">
                                 <div class="card almo-card-quick-access">
                                     <div class="card-body">
@@ -109,6 +95,34 @@
                                 </div>
                             </a>
                         </div>
+
+
+                        <div class="col-lg-3 col-md-6 mb-2">
+                            <a href="{{ path('appointment_create') }}">
+                                <div class="card almo-card-quick-access">
+                                    <div class="card-body">
+                                        <h5 class="card-title almo-card-title">Créer mes disponibilités</h5>
+                                        <img src="{{ asset('almo/img/calendar.png') }}">
+                                        
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-2">
+                            <a href="{{ path('appointment_list') }}">
+                                <div class="card almo-card-quick-access">
+                                    <div class="card-body">
+                                        <h5 class="card-title almo-card-title">Voir mes disponibilités</h5>
+                                        <img src="{{ asset('almo/img/calendar.png') }}">
+                                        <p>Modifier, supprimer mes disponibilités</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+
+                        
 
                     </div>
                 {% endif %}

@@ -31,8 +31,8 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
         // dateTimeThisYear($max = 'now', $timezone = null)        // DateTime('2011-02-27 20:52:14', 'Africa/Lagos')
         // dateTimeThisMonth($max = 'now', $timezone = null)       // DateTime('2011-10-23 13:46:23', 'Antarctica/Vostok')
 
-        $date1 = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 09:00:00');
-        $date2 = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 10:00:00');
+        $date1 = DateTime::createFromFormat('Y-m-d H:i:s', '2021-08-28 09:00:00');
+        $date2 = DateTime::createFromFormat('Y-m-d H:i:s', '2021-08-28 10:00:00');
 
         for($i = 0; $i<40; $i++ ) {
             $user = $this->getReference('user_pro_'.$i);
@@ -43,7 +43,7 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
                 $disponility->setStartTime($date1);
                 $disponility->setEndTime($date2);
                 $disponility->setCreatedBy($user);
-                $disponility->setName($user->getCivility().' '.$user->getFirstname().' '.$user->getLastname().' '.$date1->format('Y-m-d H:i:s'));
+                $disponility->setName('RV '.$user->getSpecility());
                 if($j%2==0){
                     $disponility->setIsVisio(1);
                 } else {
