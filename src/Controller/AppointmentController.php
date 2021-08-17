@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\User;
 use App\Entity\Speciality;
 use App\Entity\Appointment;
@@ -63,6 +64,139 @@ class AppointmentController extends AbstractController
 
 
     /**
+     * @Route("/appointment/future", name="appointment_future")
+     */
+    public function appointmentFuture(UserInterface $user, AppointmentRepository $appointmentRepository): Response
+    {
+        // dd($user->getAppointments());
+
+        // dd($user->getDisponibilities());
+
+        $reservations = [];
+        $reservationsRender = [];
+        $disponibilities = [];
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            foreach($appointmentRepository->findBy(['createdBy' => $user]) as $appointment){
+                if($appointment->getReservedBy() != null) {
+                    $reservations[] = $appointment;
+                } else {
+                    $disponibilities[] = $appointment;
+                }
+            }
+        } else {
+            $reservations[] = $user->getReservations();
+        }
+
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            $reservationsRender = $reservations;
+        } else {
+            $reservationsRender = $reservations[0];
+        }
+
+
+        $reservationsFuture = [];
+        $currentDate = new DateTime(date('Y-m-d H:m:s'));
+
+        foreach($reservationsRender as $reservationRender){
+            $interval = $currentDate->diff($reservationRender->getStartTime());
+            if($interval->format('%R%a') > 0){
+                $reservationsFuture[] = $reservationRender;
+            }
+        }
+
+        // dd($reservationsFuture);
+
+        return $this->render('appointment/future.html.twig', [
+            'reservations' => $reservationsFuture,
+            'disponibilities' => $disponibilities,
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/appointment/past", name="appointment_past")
+     */
+    public function appointmentPast(UserInterface $user, AppointmentRepository $appointmentRepository): Response
+    {
+        // dd($user->getAppointments());
+
+        // dd($user->getDisponibilities());
+
+        $reservations = [];
+        $reservationsRender = [];
+        $disponibilities = [];
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            foreach($appointmentRepository->findBy(['createdBy' => $user]) as $appointment){
+                if($appointment->getReservedBy() != null) {
+                    $reservations[] = $appointment;
+                } else {
+                    $disponibilities[] = $appointment;
+                }
+            }
+        } else {
+            $reservations[] = $user->getReservations();
+        }
+
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            $reservationsRender = $reservations;
+        } else {
+            $reservationsRender = $reservations[0];
+        }
+
+        // $origin = new DateTime('2009-10-11');
+        // $target = new DateTime('2009-10-13');
+        // $interval = $origin->diff($target);
+        // echo $interval->format('%R%a days');
+
+        // dd($reservations[0][0]->getStartTime());
+        // dd($interval->format('%R%a days'));
+        // dd(date('Y-m-d H:m:s'));
+
+        // $origin = new DateTime(date('Y-m-d H:m:s'));
+        // // $target = new DateTime('2009-10-13');
+        // $interval = $origin->diff($reservationsRender[0]->getStartTime());
+
+        // dd($interval->format('%R%a'));
+
+        // if($interval->format('%R%a') < 0) {
+        //     dd($interval->format('%R%a'));
+        // } else {
+        //     dd('over 0');
+        // }
+
+        $reservationsPast = [];
+        $currentDate = new DateTime(date('Y-m-d H:m:s'));
+
+        foreach($reservationsRender as $reservationRender){
+            $interval = $currentDate->diff($reservationRender->getStartTime());
+            if($interval->format('%R%a') < 0){
+                $reservationsPast[] = $reservationRender;
+            }
+        }
+
+        // setlocale(LC_TIME, 'fr_FR.UTF8', 'fr.UTF8', 'fr_FR.UTF-8', 'fr.UTF-8');
+
+        // // $dateString = $reservationsPast[0]->getStartTime()->format('Y-m-d H:m:s');
+        // $dateString = $reservationsPast[0]->getStartTime();
+        // $timestamp = $dateString->getTimestamp();
+        // $dateformatee = strftime('%A %d %B %Y',$timestamp);
+
+        // dd($dateformatee);
+
+        return $this->render('appointment/past.html.twig', [
+            'reservations' => $reservationsPast,
+            'disponibilities' => $disponibilities,
+        ]);
+    }
+
+
+
+    /**
      * @Route("/appointment/view/{id}", name="appointment_view", requirements={"id"="\d+"})
      */
     public function appointmentView(Request $request, AppointmentRepository $appointmentRepository): Response
@@ -70,6 +204,27 @@ class AppointmentController extends AbstractController
         
         return $this->render('appointment/view.html.twig', [
             'reservation' => $appointmentRepository->findOneBy(['id' => $request->get('id')]),
+        ]);
+    }
+
+
+    /**
+     * @Route("/appointment/list", name="appointment_list")
+     */
+    public function appointmentList(UserInterface $user, Request $request, AppointmentRepository $appointmentRepository): Response
+    {
+        $disponibilities = [];
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            foreach($appointmentRepository->findBy(['createdBy' => $user]) as $appointment){
+                if($appointment->getReservedBy() == null) {
+                    $disponibilities[] = $appointment;
+                }
+            }
+        }
+
+        return $this->render('appointment/list.html.twig', [
+            'disponibilities' => $disponibilities,
         ]);
     }
 
@@ -96,7 +251,7 @@ class AppointmentController extends AbstractController
 
         $this->addFlash('success', 'Votre reservation a été faite avec success');
 
-        return $this->redirectToRoute('appointment_index');
+        return $this->redirectToRoute('appointment_future');
     }
 
 
@@ -119,7 +274,7 @@ class AppointmentController extends AbstractController
 
             $this->addFlash('success', 'La disponibilité a été ajouté avec success');
 
-            return $this->redirectToRoute('appointment_index');
+            return $this->redirectToRoute('appointment_list');
         }
 
         return $this->render('appointment/add.html.twig', [

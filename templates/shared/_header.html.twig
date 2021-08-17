@@ -2,7 +2,7 @@
 <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-        <h1 class="logo me-auto"><a href="{{ path('home') }}">Almo</a></h1>
+        <h1 class="logo me-auto"><a href="{{ path('home') }}"><img src="{{ asset('almo/img/logo_home.png') }}"></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -12,30 +12,9 @@
 
 
     {% if is_granted("ROLE_USER") %}
-    <div class="container">
-        <div class="d-flex justify-content-center">
-            <button class="btn btn-primary btn-sm my-3" onclick="showHideChatBot()">Demander à Almo</button>
-        </div>        
-        
-        <div id="chatbotShowHide" style="display: none">
-            <!--Chatbot contents goes here -->
-            <div class="border border-primary rounded border-3 chats" id="chats">
-                <img class="botAvatar" src="{{ asset('chatbot/img/botAvatar.png') }}">Bonjour, je suis Almo, comment puis-je vous aider?</p><div class="clearfix"></div>
-                <div class="clearfix"></div>
-            </div>
-
-            <!--user typing indicator -->
-            <div>
-                <input type="text" id="keypad" class="border border-secondary rounded border-3 usrInput browser-default" placeholder="Tapez votre message ici..." autocomplete="off">
-            </div>
-        </div>
+        {% include 'shared/_chatbot.html.twig' %}
     {% endif %}
-    </div>
 
-    <!--JavaScript at end of body for optimized loading-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ asset('chatbot/js/materialize.min.js') }}"></script>
-    <!--Main Script -->
-    <script type="text/javascript" src="{{ asset('chatbot/js/script.js') }}"></script>
+    
  
 </header><!-- End Header -->

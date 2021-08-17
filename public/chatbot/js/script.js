@@ -35,7 +35,7 @@ function showHideChatBot() {
 
 //------------------------------------- Set user response------------------------------------
 function setUserResponse(val) {
-    var UserResponse = '<img class="userAvatar" src=' + "chatbot/img/userAvatar.jpg" + '><p class="userMsg">' + val + ' </p><div class="clearfix"></div>';
+    var UserResponse = '<p class="almo-font"><img class="userAvatar" src=' + "chatbot/img/userAvatar.jpg" + '><p class="userMsg">' + val + ' </p><div class="clearfix"></div>';
     $(UserResponse).appendTo('.chats').show('slow');
     $(".usrInput").val('');
     scrollToBottomOfResults();
@@ -137,7 +137,7 @@ function setBotResponse(val) {
             //if there is no response from Rasa
             msg = 'Désolé, je ne comprends pas ta demande, merci de bien vouloir reformuler.';
 
-            var BotResponse = '<img class="botAvatar" src="chatbot/img/botAvatar.png"><p class="botMsg">' + msg + '</p><div class="clearfix"></div>';
+            var BotResponse = '<p class="almo-font"><img class="botAvatar" src="almo/img/bot.png"><p class="botMsg">' + msg + '</p><div class="clearfix"></div>';
             $(BotResponse).appendTo('.chats').hide().fadeIn(1000);
             getFocusChatField();
 
@@ -153,17 +153,17 @@ function setBotResponse(val) {
                         for (j = 0; j < CurrentRasaResponse.length; j++) {
                             // console.log("setBotResponse::formatHyperlinkText(val[i].text).length: ",formatHyperlinkText(val[i].text).length);
                             if (j == 0) {
-                                var BotResponse = '<img class="botAvatar" src="chatbot/img/botAvatar.png">' + CurrentRasaResponse[j] + '</p><div class="clearfix"></div>';
+                                var BotResponse = '<p class="almo-font"><img class="botAvatar" src="almo/img/bot.png">' + CurrentRasaResponse[j] + '</p><div class="clearfix"></div>';
                                 $(BotResponse).appendTo('.chats').hide().fadeIn(1000);
                                 getFocusChatField();
                             } else {
-                                var BotResponse = '<p> &nbsp; &nbsp; &nbsp; *' + CurrentRasaResponse[j] + '</p><div class="clearfix"></div>';
+                                var BotResponse = '<p class="almo-font"> &nbsp; &nbsp; &nbsp; *' + CurrentRasaResponse[j] + '</p><div class="clearfix"></div>';
                                 $(BotResponse).appendTo('.chats').hide().fadeIn(1000);
                                 getFocusChatField();
                             }
                         }
                     } else {
-                        var BotResponse = '<img class="botAvatar" src="chatbot/img/botAvatar.png">' + CurrentRasaResponse + '</p><div class="clearfix"></div>';
+                        var BotResponse = '<p class="almo-font"><img class="botAvatar" src="almo/img/bot.png">' + CurrentRasaResponse + '</p><div class="clearfix"></div>';
                         $(BotResponse).appendTo('.chats').hide().fadeIn(1000);
                     }
 
@@ -190,16 +190,3 @@ function setBotResponse(val) {
 
     }, 500);
 }
-
-
-// ------------------------------------------ Toggle chatbot -----------------------------------------------
-$('#profile_div').click(function() {
-    $('.profile_div').toggle();
-    $('.widget').toggle();
-    scrollToBottomOfResults();
-});
-
-$('#close').click(function() {
-    $('.profile_div').toggle();
-    $('.widget').toggle();
-});

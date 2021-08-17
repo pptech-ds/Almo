@@ -20,8 +20,10 @@ class AppointmentFormType extends AbstractType
         $builder
             ->add('name', TextType::class, ['label' => 'Nom'])
             ->add('content', CKEditorType::class, ['label' => 'Contenu'])
-            ->add('startTime', DateTimeType::class, ['label' => 'Heure du début'])
-            ->add('endTime', DateTimeType::class, ['label' => 'Heure de fin'])
+            ->add('startTime', DateTimeType::class, [
+                'label' => 'Heure du début',
+                'widget' => 'single_text'
+                ])
             ->add('isVisio', CheckboxType ::class, [
                 'label' => 'En Visio ?',
                 'required' => false,
