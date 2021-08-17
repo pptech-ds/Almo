@@ -106,6 +106,8 @@ class AppointmentController extends AbstractController
             }
         }
 
+        // dd($reservationsFuture);
+
         return $this->render('appointment/future.html.twig', [
             'reservations' => $reservationsFuture,
             'disponibilities' => $disponibilities,
@@ -206,6 +208,27 @@ class AppointmentController extends AbstractController
     }
 
 
+    /**
+     * @Route("/appointment/list", name="appointment_list")
+     */
+    public function appointmentList(UserInterface $user, Request $request, AppointmentRepository $appointmentRepository): Response
+    {
+        $disponibilities = [];
+
+        if(($user->getRoles()[0] == 'ROLE_PRO') || ($user->getRoles()[0] == 'ROLE_DOC')) {  
+            foreach($appointmentRepository->findBy(['createdBy' => $user]) as $appointment){
+                if($appointment->getReservedBy() == null) {
+                    $disponibilities[] = $appointment;
+                }
+            }
+        }
+
+        return $this->render('appointment/list.html.twig', [
+            'disponibilities' => $disponibilities,
+        ]);
+    }
+
+
 
     /**
      * @Route("/appointment/add/{id}", name="appointment_add", requirements={"id"="\d+"})
@@ -228,7 +251,7 @@ class AppointmentController extends AbstractController
 
         $this->addFlash('success', 'Votre reservation a été faite avec success');
 
-        return $this->redirectToRoute('appointment_index');
+        return $this->redirectToRoute('appointment_future');
     }
 
 
@@ -251,7 +274,7 @@ class AppointmentController extends AbstractController
 
             $this->addFlash('success', 'La disponibilité a été ajouté avec success');
 
-            return $this->redirectToRoute('appointment_index');
+            return $this->redirectToRoute('appointment_list');
         }
 
         return $this->render('appointment/add.html.twig', [

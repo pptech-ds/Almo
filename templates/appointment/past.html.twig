@@ -7,6 +7,7 @@
     <div class="almo-background-color-article">
         <div style="height: 15rem">
         </div>
+        
         <div class="container"> 
             <div class="row">
                     <div class="almo-title-section">
@@ -35,7 +36,7 @@
                             <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.createdBy.id})}}">{{ reservation.createdBy.civility }} {{ reservation.createdBy.firstname }} {{ reservation.createdBy.lastname }}</a>
                         {% endif %}
                     </div>
-                    <div class="col-2 almo-rdv-content">
+                    <div class="col-2 almo-rdv-content-italic">
                         {% if (reservation.isVisio == true) %}
                             Téléconsultation 
                         {% else %}
@@ -45,48 +46,59 @@
                     <div class="col-2">
                         {% if (reservation.report == null) %}
                             {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
-                                <a href="{{path('report_add', {'proId':reservation.createdBy.id, 'patientId': reservation.reservedBy.id,  'appointmentId': reservation.id})}}" type="button" class="btn btn-primary">Ajouter un compte-rendu</a>
+                                <div class="row">
+                                    <a href="{{path('report_add', {'proId':reservation.createdBy.id, 'patientId': reservation.reservedBy.id,  'appointmentId': reservation.id})}}" type="button" class="btn btn-primary">AJOUTER UN <br> COMPTE-RENDU</a>
+                                </div>
                             {% endif %}
                         {% else %}
                             {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
-                                <a href="{{path('report_update', {'id': reservation.id})}}" type="button" class="btn btn-primary">Modifier un compte-rendu</a>
+                                <div class="row">
+                                    <a href="{{path('report_update', {'id': reservation.id})}}" type="button" class="btn btn-primary">MODIFIER UN COMPTE-RENDU</a>
+                                </div>
                             {% endif %}
 
                             {% if (is_granted("ROLE_PATIENT")) %}
-                                <a href="{{path('report_view', {'id': reservation.id})}}" type="button" class="btn btn-primary">Lire un compte-rendu</a>
+                                <div class="row">
+                                    <a href="{{path('report_view', {'id': reservation.id})}}" type="button" class="btn btn-primary">LIRE LE COMPTE-RENDU</a>
+                                </div>
                             {% endif %}
                         {% endif %}
+                        <div class="row">
+                            <a href="{{path('report_view', {'id': reservation.id})}}" type="button" class="btn btn-primary">DONNER MON AVIS</a>
+                        </div>
                     </div>
                 </div>
-                <hr>  
+                <div class="almo-hr">
+                    <hr>
+                </div>  
             {% endfor %}
         </div>
-  </div>
+    </div>
             
-        </div>
+        
     
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Supprimer une disponibilité</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <a href="" class="btn btn-primary">Supprimer</a>
-                </div>
-                </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Supprimer une disponibilité</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <a href="" class="btn btn-primary">Supprimer</a>
+            </div>
             </div>
         </div>
-
     </div>
+
+    
 {% endblock %}
 
 

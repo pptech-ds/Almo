@@ -11,56 +11,48 @@
         <div class="container"> 
             <div class="row">
                     <div class="almo-title-section">
-                        <img src="{{ asset('almo/img/calendar.png') }}" height="50%"> Mes rendez-vous et activités prévus
+                        <img src="{{ asset('almo/img/calendar.png') }}" height="50%"> Mes disponibilités
                     </div>
             </div>
 
             
 
-            {% for reservation in reservations %}
-                {# {{ dump(reservation.createdBy.address) }} #}
+            {% for disponibility in disponibilities %}
                 <div class="row">
-                    <div class="col-2 almo-rdv-datetime">
+                    <div class="col-3 almo-rdv-datetime">
                         {# {{ reservation.startTime | date("l dS F") }} #}
-                        {{ reservation.startTime | format_datetime(locale='fr',pattern="EEEE dd MMMM") | capitalize}}
+                        {{ disponibility.startTime | format_datetime(locale='fr',pattern="EEEE dd MMMM") | capitalize}}
                     </div>
-                    <div class="col-1 almo-rdv-datetime">
-                        {{ reservation.startTime | date("H") }} h {{ reservation.startTime | date("m") }}
+                    <div class="col-2 almo-rdv-datetime">
+                        {{ disponibility.startTime | date("H") }} h {{ disponibility.startTime | date("m") }}
                         {# {{ reservation.startTime | localizeddate("H") }} h {{ reservation.startTime | date("m") }} #}
                     </div>
                     <div class="col-2 almo-rdv-content">
-                        {{ reservation.name }}
+                        {{ disponibility.name }}
                     </div>
-                    <div class="col-3 almo-rdv-content">
-                        {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
-                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.reservedBy.id})}}">{{ reservation.reservedBy.civility }} {{ reservation.reservedBy.firstname }} {{ reservation.reservedBy.lastname }}</a>
-                        {% endif %}
-                        {% if (is_granted("ROLE_PATIENT")) %}
-                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.createdBy.id})}}">{{ reservation.createdBy.civility }} {{ reservation.createdBy.firstname }} {{ reservation.createdBy.lastname }}</a>
-                        {% endif %}
-                    </div>
+    
                     <div class="col-2 almo-rdv-content-italic">
-                        {% if (reservation.isVisio == true) %}
+                        {% if (disponibility.isVisio == true) %}
                             Téléconsultation 
                         {% else %}
                             En présentiel 
                         {% endif %}
                     </div>
-                    <div class="col-2">
-                        {% if (reservation.isVisio == true) %}
+                    <div class="col-3">
+                        {% if (disponibility.isVisio == true) %}
                             <div class="row">
                                 <a href="#" type="button" class="btn btn-secondary">ME CONNECTER</a>
                             </div>
                         {% else %}
                             <div class="almo-rdv-datetime">
-                                {{ reservation.createdBy.address }} <br> {{ reservation.createdBy.zipcode }} {{ reservation.createdBy.city }}
+                                {{ disponibility.createdBy.address }} <br> {{ disponibility.createdBy.zipcode }} {{ disponibility.createdBy.city }}
                             </div>
                         {% endif %}
-                        <div class="row">    
-                            <a href="#" type="button" class="btn btn-primary">REPORTER CE RV</a>
+                        <div class="row">
+                            <a href="{{path('appointment_update', {'id':disponibility.id})}}" type="button" class="btn btn-primary">MODIFIER</a>
                         </div>
                         <div class="row">
-                            <a href="#" type="button" class="btn btn-danger">ANNULER CE RV</a>
+                            <a href="" class="btn btn-danger modal-trigger" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="{{ disponibility.id }}" data-name="{{ disponibility.name }}">SUPPRIMER</a>
                         </div>
                     </div>
                 </div>
@@ -68,6 +60,8 @@
                     <hr>
                 </div>  
             {% endfor %}
+
+
         </div>
     </div>
             
