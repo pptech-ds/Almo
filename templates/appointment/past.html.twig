@@ -10,9 +10,9 @@
         
         <div class="container"> 
             <div class="row">
-                    <div class="almo-title-section">
-                        <img src="{{ asset('almo/img/rdv.png') }}" height="50%"> Mes rendez-vous et activités passées
-                    </div>
+                <div class="almo-title-section">
+                    <img src="{{ asset('almo/img/rdv.png') }}" height="50%"> Mes rendez-vous et activités passées
+                </div>
             </div>
 
             {% for reservation in reservations %}
@@ -22,7 +22,7 @@
                         {{ reservation.startTime | format_datetime(locale='fr',pattern="EEEE dd MMMM") | capitalize}}
                     </div>
                     <div class="col-1 almo-rdv-datetime">
-                        {{ reservation.startTime | date("H") }} h {{ reservation.startTime | date("m") }}
+                        {{ reservation.startTime | date("H") }}h{{ reservation.startTime | date("i") }}
                         {# {{ reservation.startTime | localizeddate("H") }} h {{ reservation.startTime | date("m") }} #}
                     </div>
                     <div class="col-2 almo-rdv-content">

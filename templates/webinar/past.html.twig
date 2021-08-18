@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Webinars passés{% endblock %}
+
+{% block body %}
+
+    <div class="almo-background-color-article">
+        <div style="height: 15rem">
+        </div>
+        
+        <div class="container"> 
+            <div class="row">
+                    <div class="almo-title-section">
+                        <img src="{{ asset('almo/img/webinar.png') }}" height="50%"> Les Webinars passés
+                    </div>
+            </div>
+
+            
+
+            {% for webinar in webinars %}
+                {% if (is_granted("ROLE_PATIENT")) %}
+                    <div class="row">
+                        <div class="col-2 almo-rdv-datetime">
+                            {# {{ webinar.startTime | date("l dS F") }} #}
+                            {{ webinar.startTime | format_datetime(locale='fr',pattern="EEEE dd MMMM") | capitalize}}
+                        </div>
+                        <div class="col-1 almo-rdv-datetime">
+                            {{ webinar.startTime | date("H") }}h{{ webinar.startTime | date("i") }}
+                            {# {{ webinar.startTime | localizeddate("H") }} h {{ webinar.startTime | date("m") }} #}
+                        </div>
+                        <div class="col-4 almo-rdv-datetime">
+                            {{ webinar.title }}
+                        </div>
+                        <div class="col-3 almo-rdv-content">
+                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':webinar.host.id})}}">{{ webinar.host.civility }} {{ webinar.host.firstname }} {{ webinar.host.lastname }}</a>
+                
+                        </div>
+                        <div class="col-2">
+                            
+                            <div class="row">    
+                                <a href="#" type="button" class="btn btn-primary">REVISIONNER</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-10 almo-rdv-content">
+                            <p>{{ webinar.content | u.truncate(300, '...') | raw }}</p>
+                        </div>
+                    </div>
+
+
+                    <div class="almo-hr">
+                        <hr>
+                    </div>  
+                {% else %}
+                    {% if (webinar.host.id == app.user.id) %}
+                        <div class="row">
+                            <div class="col-2 almo-rdv-datetime">
+                                {# {{ webinar.startTime | date("l dS F") }} #}
+                                {{ webinar.startTime | format_datetime(locale='fr',pattern="EEEE dd MMMM") | capitalize}}
+                            </div>
+                            <div class="col-1 almo-rdv-datetime">
+                                {{ webinar.startTime | date("H") }}h{{ webinar.startTime | date("i") }}
+                                {# {{ webinar.startTime | localizeddate("H") }} h {{ webinar.startTime | date("m") }} #}
+                            </div>
+                            <div class="col-4 almo-rdv-datetime">
+                                {{ webinar.title }}
+                            </div>
+                            <div class="col-3 almo-rdv-content">
+                                <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':webinar.host.id})}}">{{ webinar.host.civility }} {{ webinar.host.firstname }} {{ webinar.host.lastname }}</a>
+                    
+                            </div>
+                            
+                            <div class="col-2">
+                                <div class="row">    
+                                    <a href="#" type="button" class="btn btn-primary">REVISIONNER</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8 almo-rdv-content">
+                                <p>{{ webinar.content | u.truncate(300, '...') | raw }}</p>
+                            </div>
+                        </div>
+
+                        <div class="almo-hr">
+                            <hr>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+            
+        
+    
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Supprimer une disponibilité</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <a href="" class="btn btn-primary">Supprimer</a>
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        window.onload = () => {
+            
+            let btdeletes = document.querySelectorAll(".modal-trigger")
+            for(let btdelete of btdeletes) {
+                btdelete.addEventListener("click", function(){
+                    console.log(`${this.dataset}`)
+                    document.querySelector(".modal-footer a").href=`/appointment/delete/${this.dataset.id}`
+                    document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer cette ressource "${this.dataset.name}"`
+                })
+            }
+        }
+    </script>
+{% endblock %}

@@ -139,6 +139,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $information;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Webinar::class, mappedBy="host", orphanRemoval=true)
+     */
+    private $webinars;
+
+    /**
+     * @ORM\OneToMany(targetEntity=WebinarQuestions::class, mappedBy="user")
+     */
+    private $webinarQuestions;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $visioLink;
+
     
 
         
@@ -154,6 +169,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->reportPatient = new ArrayCollection();
         $this->webinarReservations = new ArrayCollection();
         $this->information = new ArrayCollection();
+        $this->webinars = new ArrayCollection();
+        $this->webinarQuestions = new ArrayCollection();
     }
 
     public function __toString()
@@ -631,6 +648,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $information->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Webinar[]
+     */
+    public function getWebinars(): Collection
+    {
+        return $this->webinars;
+    }
+
+    public function addWebinar(Webinar $webinar): self
+    {
+        if (!$this->webinars->contains($webinar)) {
+            $this->webinars[] = $webinar;
+            $webinar->setHost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWebinar(Webinar $webinar): self
+    {
+        if ($this->webinars->removeElement($webinar)) {
+            // set the owning side to null (unless already changed)
+            if ($webinar->getHost() === $this) {
+                $webinar->setHost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|WebinarQuestions[]
+     */
+    public function getWebinarQuestions(): Collection
+    {
+        return $this->webinarQuestions;
+    }
+
+    public function addWebinarQuestion(WebinarQuestions $webinarQuestion): self
+    {
+        if (!$this->webinarQuestions->contains($webinarQuestion)) {
+            $this->webinarQuestions[] = $webinarQuestion;
+            $webinarQuestion->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWebinarQuestion(WebinarQuestions $webinarQuestion): self
+    {
+        if ($this->webinarQuestions->removeElement($webinarQuestion)) {
+            // set the owning side to null (unless already changed)
+            if ($webinarQuestion->getUser() === $this) {
+                $webinarQuestion->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVisioLink(): ?string
+    {
+        return $this->visioLink;
+    }
+
+    public function setVisioLink(?string $visioLink): self
+    {
+        $this->visioLink = $visioLink;
 
         return $this;
     }

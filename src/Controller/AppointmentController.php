@@ -301,7 +301,7 @@ class AppointmentController extends AbstractController
 
             $this->addFlash('success', 'Votre utilisateur a été modifié avec succes !');
 
-            return $this->redirectToRoute('appointment_index');
+            return $this->redirectToRoute('appointment_list');
         }
 
         return $this->render('appointment/update.html.twig', [
@@ -324,6 +324,6 @@ class AppointmentController extends AbstractController
 
         $this->addFlash('success', 'Votre disponibilité a été supprimé avec succes !');
 
-        return $this->redirectToRoute('appointment_index');
+        return $this->redirectToRoute('appointment_list');
     }
 }
