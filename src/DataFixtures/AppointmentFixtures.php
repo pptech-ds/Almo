@@ -43,7 +43,7 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
                 $disponility->setStartTime($date1);
                 $disponility->setEndTime($date2);
                 $disponility->setCreatedBy($user);
-                $disponility->setName('RV '.$user->getSpecility());
+                $disponility->setName('RV '.$user->getSpeciality());
                 if($j%2==0){
                     $disponility->setIsVisio(1);
                 } else {

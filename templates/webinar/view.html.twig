@@ -24,8 +24,39 @@
 
             <section class="inner-page">
                 <p style="height: 100%; ">{{webinar.content | raw}} </p>
-                <p class="fs-6">Crée par <a href="{{path('user_biography', {'id':webinar.user.id})}}">{{webinar.user.civility}} {{webinar.user.firstname}} {{webinar.user.lastname}}</a> {{webinar.createdAt | ago}}</p>
             </section>
+
+            {% if (is_granted("ROLE_PATIENT")) %}
+                <div class="row almo-rdv-datetime">
+                    {{ form(form) }}
+                </div>
+            {% else %}
+                <div class="row almo-title-section">
+                    <p>Liste des questions posées par les participants</p>
+                </div>
+                {% for webinarQuestion in webinarQuestions %}
+                    <div class="row">
+                        <div class="col-2 almo-rdv-datetime">
+                            {{ webinarQuestion.user }}
+                        </div>
+                        <div class="col-10 almo-rdv-content">
+                            {{ webinarQuestion.question }}
+                        </div>
+                    </div>
+                    <div class="almo-hr">
+                        <hr>
+                    </div>  
+                {% endfor %}
+                <br><br><br>
+                <div class="row almo-title-section">
+                    <p>Liste des participants</p>
+                </div>
+                {% for participant in webinar.reservedBy %}
+                    <div class="row almo-rdv-datetime">
+                        <p>{{ participant.civility }} {{ participant.firstname }} {{ participant.lastname }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
         
         </div>
     </div>
