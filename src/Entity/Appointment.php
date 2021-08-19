@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AppointmentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -57,6 +59,16 @@ class Appointment
      * @ORM\OneToOne(targetEntity=Report::class, mappedBy="appointment", cascade={"persist", "remove"})
      */
     private $report;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="appointment")
+     */
+    private $messages;
+
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -172,6 +184,36 @@ class Appointment
         }
 
         $this->report = $report;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setAppointment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getAppointment() === $this) {
+                $message->setAppointment(null);
+            }
+        }
 
         return $this;
     }

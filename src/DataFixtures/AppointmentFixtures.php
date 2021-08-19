@@ -31,8 +31,11 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
         // dateTimeThisYear($max = 'now', $timezone = null)        // DateTime('2011-02-27 20:52:14', 'Africa/Lagos')
         // dateTimeThisMonth($max = 'now', $timezone = null)       // DateTime('2011-10-23 13:46:23', 'Antarctica/Vostok')
 
-        $date1 = DateTime::createFromFormat('Y-m-d H:i:s', '2021-08-28 09:00:00');
-        $date2 = DateTime::createFromFormat('Y-m-d H:i:s', '2021-08-28 10:00:00');
+        $dateStartFuture = DateTime::createFromFormat('Y-m-d H:i:s', '2021-08-28 09:00:00');
+        $dateEndFuture = DateTime::createFromFormat('Y-m-d H:i:s', '2021-08-28 10:00:00');
+
+        $dateStartPast = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 09:00:00');
+        $dateEndPast = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 10:00:00');
 
         for($i = 0; $i<40; $i++ ) {
             $user = $this->getReference('user_pro_'.$i);
@@ -40,8 +43,13 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
             for($j=0; $j<10; $j++){
                 $disponility = new Appointment;
                 $disponility->setContent($faker->realText($maxNbChars = 200, $indexSize = 2));
-                $disponility->setStartTime($date1);
-                $disponility->setEndTime($date2);
+                if($i%2 == 0){
+                    $disponility->setStartTime($dateStartFuture);
+                    $disponility->setEndTime($dateEndFuture);
+                } else {
+                    $disponility->setStartTime($dateStartPast);
+                    $disponility->setEndTime($dateEndPast);
+                }
                 $disponility->setCreatedBy($user);
                 $disponility->setName('RV '.$user->getSpeciality());
                 if($j%2==0){
@@ -51,6 +59,30 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
                 }
                 $manager->persist($disponility);
             }
+        }
+
+        for($i = 0; $i<10; $i++ ) {
+            $user = $this->getReference('user_pro');
+
+            
+            $disponility = new Appointment;
+            $disponility->setContent($faker->realText($maxNbChars = 200, $indexSize = 2));
+            if($i%2 == 0){
+                $disponility->setStartTime($dateStartFuture);
+                $disponility->setEndTime($dateEndFuture);
+            } else {
+                $disponility->setStartTime($dateStartPast);
+                $disponility->setEndTime($dateEndPast);
+            }
+            $disponility->setCreatedBy($user);
+            $disponility->setName('RV '.$user->getSpeciality());
+            if($i%2==0){
+                $disponility->setIsVisio(1);
+            } else {
+                $disponility->setIsVisio(0);
+            }
+            $manager->persist($disponility);
+            
         }
 
         // print('End HospitalFixtures ');

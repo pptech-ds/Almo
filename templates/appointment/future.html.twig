@@ -62,7 +62,22 @@
                         <div class="row">
                             <a href="#" type="button" class="btn btn-danger">ANNULER CE RV</a>
                         </div>
+                        {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                            <div class="row">
+                                <a href="{{ path('message_appointment', {'id':reservation.id}) }}" type="button" class="btn btn-primary">ENVOYER UN MESSAGE</a>
+                            </div>
+                        {% endif %}
                     </div>
+                </div>
+                <div class="row almo-message-background">
+                    {% for message in reservation.messages %}
+                        <div class="col-4 almo-rdv-content-italic">
+                            {{ message.sender }} le {{ message.createdAt | format_datetime(locale='fr',pattern="EEEE dd MMMM") | capitalize}} à {{ message.createdAt | date("H") }}h{{ message.createdAt | date("i") }}
+                        </div>    
+                        <div class="col-6 almo-rdv-content">
+                            {{ message.content }}
+                        </div>
+                    {% endfor %}
                 </div>
                 <div class="almo-hr">
                     <hr>

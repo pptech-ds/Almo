@@ -91,10 +91,16 @@ class Webinar
      */
     private $webinarQuestions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="webinar")
+     */
+    private $messages;
+
     public function __construct()
     {
         $this->reservedBy = new ArrayCollection();
         $this->webinarQuestions = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -268,6 +274,36 @@ class Webinar
             // set the owning side to null (unless already changed)
             if ($webinarQuestion->getWebinar() === $this) {
                 $webinarQuestion->setWebinar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setWebinar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getWebinar() === $this) {
+                $message->setWebinar(null);
             }
         }
 
