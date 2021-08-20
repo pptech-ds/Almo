@@ -134,6 +134,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $webinarReservations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Information::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $information;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Webinar::class, mappedBy="host", orphanRemoval=true)
+     */
+    private $webinars;
+
+    /**
+     * @ORM\OneToMany(targetEntity=WebinarQuestions::class, mappedBy="user")
+     */
+    private $webinarQuestions;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $visioLink;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="sender", orphanRemoval=true)
+     */
+    private $messages;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Feedback::class, mappedBy="sender", orphanRemoval=true)
+     */
+    private $feedback;
+
     
 
         
@@ -148,6 +178,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->reportCreatedBy = new ArrayCollection();
         $this->reportPatient = new ArrayCollection();
         $this->webinarReservations = new ArrayCollection();
+        $this->information = new ArrayCollection();
+        $this->webinars = new ArrayCollection();
+        $this->webinarQuestions = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->feedback = new ArrayCollection();
     }
 
     public function __toString()
@@ -594,6 +629,168 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->webinarReservations->removeElement($webinarReservation)) {
             $webinarReservation->removeReservedBy($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Information[]
+     */
+    public function getInformation(): Collection
+    {
+        return $this->information;
+    }
+
+    public function addInformation(Information $information): self
+    {
+        if (!$this->information->contains($information)) {
+            $this->information[] = $information;
+            $information->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInformation(Information $information): self
+    {
+        if ($this->information->removeElement($information)) {
+            // set the owning side to null (unless already changed)
+            if ($information->getUser() === $this) {
+                $information->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Webinar[]
+     */
+    public function getWebinars(): Collection
+    {
+        return $this->webinars;
+    }
+
+    public function addWebinar(Webinar $webinar): self
+    {
+        if (!$this->webinars->contains($webinar)) {
+            $this->webinars[] = $webinar;
+            $webinar->setHost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWebinar(Webinar $webinar): self
+    {
+        if ($this->webinars->removeElement($webinar)) {
+            // set the owning side to null (unless already changed)
+            if ($webinar->getHost() === $this) {
+                $webinar->setHost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|WebinarQuestions[]
+     */
+    public function getWebinarQuestions(): Collection
+    {
+        return $this->webinarQuestions;
+    }
+
+    public function addWebinarQuestion(WebinarQuestions $webinarQuestion): self
+    {
+        if (!$this->webinarQuestions->contains($webinarQuestion)) {
+            $this->webinarQuestions[] = $webinarQuestion;
+            $webinarQuestion->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWebinarQuestion(WebinarQuestions $webinarQuestion): self
+    {
+        if ($this->webinarQuestions->removeElement($webinarQuestion)) {
+            // set the owning side to null (unless already changed)
+            if ($webinarQuestion->getUser() === $this) {
+                $webinarQuestion->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVisioLink(): ?string
+    {
+        return $this->visioLink;
+    }
+
+    public function setVisioLink(?string $visioLink): self
+    {
+        $this->visioLink = $visioLink;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getSender() === $this) {
+                $message->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Feedback[]
+     */
+    public function getFeedback(): Collection
+    {
+        return $this->feedback;
+    }
+
+    public function addFeedback(Feedback $feedback): self
+    {
+        if (!$this->feedback->contains($feedback)) {
+            $this->feedback[] = $feedback;
+            $feedback->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeedback(Feedback $feedback): self
+    {
+        if ($this->feedback->removeElement($feedback)) {
+            // set the owning side to null (unless already changed)
+            if ($feedback->getSender() === $this) {
+                $feedback->setSender(null);
+            }
         }
 
         return $this;

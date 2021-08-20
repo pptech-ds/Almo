@@ -3,28 +3,64 @@
 {% block title %}{{webinar.title}}{% endblock %}
 
 {% block body %}
-    <div class="container">
-    
-        <div style="height: 10rem">
-        </div>
-
-        <!-- ======= Breadcrumbs Section ======= -->
-        <section class="breadcrumbs">
-
-            <div class="d-flex justify-content-between align-items-center">
-                <h2 class="fw-bold">{{webinar.title}}</h2>
-                <ol>
-                    <li><a href="{{path('webinar_index')}}">Retour à la liste des webinars</a></li>
-                    <li>{{webinar.title}}</li>
-                </ol>
+    <div class="almo-background-color-article">
+        <div class="container">
+        
+            <div style="height: 10rem">
             </div>
 
-        </section><!-- End Breadcrumbs Section -->
+            <!-- ======= Breadcrumbs Section ======= -->
+            <section class="breadcrumbs">
 
-        <section class="inner-page">
-            <p style="height: 100%; ">{{webinar.content | raw}} </p>
-            <p class="fs-6">Crée par <a href="{{path('user_biography', {'id':webinar.user.id})}}">{{webinar.user.civility}} {{webinar.user.firstname}} {{webinar.user.lastname}}</a> {{webinar.createdAt | ago}}</p>
-        </section>
-    
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2 class="fw-bold">{{webinar.title}}</h2>
+                    <ol>
+                        <li><a href="{{path('webinar_index')}}">Retour à la liste des webinars</a></li>
+                        <li>{{webinar.title}}</li>
+                    </ol>
+                </div>
+
+            </section><!-- End Breadcrumbs Section -->
+
+            <section class="inner-page">
+                <p style="height: 100%; ">{{webinar.content | raw}} </p>
+            </section>
+
+            {% if (is_granted("ROLE_PATIENT")) %}
+                <div class="row almo-rdv-datetime">
+                    {{ form(form) }}
+                </div>
+            {% else %}
+                <div class="row almo-title-section">
+                    <p>Liste des questions posées par les participants</p>
+                </div>
+                {% for webinarQuestion in webinarQuestions %}
+                    <div class="row">
+                        <div class="col-2 almo-rdv-datetime">
+                            {{ webinarQuestion.user }}
+                        </div>
+                        <div class="col-10 almo-rdv-content">
+                            {{ webinarQuestion.question }}
+                        </div>
+                    </div>
+                    <div class="almo-hr">
+                        <hr>
+                    </div>  
+                {% endfor %}
+                <br><br><br>
+                <div class="row almo-title-section">
+                    <p>Liste des participants</p>
+                </div>
+                {% for participant in webinar.reservedBy %}
+                    <div class="row almo-rdv-datetime">
+                        <p>{{ participant.civility }} {{ participant.firstname }} {{ participant.lastname }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        
+        </div>
     </div>
+
+
+    
 {% endblock %}

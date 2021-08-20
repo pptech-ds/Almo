@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes rendez-vous et activités prévus{% endblock %}
+
+{% block body %}
+
+    <div class="almo-background-color-article">
+        <div style="height: 15rem">
+        </div>
+        
+        <div class="container"> 
+            <div class="row">
+                    <div class="almo-title-section">
+                        <img src="{{ asset('almo/img/calendar.png') }}" height="50%"> Mes disponibilités
+                    </div>
+            </div>
+
+            
+
+            {% for disponibility in disponibilities %}
+                <div class="row">
+                    <div class="col-3 almo-rdv-datetime">
+                        {# {{ reservation.startTime | date("l dS F") }} #}
+                        {{ disponibility.startTime | format_datetime(locale='fr',pattern="EEEE dd MMMM") | capitalize}}
+                    </div>
+                    <div class="col-2 almo-rdv-datetime">
+                        {{ disponibility.startTime | date("H") }} h {{ disponibility.startTime | date("m") }}
+                        {# {{ reservation.startTime | localizeddate("H") }} h {{ reservation.startTime | date("m") }} #}
+                    </div>
+                    <div class="col-2 almo-rdv-content">
+                        {{ disponibility.name }}
+                    </div>
+    
+                    <div class="col-2 almo-rdv-content-italic">
+                        {% if (disponibility.isVisio == true) %}
+                            Téléconsultation 
+                        {% else %}
+                            En présentiel 
+                        {% endif %}
+                    </div>
+                    <div class="col-3">
+                        {% if (disponibility.isVisio == true) %}
+                            <div class="row">
+                                <a href="{{ disponibility.createdBy.visioLink }}" type="button" class="btn btn-secondary">ME CONNECTER</a>
+                            </div>
+                        {% else %}
+                            <div class="almo-rdv-datetime">
+                                {{ disponibility.createdBy.address }} <br> {{ disponibility.createdBy.zipcode }} {{ disponibility.createdBy.city }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <a href="{{path('appointment_update', {'id':disponibility.id})}}" type="button" class="btn btn-primary">MODIFIER</a>
+                        </div>
+                        <div class="row">
+                            <a href="" class="btn btn-danger modal-trigger" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="{{ disponibility.id }}" data-name="{{ disponibility.name }}">SUPPRIMER</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="almo-hr">
+                    <hr>
+                </div>  
+            {% endfor %}
+
+
+        </div>
+    </div>
+            
+        
+    
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Supprimer une disponibilité</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <a href="" class="btn btn-primary">Supprimer</a>
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        window.onload = () => {
+            
+            let btdeletes = document.querySelectorAll(".modal-trigger")
+            for(let btdelete of btdeletes) {
+                btdelete.addEventListener("click", function(){
+                    console.log(`${this.dataset}`)
+                    document.querySelector(".modal-footer a").href=`/appointment/delete/${this.dataset.id}`
+                    document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer cette ressource "${this.dataset.name}"`
+                })
+            }
+        }
+    </script>
+{% endblock %}

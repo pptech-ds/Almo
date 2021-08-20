@@ -46,6 +46,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setZipcode($faker->postcode());
                 $user->setPhone($faker->phoneNumber());
                 $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
+                $user->setVisioLink('https://meet.google.com/yze-zkvf-mjy');
                 $manager->persist($user);
                 $this->addReference('user_admin', $user);
             } elseif($i === 1){
@@ -63,6 +64,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setPhone($faker->phoneNumber());
                 $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
                 $user->setHospital($this->getReference('hospital_0'));
+                $user->setVisioLink('https://meet.google.com/yze-zkvf-mjy');
                 $manager->persist($user);
                 $this->addReference('user_doc', $user);
             } elseif($i === 2){
@@ -80,6 +82,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setZipcode($faker->postcode());
                 $user->setPhone($faker->phoneNumber());
                 $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
+                $user->setVisioLink('https://meet.google.com/yze-zkvf-mjy');
                 $manager->persist($user);
                 $this->addReference('user_pro', $user);
             } elseif($i === 3){
@@ -115,6 +118,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setZipcode($faker->postcode());
                 $user->setPhone($faker->phoneNumber());
                 $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
+                $user->setVisioLink('https://meet.google.com/yze-zkvf-mjy');
                 if($i%3 == 0){
                     $user->setHospital($this->getReference('hospital_0'));
                 } elseif($i%3 == 1) {
@@ -152,6 +156,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                         $user->setZipcode($faker->postcode());
                         $user->setPhone($faker->phoneNumber());
                         $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
+                        $user->setVisioLink('https://meet.google.com/yze-zkvf-mjy');
                         $manager->persist($user);
                         // print('user_pro_'.($count));
                         $this->addReference('user_pro_'.($count), $user);

@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes rendez-vous et mes disponibilités{% endblock %}
+
+{% block body %}
+
+    <div class="almo-background-color-article">
+        <div style="height: 15rem">
+        </div>
+        
+        <div class="container"> 
+            <div class="row">
+                <div class="almo-title-section">
+                    <img src="{{ asset('almo/img/rdv.png') }}" height="50%"> Mes rendez-vous et activités passées
+                </div>
+            </div>
+
+            {% for reservation in reservations %}
+                <div class="row">
+                    <div class="col-2 almo-rdv-datetime">
+                        {# {{ reservation.startTime | date("l dS F") }} #}
+                        {{ reservation.startTime | format_datetime(locale='fr',pattern="EEEE dd MMMM") | capitalize}}
+                    </div>
+                    <div class="col-1 almo-rdv-datetime">
+                        {{ reservation.startTime | date("H") }}h{{ reservation.startTime | date("i") }}
+                        {# {{ reservation.startTime | localizeddate("H") }} h {{ reservation.startTime | date("m") }} #}
+                    </div>
+                    <div class="col-2 almo-rdv-content">
+                        {{ reservation.name }}
+                    </div>
+                    <div class="col-3 almo-rdv-content">
+                        {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.reservedBy.id})}}">{{ reservation.reservedBy.civility }} {{ reservation.reservedBy.firstname }} {{ reservation.reservedBy.lastname }}</a>
+                        {% endif %}
+                        {% if (is_granted("ROLE_PATIENT")) %}
+                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.createdBy.id})}}">{{ reservation.createdBy.civility }} {{ reservation.createdBy.firstname }} {{ reservation.createdBy.lastname }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-2 almo-rdv-content-italic">
+                        {% if (reservation.isVisio == true) %}
+                            Téléconsultation 
+                        {% else %}
+                            En présentiel 
+                        {% endif %}
+                    </div>
+                    <div class="col-2">
+                        {% if (reservation.report == null) %}
+                            {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                                <div class="row">
+                                    <a href="{{path('report_add', {'proId':reservation.createdBy.id, 'patientId': reservation.reservedBy.id,  'appointmentId': reservation.id})}}" type="button" class="btn btn-primary">AJOUTER UN <br> COMPTE-RENDU</a>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                                <div class="row">
+                                    <a href="{{path('report_update', {'id': reservation.id})}}" type="button" class="btn btn-primary">MODIFIER UN COMPTE-RENDU</a>
+                                </div>
+                            {% endif %}
+
+                            {% if (is_granted("ROLE_PATIENT")) %}
+                                <div class="row">
+                                    <a href="{{path('report_view', {'id': reservation.id})}}" type="button" class="btn btn-primary">LIRE LE COMPTE-RENDU</a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        <div class="row">
+                            <a href="{{path('feedback_appointment', {'id': reservation.id})}}" type="button" class="btn btn-primary">DONNER MON AVIS</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="almo-hr">
+                    <hr>
+                </div>  
+            {% endfor %}
+        </div>
+    </div>
+            
+        
+    
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Supprimer une disponibilité</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <a href="" class="btn btn-primary">Supprimer</a>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        window.onload = () => {
+            
+            let btdeletes = document.querySelectorAll(".modal-trigger")
+            for(let btdelete of btdeletes) {
+                btdelete.addEventListener("click", function(){
+                    console.log(`${this.dataset}`)
+                    document.querySelector(".modal-footer a").href=`/appointment/delete/${this.dataset.id}`
+                    document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer cette ressource "${this.dataset.name}"`
+                })
+            }
+        }
+    </script>
+{% endblock %}

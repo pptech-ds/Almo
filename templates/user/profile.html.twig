@@ -6,82 +6,151 @@
 
     {# {{dump(user)}} #}
 
-    <div class="container">
-    
-        <div style="height: 10rem">
-        </div>
+    <div class="almo-background-color-article">            
+        <div class="container">
+            <div style="height: 15rem">
+            </div>
 
-        <!-- ======= Services Section ======= -->
-        <section id="services" class="services">
 
             <div class="section-title">
                 <h2>Profil utilisateur de {{user.civility}} {{user.firstname}} {{user.lastname}}</h2>
             </div>
 
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th hidden>Field</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th hidden>Field</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        
-                        <tr>
-                            <td>Nom : {{ (user.lastname is defined) ? user.lastname : '' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Prenom : {{ (user.firstname is defined) ? user.firstname : '' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Email : {{ (user.email is defined) ? user.email : '' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Adresse : {{ (user.address is defined) ? user.address : '' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Code Postal : {{ (user.zipcode is defined) ? user.zipcode : '' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Ville : {{ (user.city is defined) ? user.city : '' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Téléphone : {{ (user.phone is defined) ? user.phone : '' }}</td>
-                        </tr>
-                        {% if (is_granted("ROLE_PATIENT") or is_granted("ROLE_DOC")) %}
-                            <tr>
-                                <td>Hopital : {{ (user.hospital.name is defined) ? user.hospital.name : '' }}</td>
-                            </tr>
-                        {% endif %}
-                        {% if (is_granted("ROLE_PATIENT")) %}
-                            <tr>
-                                <td>Medecin Traitant : {{ (user.doctor.civility is defined) ? user.doctor.civility : '' }} {{ (user.doctor.firstname is defined) ? user.doctor.firstname : '' }} {{ (user.doctor.lastname is defined) ? user.doctor.lastname : '' }}</td>
-                            </tr>
-                        {% endif %}
-                        <tr>
-                            <td>Détails :{{ (user.details is defined) ? (user.details | raw) : '' }}</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="{{ path('user_update') }}" class="btn btn-primary btn-sm">Modifier</a>
-                            </td>
-                        </tr>
-                            
-                        
-                        
-                    </tbody>
-                </table>
+            <div class="row">
+                <div class="col-2 almo-rdv-datetime">
+                    Nom
+                </div>
+                <div class="col-10 almo-rdv-content">
+                    {{ (user.lastname is defined) ? user.lastname : '' }}
+                </div>
             </div>
+            <div class="almo-hr">
+                <hr>
+            </div>  
+
+            <div class="row">
+                <div class="col-2 almo-rdv-datetime">
+                    Prenom
+                </div>
+                <div class="col-10 almo-rdv-content">
+                    {{ (user.firstname is defined) ? user.firstname : '' }}
+                </div>
+            </div>
+            <div class="almo-hr">
+                <hr>
+            </div>  
+
+            <div class="row">
+                <div class="col-2 almo-rdv-datetime">
+                    Email
+                </div>
+                <div class="col-10 almo-rdv-content">
+                    {{ (user.email is defined) ? user.email : '' }}
+                </div>
+            </div>
+            <div class="almo-hr">
+                <hr>
+            </div>  
+
+            <div class="row">
+                <div class="col-2 almo-rdv-datetime">
+                    Téléphone
+                </div>
+                <div class="col-10 almo-rdv-content">
+                    {{ (user.phone is defined) ? user.phone : '' }}
+                </div>
+            </div>
+            <div class="almo-hr">
+                <hr>
+            </div>  
+
+            <div class="row">
+                <div class="col-2 almo-rdv-datetime">
+                    Adresse
+                </div>
+                <div class="col-10 almo-rdv-content">
+                    {{ (user.address is defined) ? user.address : '' }}
+                </div>
+            </div>
+            <div class="almo-hr">
+                <hr>
+            </div>  
+
+            <div class="row">
+                <div class="col-2 almo-rdv-datetime">
+                    Code Postal
+                </div>
+                <div class="col-10 almo-rdv-content">
+                    {{ (user.zipcode is defined) ? user.zipcode : '' }}
+                </div>
+            </div>
+            <div class="almo-hr">
+                <hr>
+            </div>  
+
+            <div class="row">
+                <div class="col-2 almo-rdv-datetime">
+                    Ville
+                </div>
+                <div class="col-10 almo-rdv-content">
+                    {{ (user.city is defined) ? user.city : '' }}
+                </div>
+            </div>
+            <div class="almo-hr">
+                <hr>
+            </div>  
+
+            {% if (is_granted("ROLE_PATIENT") or is_granted("ROLE_DOC")) %}
+                <div class="row">
+                    <div class="col-2 almo-rdv-datetime">
+                        Hopital
+                    </div>
+                    <div class="col-10 almo-rdv-content">
+                        {{ (user.hospital.name is defined) ? user.hospital.name : '' }}
+                    </div>
+                </div>
+                <div class="almo-hr">
+                    <hr>
+                </div>  
+            {% endif %}
+
+            {% if (is_granted("ROLE_PATIENT")) %}
+                <div class="row">
+                    <div class="col-2 almo-rdv-datetime">
+                        Medecin Traitant
+                    </div>
+                    <div class="col-10 almo-rdv-content">
+                        {{ (user.doctor.civility is defined) ? user.doctor.civility : '' }} {{ (user.doctor.firstname is defined) ? user.doctor.firstname : '' }} {{ (user.doctor.lastname is defined) ? user.doctor.lastname : '' }}
+                    </div>
+                </div>
+                <div class="almo-hr">
+                    <hr>
+                </div>  
+            {% endif %}
+
+            <div class="row">
+                <div class="col-2 almo-rdv-datetime">
+                    Informations complémentaires
+                </div>
+                <div class="col-10 almo-rdv-content">
+                    {{ (user.details is defined) ? user.details : '' }}
+                </div>
+            </div>
+            <div class="almo-hr">
+                <hr>
+            </div>  
+
+            <div class="row">
+                <div class="col-2">
+                    <a href="{{ path('user_update') }}" class="btn btn-primary btn-sm">MODIFIER MON PROFILE</a>
+                </div>
+            </div>
+            
 
 
-        </section><!-- End Services Section -->
+        
 
-
+        </div>
     </div>
 
 

@@ -3,62 +3,50 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <div class="container">
-    
-        <div style="height: 10rem">
-        </div>
-
-         <section id="services" class="services">
-            <div style="height: 100%; ">
-                <h1 class="text-center">{{usersBySpeciality[0].speciality.name}}</h1>
-                {{usersBySpeciality[0].speciality.description}}    
-            </div>
-        </section><!-- End Services Section -->
-
-        <!-- ======= Breadcrumbs Section ======= -->
-        <section class="breadcrumbs">
-
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Le spécialiste</th>
-                            <th class="text-center">Ses disponibilités - Cliquer sur une disponibilité pour reserver</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th hidden class="text-center">Le spécialiste</th>
-                            <th hidden class="text-center">Ses disponibilités - Cliquer sur une disponibilité pour reserver</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        {% for userBySpeciality in usersBySpeciality %}
-                            <tr>
-                                {# <td>{{ userBySpeciality.email }}</td> #}
-                                <td><a href="{{path('user_biography', {'id':userBySpeciality.id})}}">{{ userBySpeciality.civility }} {{ userBySpeciality.firstname }} {{ userBySpeciality.lastname }}</a></td>
-                                    <td>
-                                {% for appointment in userBySpeciality.appointments %}
-                                    {% if (appointment.reservedBy == null) %}
-                                        {% if (appointment.isVisio == true) %}
-                                            <a href="{{path('appointment_add', {'id':appointment.id})}}" type="button" class="btn btn-primary my-1">En visio <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }} </a>
-                                        {% else %}
-                                            <a href="{{path('appointment_add', {'id':appointment.id})}}" type="button" class="btn btn-success my-1">En présentiel <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }}</a>
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                                    </td>   
-                            </tr>
-                        {% endfor %}
-    
-                    </tbody>
-                </table>
-            </div>
-
+    <div class="almo-background-color-article">
+        <div class="container">
         
-        </section><!-- End Breadcrumbs Section -->
+            <div style="height: 10rem">
+            </div>
 
-     </div>
+            <section id="services" class="services">
+                <div style="height: 100%; ">
+                    <h1 class="text-center">{{usersBySpeciality[0].speciality.name}}</h1>
+                    {{usersBySpeciality[0].speciality.description}}    
+                </div>
+            </section><!-- End Services Section -->
 
-    
+            <!-- ======= Breadcrumbs Section ======= -->
+            <section class="breadcrumbs">
+
+                
+                {% for userBySpeciality in usersBySpeciality %}
+                    <div class="row">
+                        <div class="col-3 almo-rdv-datetime">
+                            <a href="{{path('user_biography', {'id':userBySpeciality.id})}}">{{ userBySpeciality.civility }} {{ userBySpeciality.firstname }} {{ userBySpeciality.lastname }}</a>
+                        </div>
+                        <div class="col-9">
+                            {% for appointment in userBySpeciality.appointments %}
+                                {% if (appointment.reservedBy == null) %}
+                                    {% if (appointment.isVisio == true) %}
+                                        <a href="{{path('appointment_add', {'id':appointment.id})}}" type="button" class="btn btn-primary my-1">En visio <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }} </a>
+                                    {% else %}
+                                        <a href="{{path('appointment_add', {'id':appointment.id})}}" type="button" class="btn btn-success my-1">En présentiel <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }}</a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="almo-hr">
+                        <hr>
+                    </div>      
+                {% endfor %}
+        
+                        
+            
+            </section><!-- End Breadcrumbs Section -->
+
+        </div>
+    </div>
+
 {% endblock %}

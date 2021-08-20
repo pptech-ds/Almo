@@ -3,35 +3,40 @@
 {% block title %}Les webinars{% endblock %}
 
 {% block body %}
-    <div class="container">
 
-        <div style="height: 10rem">
-        </div>
-        <!-- ======= Services Section ======= -->
-        <section id="services" class="services">
 
-            <div class="section-title">
-                <h2>Les webinars</h2>
+
+    <div class="almo-background-color-article">            
+        <div class="container">
+            <div style="height: 15rem">
             </div>
 
             <div class="row">
-                {% for webinar in webinars %}
-                    <div class="col-lg-4 col-md-6" style="height: 35rem;">
-                        <div class="icon-box">
-                            <h4><a href="{{ path('webinar_view', {slug: webinar.slug }) }}">{{webinar.title}}</a></h4>
-                            <img src={{ webinar.image }} alt="" style="width: 100%">
-                            {# <p>{{webinar.content | u.truncate(150, '...') | raw}}</p> #}
-                            
+                
+                <div class="section-title">
+                    <h2>Les webinars</h2>
+                </div>
+
+                
+                    {% for webinar in webinars %}
+                        <div class="col-lg-4 col-md-6 mb-2">
+                            <a href="{{ path('webinar_view', {slug: webinar.slug }) }}">
+                                <div class="card almo-card-article">
+                                    <div class="card-body">
+                                        <img src={{ webinar.image }} alt="" style="width: 100%">
+                                        <h5 class="card-title almo-card-title">{{webinar.title}}</h5>
+                                        <p class="card-text">{{ webinar.content | u.truncate(100, '...') | raw }}</p>
+                                    </div>
+                                    
+                                </div>
+                            </a>
                         </div>
-                        <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':webinar.user.id})}}">{{webinar.user.civility}} {{webinar.user.firstname}} {{webinar.user.lastname}}</a> {{webinar.createdAt | ago}}</p>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
 
             </div>
 
-        </section><!-- End Services Section -->
-            
-        {{knp_pagination_render(webinars)}}
+             {{knp_pagination_render(webinars)}}
+        </div>
     </div>
 
 {% endblock %}

@@ -3,28 +3,32 @@
 {% block title %}{{article.title}}{% endblock %}
 
 {% block body %}
-    <div class="container">
     
-        <div style="height: 10rem">
-        </div>
 
-        <!-- ======= Breadcrumbs Section ======= -->
-        <section class="breadcrumbs">
 
-            <div class="d-flex justify-content-between align-items-center">
-                <h2 class="fw-bold">{{article.title}}</h2>
-                <ol>
-                    <li><a href="{{path('article_index')}}">Retour à la liste des articles</a></li>
-                    <li>{{article.title}}</li>
-                </ol>
+
+    <div class="almo-background-color-article">            
+        <div class="container">
+            <div style="height: 10rem">
             </div>
 
-        </section><!-- End Breadcrumbs Section -->
+            <!-- ======= Breadcrumbs Section ======= -->
+            <section class="breadcrumbs">
 
-        <section class="inner-page">
-            <p style="height: 100%; ">{{article.content | raw}} </p>
-            <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':article.user.id})}}">{{article.user.civility}} {{article.user.firstname}} {{article.user.lastname}}</a> {{article.createdAt | ago}}</p>
-        </section>
-    
+                <div class="d-flex justify-content-between align-items-center ">
+                    <h2 class="fw-bold">{{article.title}}</h2>
+                    <ol>
+                        <li><a href="{{path('article_index')}}">Retour à la liste des articles</a></li>
+                        <li>{{article.title}}</li>
+                    </ol>
+                </div>
+
+            </section><!-- End Breadcrumbs Section -->
+
+            <section class="inner-page">
+                <p style="height: 100%; ">{{article.content | raw}} </p>
+                <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':article.user.id})}}">{{article.user.civility}} {{article.user.firstname}} {{article.user.lastname}}</a> {{article.createdAt | ago}}</p>
+            </section>
+        </div>
     </div>
 {% endblock %}
