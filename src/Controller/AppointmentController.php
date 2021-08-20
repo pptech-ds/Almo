@@ -274,7 +274,7 @@ class AppointmentController extends AbstractController
 
             $this->addFlash('success', 'La disponibilité a été ajouté avec success');
 
-            return $this->redirectToRoute('appointment_list');
+            return $this->redirectToRoute('appointment_future');
         }
 
         return $this->render('appointment/add.html.twig', [
@@ -299,9 +299,9 @@ class AppointmentController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Votre utilisateur a été modifié avec succes !');
+            $this->addFlash('success', 'Votre disponibilité a été modifié avec succes !');
 
-            return $this->redirectToRoute('appointment_list');
+            return $this->redirectToRoute('appointment_future');
         }
 
         return $this->render('appointment/update.html.twig', [
@@ -324,6 +324,60 @@ class AppointmentController extends AbstractController
 
         $this->addFlash('success', 'Votre disponibilité a été supprimé avec succes !');
 
-        return $this->redirectToRoute('appointment_list');
+        return $this->redirectToRoute('appointment_future');
+    }
+
+
+    /**
+     * @Route("/appointment/change/{id}", name="appointment_change", requirements={"id"="\d+"})
+     */
+    public function appointmentChange(Appointment $appointment, SpecialityRepository $specialityRepository, Request $request): Response
+    {
+        $specialitySlug = $appointment->getCreatedBy()->getSpeciality()->getSlug();
+
+        // dd($speciality);
+
+        $appointment->setReservedBy(null);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($appointment);
+        $em->flush();
+
+        $usersBySpeciality = $specialityRepository->findBy(['slug' => $specialitySlug])[0]->getUsers();
+
+        $arrayDispo = [];
+
+        for($j = 0 ; $j< count($usersBySpeciality); $j++){
+            
+            // for($i = 0; $i< count($usersBySpeciality[$j]->getAppointments()); $i++) {
+
+            //     $arrayDispo[] = ($usersBySpeciality[$j]->getAppointments()[$i]);
+            // }
+
+            if(count($usersBySpeciality[$j]->getAppointments()) > 0){
+                $arrayDispo[] = $usersBySpeciality[$j];
+            }
+        }
+
+        // dd($arrayDispo[0]);
+
+        return $this->render('speciality/view.html.twig', [
+            'usersBySpeciality' => $arrayDispo,
+        ]);
+    }
+
+
+    /**
+     * @Route("/appointment/cancel/{id}", name="appointment_cancel", requirements={"id"="\d+"})
+     */
+    public function appointmentCancel(Appointment $appointment): Response
+    {
+        $appointment->setReservedBy(null);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($appointment);
+        $em->flush();
+
+        $this->addFlash('success', 'Votre RV a été annulé avec succes !');
+
+        return $this->redirectToRoute('appointment_future');
     }
 }

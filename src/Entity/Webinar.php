@@ -96,11 +96,17 @@ class Webinar
      */
     private $messages;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Feedback::class, mappedBy="webinar")
+     */
+    private $feedback;
+
     public function __construct()
     {
         $this->reservedBy = new ArrayCollection();
         $this->webinarQuestions = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->feedback = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -304,6 +310,36 @@ class Webinar
             // set the owning side to null (unless already changed)
             if ($message->getWebinar() === $this) {
                 $message->setWebinar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Feedback[]
+     */
+    public function getFeedback(): Collection
+    {
+        return $this->feedback;
+    }
+
+    public function addFeedback(Feedback $feedback): self
+    {
+        if (!$this->feedback->contains($feedback)) {
+            $this->feedback[] = $feedback;
+            $feedback->setWebinar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeedback(Feedback $feedback): self
+    {
+        if ($this->feedback->removeElement($feedback)) {
+            // set the owning side to null (unless already changed)
+            if ($feedback->getWebinar() === $this) {
+                $feedback->setWebinar(null);
             }
         }
 

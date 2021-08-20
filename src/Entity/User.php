@@ -159,6 +159,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $messages;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Feedback::class, mappedBy="sender", orphanRemoval=true)
+     */
+    private $feedback;
+
     
 
         
@@ -177,6 +182,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->webinars = new ArrayCollection();
         $this->webinarQuestions = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->feedback = new ArrayCollection();
     }
 
     public function __toString()
@@ -754,6 +760,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($message->getSender() === $this) {
                 $message->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Feedback[]
+     */
+    public function getFeedback(): Collection
+    {
+        return $this->feedback;
+    }
+
+    public function addFeedback(Feedback $feedback): self
+    {
+        if (!$this->feedback->contains($feedback)) {
+            $this->feedback[] = $feedback;
+            $feedback->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeedback(Feedback $feedback): self
+    {
+        if ($this->feedback->removeElement($feedback)) {
+            // set the owning side to null (unless already changed)
+            if ($feedback->getSender() === $this) {
+                $feedback->setSender(null);
             }
         }
 

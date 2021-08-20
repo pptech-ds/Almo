@@ -65,9 +65,15 @@ class Appointment
      */
     private $messages;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Feedback::class, mappedBy="appointment")
+     */
+    private $feedback;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->feedback = new ArrayCollection();
     }
 
     public function __toString()
@@ -212,6 +218,36 @@ class Appointment
             // set the owning side to null (unless already changed)
             if ($message->getAppointment() === $this) {
                 $message->setAppointment(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Feedback[]
+     */
+    public function getFeedback(): Collection
+    {
+        return $this->feedback;
+    }
+
+    public function addFeedback(Feedback $feedback): self
+    {
+        if (!$this->feedback->contains($feedback)) {
+            $this->feedback[] = $feedback;
+            $feedback->setAppointment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeedback(Feedback $feedback): self
+    {
+        if ($this->feedback->removeElement($feedback)) {
+            // set the owning side to null (unless already changed)
+            if ($feedback->getAppointment() === $this) {
+                $feedback->setAppointment(null);
             }
         }
 
