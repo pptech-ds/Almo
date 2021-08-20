@@ -58,6 +58,11 @@ p {
     max-height: 40px;
 }
 
+.almo-message-background {
+    background-color: #b3aeae;
+    border-radius: 24px;
+}
+
 .almo-hr {
     height: 2px;
     margin: 5px;

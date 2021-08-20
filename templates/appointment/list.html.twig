@@ -41,7 +41,7 @@
                     <div class="col-3">
                         {% if (disponibility.isVisio == true) %}
                             <div class="row">
-                                <a href="#" type="button" class="btn btn-secondary">ME CONNECTER</a>
+                                <a href="{{ disponibility.createdBy.visioLink }}" type="button" class="btn btn-secondary">ME CONNECTER</a>
                             </div>
                         {% else %}
                             <div class="almo-rdv-datetime">

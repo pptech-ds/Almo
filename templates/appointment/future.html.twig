@@ -49,7 +49,7 @@
                     <div class="col-2">
                         {% if (reservation.isVisio == true) %}
                             <div class="row">
-                                <a href="#" type="button" class="btn btn-secondary">ME CONNECTER</a>
+                                <a href="{{ reservation.createdBy.visioLink }}" type="button" class="btn btn-secondary">ME CONNECTER</a>
                             </div>
                         {% else %}
                             <div class="almo-rdv-datetime">
@@ -57,12 +57,28 @@
                             </div>
                         {% endif %}
                         <div class="row">    
-                            <a href="#" type="button" class="btn btn-primary">REPORTER CE RV</a>
+                            <a href="{{ path('appointment_change', {'id':reservation.id}) }}" type="button" class="btn btn-primary">REPORTER CE RV</a>
                         </div>
                         <div class="row">
-                            <a href="#" type="button" class="btn btn-danger">ANNULER CE RV</a>
+                            <a href="" class="btn btn-danger modal-trigger" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="{{ reservation.id }}" data-name="{{ reservation.name }}">ANNULER CE RV</a>
+                            {# <a href="{{ path('appointment_cancel', {'id':reservation.id}) }}" type="button" class="btn btn-danger">ANNULER CE RV</a> #}
                         </div>
+                        {# {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %} #}
+                            <div class="row">
+                                <a href="{{ path('message_appointment', {'id':reservation.id}) }}" type="button" class="btn btn-primary">ENVOYER UN MESSAGE</a>
+                            </div>
+                        {# {% endif %} #}
                     </div>
+                </div>
+                <div class="row almo-message-background">
+                    {% for message in reservation.messages %}
+                        <div class="col-4 almo-rdv-content-italic">
+                            {{ message.sender }} le {{ message.createdAt | format_datetime(locale='fr',pattern="EEEE dd MMMM") | capitalize}} à {{ message.createdAt | date("H") }}h{{ message.createdAt | date("i") }}
+                        </div>    
+                        <div class="col-6 almo-rdv-content">
+                            {{ message.content }}
+                        </div>
+                    {% endfor %}
                 </div>
                 <div class="almo-hr">
                     <hr>
@@ -80,7 +96,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Supprimer une disponibilité</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Annuler un RV</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -88,7 +104,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <a href="" class="btn btn-primary">Supprimer</a>
+                <a href="" class="btn btn-primary">Confirmer</a>
             </div>
             </div>
         </div>
