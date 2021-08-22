@@ -90,7 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $doctor;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="doctor")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="doctor", orphanRemoval=true)
      */
     private $patients;
 
@@ -115,7 +115,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $speciality;
 
     /**
-     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="reservedBy")
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="reservedBy", orphanRemoval=true)
      */
     private $reservations;
 
@@ -130,7 +130,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $reportPatient;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Webinar::class, mappedBy="reservedBy")
+     * @ORM\ManyToMany(targetEntity=Webinar::class, mappedBy="reservedBy", orphanRemoval=true)
      */
     private $webinarReservations;
 
@@ -145,7 +145,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $webinars;
 
     /**
-     * @ORM\OneToMany(targetEntity=WebinarQuestions::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=WebinarQuestions::class, mappedBy="user", orphanRemoval=true)
      */
     private $webinarQuestions;
 
@@ -155,12 +155,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $visioLink;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="sender", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="sender", orphanRemoval=true, orphanRemoval=true)
      */
     private $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity=Feedback::class, mappedBy="sender", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Feedback::class, mappedBy="sender", orphanRemoval=true, orphanRemoval=true)
      */
     private $feedback;
 
