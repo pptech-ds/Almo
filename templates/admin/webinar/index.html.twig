@@ -1,79 +1,66 @@
-{% extends 'admin/sbadmin2.html.twig' %}
+{% extends 'admin/sbadmin.html.twig' %}
 
 {% block title %}Ajout d'une catégorie{% endblock %}
 
 {% block body %}
 
-    <!-- Begin Page Content -->
-    <div class="container-fluid">
-
-        <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Liste des Webinars</h1>
-        <p class="mb-4">Ajout ou Suppression de Webinars</p>
-
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Liste des Webinars</h6>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Titre</th>
-                                <th>Categorie</th>
-                                <th>Auteur</th>
-                                <th>Date</th>
-                                <th>Active</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th hidden>Id</th>
-                                <th hidden>Titre</th>
-                                <th hidden>Categorie</th>
-                                <th hidden>Auteur</th>
-                                <th hidden>Date</th>
-                                <th hidden>Active</th>
-                                <th hidden>Actions</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            
-                            {% for webinar in webinars %}
-                                <tr>
-                                    <td>{{webinar.id}}</td>
-                                    <td>{{webinar.title}}</td>
-                                    <td>{{webinar.webinarCategory}}</td>
-                                    <td>{{webinar.user.email}}</td>
-                                    <td>{{webinar.createdAt | date}}</td>
-                                    {# <td>{{webinar.active}}</td> #}
-                                    
-                                    
-                                    <td>
-                                        <div class="custom-control custom-switch">
-                                            <input class="custom-control-input" type="checkbox" name="active" id="customSwitch{{ webinar.id }}" data-id="{{ webinar.id }}" {{ webinar.active ? 'checked' : null}}>
-                                            <label class="custom-control-label" for="customSwitch{{ webinar.id }}"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="{{ path('admin_webinar_update', {id: webinar.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
-                                        <a href="" class="btn btn-danger btn-sm modal-trigger" data-toggle="modal" data-target="#modalDelete" data-id="{{ webinar.id }}" data-title="{{ webinar.title }}">Supprimer</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i> Webinars
         </div>
-
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Titre</th>
+                        <th>Categorie</th>
+                        <th>Auteur</th>
+                        <th>Date</th>
+                        <th>Active</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th hidden>Id</th>
+                        <th hidden>Titre</th>
+                        <th hidden>Categorie</th>
+                        <th hidden>Auteur</th>
+                        <th hidden>Date</th>
+                        <th hidden>Active</th>
+                        <th hidden>Actions</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    
+                    {% for webinar in webinars %}
+                        <tr>
+                            <td>{{webinar.id}}</td>
+                            <td>{{webinar.title}}</td>
+                            <td>{{webinar.webinarCategory}}</td>
+                            <td>{{webinar.user.email}}</td>
+                            <td>{{webinar.createdAt | date}}</td>
+                            {# <td>{{webinar.active}}</td> #}
+                            
+                            
+                            <td>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="active" id="customSwitch{{ webinar.id }}" data-id="{{ webinar.id }}" {{ webinar.active ? 'checked' : null}}>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_webinar_update', {id: webinar.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                {# <a href="" class="btn btn-danger btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="{{ webinar.id }}" data-title="{{ webinar.title }}">Supprimer</a> #}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
     </div>
-    <!-- /.container-fluid -->
+
 
     <!-- Modal -->
     <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -81,36 +68,34 @@
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Supprimer un webinar</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 ...
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 <a href="" class="btn btn-primary">Supprimer</a>
             </div>
             </div>
         </div>
-    </div>}
+    </div>
 
+
+
+    
 {% endblock %}
 
 
 {% block javascripts %}
     <script>
         window.onload = () => {
-            console.log('Load !!!!')
             let activate = document.querySelectorAll("[type=checkbox]")
-            console.log(activate)
             for(let button of activate) {
-                console.log(button)
                 button.addEventListener("click", function(){
-                    // alert('clik!!')
                     let xmlhttp = new XMLHttpRequest
                     xmlhttp.open("get", `/admin/webinar/activate/${this.dataset.id}`)
-                    xmlhttp.send();
-                    // console.log(xmlhttp)
+                    xmlhttp.send() 
                 })
             }
 
@@ -118,7 +103,7 @@
             for(let btdelete of btdeletes) {
                 btdelete.addEventListener("click", function(){
                     document.querySelector(".modal-footer a").href=`/admin/webinar/delete/${this.dataset.id}`
-                    document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer cette webinar "${this.dataset.title}"`
+                    document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer ce webinar "${this.dataset.title}"`
                 })
             }
         }

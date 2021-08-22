@@ -231,6 +231,8 @@ class UserController extends AbstractController
      */
     public function deleteUser(User $user): Response
     {
+        // dd($user);
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();
