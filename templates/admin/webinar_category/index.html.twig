@@ -1,65 +1,53 @@
-{% extends 'admin/sbadmin2.html.twig' %}
+{% extends 'admin/sbadmin.html.twig' %}
 
 {% block title %}Ajout d'une catégorie{% endblock %}
 
 {% block body %}
 
-    <!-- Begin Page Content -->
-    <div class="container-fluid">
 
-        <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Liste des categories</h1>
-        <p class="mb-4">Ajout ou Suppression de categorie de Webinars</p>
-
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Liste des categories</h6>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Parent</th>
-                                <th>Nom</th>
-                                <th>Sluge</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th hidden>Id</th>
-                                <th hidden>Parent</th>
-                                <th hidden>Nom</th>
-                                <th hidden>Sluge</th>
-                                <th hidden>Actions</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            
-                            {% for webinarCategory in webinarCategories %}
-                                <tr>
-                                    <td>{{webinarCategory.id}}</td>
-                                    <td>{{webinarCategory.parent}}</td>
-                                    <td>{{webinarCategory.name}}</td>
-                                    <td>{{webinarCategory.slug}}</td>
-                                    <td>
-                                        <a href="{{ path('admin_webinar_category_update', {id: webinarCategory.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
-                                        <a href="" class="btn btn-danger btn-sm modal-trigger" data-toggle="modal" data-target="#modalDelete" data-id="{{ webinarCategory.id }}" data-title="{{ webinarCategory.name }}">Supprimer</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i> Webinars categories
         </div>
-
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Parent</th>
+                        <th>Nom</th>
+                        <th>Sluge</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th hidden>Id</th>
+                        <th hidden>Parent</th>
+                        <th hidden>Nom</th>
+                        <th hidden>Sluge</th>
+                        <th hidden>Actions</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    
+                    {% for webinarCategory in webinarCategories %}
+                        <tr>
+                            <td>{{webinarCategory.id}}</td>
+                            <td>{{webinarCategory.parent}}</td>
+                            <td>{{webinarCategory.name}}</td>
+                            <td>{{webinarCategory.slug}}</td>
+                            <td>
+                                <a href="{{ path('admin_webinar_category_update', {id: webinarCategory.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                <a href="" class="btn btn-danger btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="{{ webinarCategory.id }}" data-title="{{ webinarCategory.name }}">Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
     </div>
-    <!-- /.container-fluid -->
 
 
     <!-- Modal -->
@@ -68,18 +56,18 @@
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Supprimer une categorie</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 ...
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 <a href="" class="btn btn-primary">Supprimer</a>
             </div>
             </div>
         </div>
-    </div>}
+    </div>
 
 {% endblock %}
 
@@ -87,20 +75,6 @@
 {% block javascripts %}
     <script>
         window.onload = () => {
-            console.log('Load !!!!')
-            let activate = document.querySelectorAll("[type=checkbox]")
-            console.log(activate)
-            for(let button of activate) {
-                console.log(button)
-                button.addEventListener("click", function(){
-                    // alert('clik!!')
-                    let xmlhttp = new XMLHttpRequest
-                    xmlhttp.open("get", `/admin/webinar_category/activate/${this.dataset.id}`)
-                    xmlhttp.send();
-                    // console.log(xmlhttp)
-                })
-            }
-
             let btdeletes = document.querySelectorAll(".modal-trigger")
             for(let btdelete of btdeletes) {
                 btdelete.addEventListener("click", function(){

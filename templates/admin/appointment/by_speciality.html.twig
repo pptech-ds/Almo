@@ -4,14 +4,13 @@
 
 {% block body %}
 
-    <!-- Begin Page Content -->
-    <div class="container-fluid">
 
-        <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Liste des disponibilités</h1>
-
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i> Disponibilités
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
                 <thead>
                     <tr>
                         <th>Le Spécialiste</th>
@@ -33,9 +32,9 @@
                                     {% for appointment in userBySpeciality.appointments %}
                                         {% if (appointment.reservedBy == null) %}
                                             {% if (appointment.isVisio == true) %}
-                                                <a href="{{path('admin_appointment_update', {'id':appointment.id})}}" type="button" class="btn btn-primary my-1">En visio <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }}  {{ appointment.endTime | date('H:i:s') }}</a>
+                                                <a href="{{path('admin_appointment_update', {'id':appointment.id})}}" type="button" class="btn btn-primary my-1">En visio <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }}</a>
                                             {% else %}
-                                                <a href="{{path('admin_appointment_update', {'id':appointment.id})}}" type="button" class="btn btn-success my-1">En présentiel <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }}  {{ appointment.endTime | date('H:i:s') }}</a>
+                                                <a href="{{path('admin_appointment_update', {'id':appointment.id})}}" type="button" class="btn btn-success my-1">En présentiel <br> {{ appointment.startTime | date("Y/m/d") }} <br> {{ appointment.startTime | date('H:i:s') }}</a>
                                             {% endif %}
                                         {% endif %}
                                     {% endfor %}
@@ -46,9 +45,7 @@
                 </tbody>
             </table>
         </div>
-
     </div>
-    <!-- /.container-fluid -->
 
 
     <!-- Modal -->
@@ -56,20 +53,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Supprimer utilisateur</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="exampleModalLabel">Supprimer un article</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 ...
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 <a href="" class="btn btn-primary">Supprimer</a>
             </div>
             </div>
         </div>
-    </div>}
+    </div>
 
+    
 
 {% endblock %}
 
@@ -77,25 +75,20 @@
 {% block javascripts %}
     <script>
         window.onload = () => {
-            console.log('Load !!!!')
             let activate = document.querySelectorAll("[type=checkbox]")
-            console.log(activate)
             for(let button of activate) {
-                console.log(button)
                 button.addEventListener("click", function(){
-                    // alert('clik!!')
                     let xmlhttp = new XMLHttpRequest
-                    xmlhttp.open("get", `/admin/user/verify/${this.dataset.id}`)
-                    xmlhttp.send();
-                    // console.log(xmlhttp)
+                    xmlhttp.open("get", `/admin/ressource/activate/TOUPDATE${this.dataset.id}`)
+                    xmlhttp.send() 
                 })
             }
 
             let btdeletes = document.querySelectorAll(".modal-trigger")
             for(let btdelete of btdeletes) {
                 btdelete.addEventListener("click", function(){
-                    document.querySelector(".modal-footer a").href=`/admin/user/delete/${this.dataset.id}`
-                    document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer cette ressource "${this.dataset.title}"`
+                    document.querySelector(".modal-footer a").href=`/admin/ressource/delete/TOUPDATE${this.dataset.id}`
+                    document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer cet article "${this.dataset.title}"`
                 })
             }
         }

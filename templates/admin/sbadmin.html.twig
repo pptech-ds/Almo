@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Dashboard - Almo</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="{{ asset('sbadmin/css/styles.css') }}" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+
+        {% block stylesheets %}
+        {% endblock %}
+
+
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="{{ path('home') }}">Almo Home</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            </div>
+            
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+
+                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="{{ path('admin_home') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Dashboard
+                            </a>
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts1">
+                                <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                                Utilisateurs
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{{ path('admin_user_by_role_index', {'role': 'ROLE_ADMIN' }) }}">Admins</a>
+                                    <a class="nav-link" href="{{ path('admin_user_by_role_index', {'role': 'ROLE_DOC' }) }}">Médecins</a>
+                                    <a class="nav-link" href="{{ path('admin_user_by_role_index', {'role': 'ROLE_PRO' }) }}">Profesionnels</a>
+                                    <a class="nav-link" href="{{ path('admin_user_by_role_index', {'role': 'ROLE_PATIENT' }) }}">Patients</a>
+                                    <a class="nav-link" href="{{ path('admin_user_add') }}">Ajouter</a>
+                                </nav>
+                            </div>
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2">
+                                <div class="sb-nav-link-icon"><i class="fas fa-pager"></i></div>
+                                Ressources
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{{ path('admin_ressource_category_index') }}">Lister les catégories</a>
+                                    <a class="nav-link" href="{{ path('admin_ressource_category_add') }}">Ajouter une catégorie</a>
+                                    <a class="nav-link" href="{{ path('admin_ressource_by_category_index', {'slug': 'article'}) }}">Lister les articles</a>
+                                    <a class="nav-link" href="{{ path('admin_ressource_add') }}">Ajouter un article</a> 
+                                </nav>
+                            </div>
+
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
+                                <div class="sb-nav-link-icon"><i class="fas fa-hospital-user"></i></div>
+                                Webinars
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{{ path('admin_webinar_category_index') }}">Lister les catégories</a>
+                                    <a class="nav-link" href="{{ path('admin_webinar_category_add') }}">Ajouter une catégorie</a>
+                                    <a class="nav-link" href="{{ path('admin_webinar_index') }}">Lister les webinars</a>
+                                    <a class="nav-link" href="{{ path('admin_webinar_add') }}">Ajouter un webinar</a>
+                                </nav>
+                            </div>
+
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts4">
+                                <div class="sb-nav-link-icon"><i class="fas fa-calendar-alt"></i></div>
+                                Disponibilités
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{{ path('admin_speciality_index') }}">Lister les pratiques</a>
+                                    <a class="nav-link" href="{{ path('admin_appointment_add') }}">Ajouter une disponibilité</a>
+                                    <a class="nav-link" href="{{ path('admin_appointment_asign') }}">Asigner un RDV</a>
+                                    <a class="nav-link" href="{{ path('admin_speciality_add') }}">Ajouter une pratique</a>
+                                </nav>
+                            </div>
+
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts5">
+                                <div class="sb-nav-link-icon"><i class="fas fa-info-circle"></i></div>
+                                Informations
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts5" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{{ path('admin_information_index') }}">Lister les informations</a>
+                                    <a class="nav-link" href="{{ path('admin_information_add') }}">Ajouter une information</a>
+                                </nav>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Utilisateur connecté:</div>
+                        {{ app.user.civility }} {{ app.user.firstname }} {{ app.user.lastname }}
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Dashboard</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success" role="alert">{{ message }}</div>
+                        {% endfor %}
+
+                        {% block body %}{% endblock %}
+ 
+
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Almo 2021</div>
+                            
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="{{ asset('sbadmin/js/scripts.js')}}"></script>
+        <script src="{{ asset('sbadmin/js/datatables-simple-demo.js')}}"></script>
+        <script src="{{ asset('sbadmin/js/pages.js')}}"></script>
+
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
