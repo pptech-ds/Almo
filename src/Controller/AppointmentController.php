@@ -9,6 +9,7 @@ use App\Entity\Appointment;
 use App\Form\AppointmentFormType;
 use App\Repository\SpecialityRepository;
 use App\Repository\AppointmentRepository;
+use App\Repository\WebinarRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,11 +67,22 @@ class AppointmentController extends AbstractController
     /**
      * @Route("/appointment/future", name="appointment_future")
      */
-    public function appointmentFuture(UserInterface $user, AppointmentRepository $appointmentRepository): Response
+    public function appointmentFuture(UserInterface $user, AppointmentRepository $appointmentRepository, WebinarRepository $webinarRepository): Response
     {
-        // dd($user->getAppointments());
+        $currentDate = new DateTime(date('Y-m-d H:m:s'));
 
-        // dd($user->getDisponibilities());
+        $ReservedWebinars = [];
+
+        foreach($webinarRepository->FindAll() as $webinar){
+            $interval = $currentDate->diff($webinar->getStartTime());
+            if($interval->format('%R%a') > 0){
+                if(($webinar->getReservedBy()[0] != null) && ($webinar->getReservedBy()[0]->getId() == $this->getUser()->getId())){
+                    $ReservedWebinars[] = $webinar;
+                }
+            }
+        }
+
+        // dd($ReservedWebinars);
 
         $reservations = [];
         $reservationsRender = [];
@@ -97,7 +109,7 @@ class AppointmentController extends AbstractController
 
 
         $reservationsFuture = [];
-        $currentDate = new DateTime(date('Y-m-d H:m:s'));
+        
 
         foreach($reservationsRender as $reservationRender){
             $interval = $currentDate->diff($reservationRender->getStartTime());
@@ -111,6 +123,7 @@ class AppointmentController extends AbstractController
         return $this->render('appointment/future.html.twig', [
             'reservations' => $reservationsFuture,
             'disponibilities' => $disponibilities,
+            'webinars' => $ReservedWebinars
         ]);
     }
 
