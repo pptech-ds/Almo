@@ -2,17 +2,22 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\User;
 use App\Entity\Webinar;
 use App\Entity\Ressource;
 use App\Form\WebinarFormType;
 use App\Entity\WebinarCategory;
 use App\Form\RessourceFormType;
+use App\Repository\UserRepository;
 use App\Form\WebinarCategoryFormType;
 use App\Repository\WebinarRepository;
+use App\Form\Admin\AdminWebinarAsignFormType;
 use App\Repository\WebinarCategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -116,5 +121,51 @@ class WebinarController extends AbstractController
         $this->addFlash('success', 'Votre webinar a été supprimé avec succes !');
 
         return $this->redirectToRoute('admin_webinar_index');
+    }
+
+
+
+    /**
+     * @Route("/admin/webinar/asign", name="admin_webinar_asign")
+     */
+    public function webinarAsign(WebinarRepository $webinarRepository,UserRepository $userRepository, Request $request): Response
+    {
+        // $usersPro = $userRepository->findByRole('ROLE_PRO');
+        $usersPatient = $userRepository->findByRole('ROLE_PATIENT');
+
+        $webinars = $webinarRepository->findAll();
+        
+        // $appointment = new Appointment();
+        $form = $this->createForm(AdminWebinarAsignFormType::class);
+        $form->add('reservedBy', EntityType::class, [
+                'class' => User::class,
+                'choices' => $usersPatient,
+                'label' => 'Patient'
+        ]);
+        $form->add('Enregistrer', SubmitType::class);
+        
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            dd($form->get('reservedBy'));
+            
+            // $webinar = $form->get('title')->getData();
+            // $patient = $form->get('reservedBy')->getData();
+            // dd($patient);
+            // $webinar->addReservedBy([$patient]);
+            // // $webinar->setActive(false);
+            // $em = $this->getDoctrine()->getManager();
+            // $em->persist($webinar);
+            // $em->flush();
+
+            $this->addFlash('success', 'Le webinar a été asignée avec success');
+
+            return $this->redirectToRoute('admin_webinar_asign');
+        }
+
+        return $this->render('admin/webinar/asign.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

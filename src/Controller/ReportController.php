@@ -87,7 +87,7 @@ class ReportController extends AbstractController
 
             $this->addFlash('success', 'Votre rapport a été ajouter avec success !');
 
-            return $this->redirectToRoute('appointment_index');
+            return $this->redirectToRoute('appointment_past');
         }
 
         return $this->render('report/add.html.twig', [
@@ -119,7 +119,7 @@ class ReportController extends AbstractController
 
             $this->addFlash('success', 'Votre rapport a été modifié avec success !');
 
-            return $this->redirectToRoute('user_reservation_list');
+            return $this->redirectToRoute('appointment_past');
         }
 
         return $this->render('report/update.html.twig', [
