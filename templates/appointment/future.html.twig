@@ -84,6 +84,43 @@
                     <hr>
                 </div>  
             {% endfor %}
+
+            {% for webinar in webinars %}
+                <div class="row">
+                    <div class="col-2 almo-rdv-datetime">
+                        {{ webinar.startTime | format_datetime(locale='fr',pattern="EEEE dd MMMM") | capitalize}}
+                    </div>
+                    <div class="col-1 almo-rdv-datetime">
+                        {{ webinar.startTime | date("H") }}h{{ webinar.startTime | date("i") }}
+                    </div>
+                    <div class="col-2 almo-rdv-content">
+                        {{ webinar.title }}
+                    </div>
+                    <div class="col-3 almo-rdv-content">
+                        {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
+                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':webinar.reservedBy.id})}}">{{ webinar.reservedBy.civility }} {{ webinar.reservedBy.firstname }} {{ webinar.reservedBy.lastname }}</a>
+                        {% endif %}
+                        {% if (is_granted("ROLE_PATIENT")) %}
+                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':webinar.user.id})}}">{{ webinar.user.civility }} {{ webinar.user.firstname }} {{ webinar.user.lastname }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-2 almo-rdv-content-italic">
+                        A distance 
+                    </div>
+                    <div class="col-2">
+                        
+                        <div class="row">
+                            <a href="{{ webinar.user.visioLink }}" type="button" class="btn btn-secondary">ME CONNECTER</a>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+                
+                <div class="almo-hr">
+                    <hr>
+                </div>  
+            {% endfor %}
         </div>
     </div>
             
