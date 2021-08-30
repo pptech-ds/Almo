@@ -31,8 +31,8 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
         // dateTimeThisYear($max = 'now', $timezone = null)        // DateTime('2011-02-27 20:52:14', 'Africa/Lagos')
         // dateTimeThisMonth($max = 'now', $timezone = null)       // DateTime('2011-10-23 13:46:23', 'Antarctica/Vostok')
 
-        $dateStartFuture = DateTime::createFromFormat('Y-m-d H:i:s', '2021-08-28 09:00:00');
-        $dateEndFuture = DateTime::createFromFormat('Y-m-d H:i:s', '2021-08-28 10:00:00');
+        $dateStartFuture = DateTime::createFromFormat('Y-m-d H:i:s', '2021-09-10 09:00:00');
+        $dateEndFuture = DateTime::createFromFormat('Y-m-d H:i:s', '2021-09-10 10:00:00');
 
         $dateStartPast = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 09:00:00');
         $dateEndPast = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 10:00:00');
@@ -43,13 +43,8 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
             for($j=0; $j<10; $j++){
                 $disponility = new Appointment;
                 $disponility->setContent($faker->realText($maxNbChars = 200, $indexSize = 2));
-                if($i%2 == 0){
-                    $disponility->setStartTime($dateStartFuture);
-                    $disponility->setEndTime($dateEndFuture);
-                } else {
-                    $disponility->setStartTime($dateStartPast);
-                    $disponility->setEndTime($dateEndPast);
-                }
+                $disponility->setStartTime($dateStartFuture);
+                $disponility->setEndTime($dateEndFuture);
                 $disponility->setCreatedBy($user);
                 $disponility->setName('RV '.$user->getSpeciality());
                 if($j%2==0){
@@ -67,13 +62,8 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
             
             $disponility = new Appointment;
             $disponility->setContent($faker->realText($maxNbChars = 200, $indexSize = 2));
-            if($i%2 == 0){
-                $disponility->setStartTime($dateStartFuture);
-                $disponility->setEndTime($dateEndFuture);
-            } else {
-                $disponility->setStartTime($dateStartPast);
-                $disponility->setEndTime($dateEndPast);
-            }
+            $disponility->setStartTime($dateStartFuture);
+            $disponility->setEndTime($dateEndFuture);
             $disponility->setCreatedBy($user);
             $disponility->setName('RV '.$user->getSpeciality());
             if($i%2==0){

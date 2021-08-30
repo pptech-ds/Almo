@@ -18,7 +18,7 @@ class WebinarFixtures extends Fixture implements DependentFixtureInterface
 
         // print('Starting WebinarFixtures ');
 
-        $dateFuture = DateTime::createFromFormat('Y-m-d H:i:s', '2021-08-28 09:00:00');
+        $dateFuture = DateTime::createFromFormat('Y-m-d H:i:s', '2021-09-28 09:00:00');
         $datePast = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 09:00:00');
 
         for($i = 0; $i < 10; $i++ ) {
