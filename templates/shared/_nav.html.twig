@@ -3,8 +3,8 @@
         {# <li><a class="nav-link scrollto " href="{{ path('home') }}">ACCUEIL</a></li> #}
         
         {% if not is_granted("ROLE_USER") %}
-            <li><a class="nav-link scrollto" href="{{ path('app_register') }}">ENREGISTREMENT</a></li>
-            <li><a class="nav-link scrollto" href="{{ path('app_login') }}">CONNEXION</a></li>
+            {# <li><a class="nav-link scrollto" href="{{ path('app_register') }}">ENREGISTREMENT</a></li>
+            <li><a class="nav-link scrollto" href="{{ path('app_login') }}">CONNEXION</a></li> #}
         {% else %}
             {% if (is_granted("ROLE_PATIENT") or is_granted("ROLE_ADMIN")) %}
                 <li><a class="nav-link scrollto" href="{{ path('experiment') }}">TOUT SAVOIR SUR L’EXPERIMENTATION</a></li>
@@ -30,13 +30,14 @@
             <li><a class="nav-link scrollto" href="{{ path('article_index') }}">NOS ARTICLES</a></li>
             <li><a class="nav-link scrollto" href="{{ path('user_profile') }}">MON PROFIL</a></li>
             <li><a class="nav-link scrollto" href="{{ path('app_logout') }}">DECONNEXION</a></li>
+            <li><a class="nav-link scrollto" href="{{ path('contact') }}">CONTACTER L'EQUIPE</a></li>
         {% endif %}
 
         {% if is_granted("ROLE_ADMIN") %}
             <li><a class="nav-link scrollto" href="{{ path('admin_home') }}">ADMIN</a></li>
         {% endif %}
 
-        <li><a class="nav-link scrollto" href="{{ path('contact') }}">CONTACTER L'EQUIPE</a></li>
+        
 
     </ul>
     <i class="bi bi-list mobile-nav-toggle"></i>

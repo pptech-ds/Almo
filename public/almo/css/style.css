@@ -63,6 +63,15 @@ p {
     border-radius: 24px;
 }
 
+.almo-fixed-top {
+    position: fixed;
+    background-color: #FAE6D5;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
 .almo-hr {
     height: 2px;
     margin: 5px;
@@ -206,6 +215,17 @@ p {
     color: #224F9D;
 }
 
+.almo-login {
+    font-family: 'Arial', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: #224F9D;
+}
+
+.almo-login-input {
+    border-color: #224F9D;
+}
+
 .almo-navbar {
     font-weight: bold;
     color: #224F9D;
@@ -291,4 +311,16 @@ p {
     font-size: 12px!important;
     margin: 2px!important;
     /* font-weight: bold!important; */
+}
+
+.btn-info {
+    background-color: #faf600!important;
+    border-radius: 24px!important;
+    border-color: #28225B!important;
+    margin: 2px!important;
+    font-family: 'Arial', sans-serif!important;
+    font-size: 15px!important;
+    font-weight: bold!important;
+    color: #224F9D!important;
+    border-width: 2px;
 }
