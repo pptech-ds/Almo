@@ -6,8 +6,8 @@
     {% if is_granted("ROLE_USER") %}
     
         <div class="almo-background-color">
-            <div style="height: 15rem">
-            </div>
+            {# <div style="height: 15rem">
+            </div> #}
 
             <div class="container">
 
@@ -32,7 +32,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Mes rendez-vous et mes activités passés</h5>
                                         <img src="{{ asset('almo/img/rdv.png') }}">
-                                        <p>Donner mon avis</p>
+                                        <p class="almo-card-p">Donner mon avis</p>
                                     </div>
                                 </div>
                             </a>
@@ -45,7 +45,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Les webinars à venir</h5>
                                         <img src="{{ asset('almo/img/webinar.png') }}">
-                                        <p>Poser des questions</p>
+                                        <p class="almo-card-p">Poser des questions</p>
                                     </div>
                                 </div>
                             </a>
@@ -57,7 +57,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Les webinars passés</h5>
                                         <img src="{{ asset('almo/img/webinar.png') }}">
-                                        <p>Visionner les webinars passés</p>
+                                        <p class="almo-card-p">Visionner les webinars passés</p>
                                     </div>
                                 </div>
                             </a>
@@ -160,9 +160,9 @@
                 </div>   
                 <div class="row">
                     
-                    <div class="section-title">
+                    {# <div class="section-title">
                         <h2>Nos derniers articles</h2>
-                    </div>
+                    </div> #}
 
                     
                         {% for article in articles %}
@@ -196,12 +196,14 @@
             
     {% else %}
         <div class="almo-background-color">
-            <div style="height: 15rem">
-            </div>
+            {# <div style="height: 15rem">
+            </div> #}
             <div class="container">
+                
                 <div class="text-center">
                     <img  src="{{ asset('almo/img/logo_home.png') }}">
                 </div>
+                
                 <div>
                     <div class="text-center almo-intro1">
                         <br>
@@ -213,6 +215,64 @@
                         <p>{{ almo_intro_2.content | raw }}</p>    
                     </div>
                 </div>
+
+                <br>
+                <br>
+                <br>
+
+                <div>
+                    <form method="post">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        {% if app.user %}
+                            <div class="mb-3">
+                                Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                            </div>
+                        {% endif %}
+                       
+                        <h1 class="h3 mb-3 font-weight-normal almo-intro1">Connectez-vous ici:</h1>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="inputEmail" class="almo-login">E-mail</label>
+                                <input placeholder="email@provider.com" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control rounded-pill almo-login-input" autocomplete="email" required autofocus>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="inputPassword" class="almo-login">Mot de passe</label>
+                                <input placeholder="************" type="password" name="password" id="inputPassword" class="form-control rounded-pill almo-login-input" autocomplete="current-password" required>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <br>
+                        
+                        <button class="btn btn-lg btn-secondary my-3" type="submit">S'identifier</button>
+                        {# <a href="#" type="button" class="btn btn-primary">Connexion</a> #}
+                        
+                        <br>
+                        <br>
+
+                        <a class="almo-login" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié?</a>
+
+                        <br>
+                        <br>
+
+                        <div class="row">
+                            <div class="almo-intro1 col-4">Vous n'avez pas de d'identifiants et voulez </div> 
+                            <div class="almo-intro1 col-3"><a href="{{ path('contact') }}" type="button" class="btn btn-info">NOUS CONTACTER, C'EST ICI!</a></div> 
+                        </div>
+
+                    </form>
+                </div>
+                
             </div>
         </div>
     {% endif %}

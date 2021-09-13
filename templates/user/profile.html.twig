@@ -8,12 +8,18 @@
 
     <div class="almo-background-color-article">            
         <div class="container">
-            <div style="height: 15rem">
-            </div>
+            {# <div style="height: 15rem">
+            </div> #}
 
 
             <div class="section-title">
-                <h2>Profil utilisateur de {{user.civility}} {{user.firstname}} {{user.lastname}}</h2>
+                <h2>Mon Profil</h2>
+                <div class="col-2">
+                    <a href="{{ path('user_update') }}" class="btn btn-primary btn-sm">MODIFIER MON PROFILE</a>
+                </div>
+            </div>
+
+            <div style="height: 1rem">
             </div>
 
             <div class="row">
@@ -24,9 +30,11 @@
                     {{ (user.lastname is defined) ? user.lastname : '' }}
                 </div>
             </div>
-            <div class="almo-hr">
+            {# <div class="almo-hr">
                 <hr>
-            </div>  
+            </div>   #}
+            <div style="height: 1rem">
+            </div>
 
             <div class="row">
                 <div class="col-2 almo-rdv-datetime">
@@ -36,9 +44,11 @@
                     {{ (user.firstname is defined) ? user.firstname : '' }}
                 </div>
             </div>
-            <div class="almo-hr">
+            {# <div class="almo-hr">
                 <hr>
-            </div>  
+            </div>   #}
+            <div style="height: 1rem">
+            </div>
 
             <div class="row">
                 <div class="col-2 almo-rdv-datetime">
@@ -48,9 +58,11 @@
                     {{ (user.email is defined) ? user.email : '' }}
                 </div>
             </div>
-            <div class="almo-hr">
+            {# <div class="almo-hr">
                 <hr>
-            </div>  
+            </div>   #}
+            <div style="height: 1rem">
+            </div>
 
             <div class="row">
                 <div class="col-2 almo-rdv-datetime">
@@ -60,9 +72,11 @@
                     {{ (user.phone is defined) ? user.phone : '' }}
                 </div>
             </div>
-            <div class="almo-hr">
+            {# <div class="almo-hr">
                 <hr>
-            </div>  
+            </div>   #}
+            <div style="height: 1rem">
+            </div>
 
             <div class="row">
                 <div class="col-2 almo-rdv-datetime">
@@ -72,9 +86,11 @@
                     {{ (user.address is defined) ? user.address : '' }}
                 </div>
             </div>
-            <div class="almo-hr">
+            {# <div class="almo-hr">
                 <hr>
-            </div>  
+            </div>   #}
+            <div style="height: 1rem">
+            </div>
 
             <div class="row">
                 <div class="col-2 almo-rdv-datetime">
@@ -84,9 +100,11 @@
                     {{ (user.zipcode is defined) ? user.zipcode : '' }}
                 </div>
             </div>
-            <div class="almo-hr">
+            {# <div class="almo-hr">
                 <hr>
-            </div>  
+            </div>   #}
+            <div style="height: 1rem">
+            </div>
 
             <div class="row">
                 <div class="col-2 almo-rdv-datetime">
@@ -96,9 +114,11 @@
                     {{ (user.city is defined) ? user.city : '' }}
                 </div>
             </div>
-            <div class="almo-hr">
+            {# <div class="almo-hr">
                 <hr>
-            </div>  
+            </div>   #}
+            <div style="height: 1rem">
+            </div>
 
             {% if (is_granted("ROLE_PATIENT") or is_granted("ROLE_DOC")) %}
                 <div class="row">
@@ -109,9 +129,11 @@
                         {{ (user.hospital.name is defined) ? user.hospital.name : '' }}
                     </div>
                 </div>
-                <div class="almo-hr">
+                {# <div class="almo-hr">
                     <hr>
-                </div>  
+                </div>   #}
+                <div style="height: 1rem">
+                </div>
             {% endif %}
 
             {% if (is_granted("ROLE_PATIENT")) %}
@@ -123,9 +145,11 @@
                         {{ (user.doctor.civility is defined) ? user.doctor.civility : '' }} {{ (user.doctor.firstname is defined) ? user.doctor.firstname : '' }} {{ (user.doctor.lastname is defined) ? user.doctor.lastname : '' }}
                     </div>
                 </div>
-                <div class="almo-hr">
+                {# <div class="almo-hr">
                     <hr>
-                </div>  
+                </div>   #}
+                <div style="height: 1rem">
+                </div>
             {% endif %}
 
             <div class="row">
@@ -136,16 +160,13 @@
                     {{ (user.details is defined) ? user.details : '' }}
                 </div>
             </div>
-            <div class="almo-hr">
+            {# <div class="almo-hr">
                 <hr>
-            </div>  
+            </div>   #}
 
-            <div class="row">
-                <div class="col-2">
-                    <a href="{{ path('user_update') }}" class="btn btn-primary btn-sm">MODIFIER MON PROFILE</a>
-                </div>
-            </div>
             
+            <div style="height: 15rem">
+            </div>
 
 
         

@@ -48,7 +48,9 @@
     </head>
     <body>
 
-        {% include 'shared/_header.html.twig' %}
+        {% if is_granted("ROLE_USER") %}
+            {% include 'shared/_header.html.twig' %}
+        {% endif %}
 
         {% for message in app.flashes('success') %}
             <div class="alert alert-success" role="alert">{{ message }}</div>

@@ -5,8 +5,8 @@
 {% block body %}
 
     <div class="almo-background-color-article">
-        <div style="height: 15rem">
-        </div>
+        {# <div style="height: 15rem">
+        </div> #}
         
         <div class="container"> 
             <div class="row">
@@ -61,13 +61,10 @@
                         </div>
                         <div class="row">
                             <a href="" class="btn btn-danger modal-trigger" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="{{ reservation.id }}" data-name="{{ reservation.name }}">ANNULER CE RV</a>
-                            {# <a href="{{ path('appointment_cancel', {'id':reservation.id}) }}" type="button" class="btn btn-danger">ANNULER CE RV</a> #}
                         </div>
-                        {# {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %} #}
-                            <div class="row">
-                                <a href="{{ path('message_appointment', {'id':reservation.id}) }}" type="button" class="btn btn-primary">ENVOYER UN MESSAGE</a>
-                            </div>
-                        {# {% endif %} #}
+                        <div class="row">
+                            <a href="{{ path('message_appointment', {'id':reservation.id}) }}" type="button" class="btn btn-primary">ENVOYER UN MESSAGE</a>
+                        </div>
                     </div>
                 </div>
                 <div class="row almo-message-background">
@@ -121,6 +118,9 @@
                     <hr>
                 </div>  
             {% endfor %}
+        </div>
+
+        <div style="height: 15rem">
         </div>
     </div>
             

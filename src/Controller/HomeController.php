@@ -4,19 +4,20 @@ namespace App\Controller;
 
 use App\Entity\Ressource;
 use App\Entity\RessourceCategory;
-use App\Repository\InformationRepository;
 use App\Repository\WebinarRepository;
 use App\Repository\RessourceRepository;
+use App\Repository\InformationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(RessourceRepository $ressourceRepository, WebinarRepository $webinarRepository, InformationRepository $informationRepository): Response
+    public function index(RessourceRepository $ressourceRepository, WebinarRepository $webinarRepository, InformationRepository $informationRepository, AuthenticationUtils $authenticationUtils): Response
     {
         $documents = $ressourceRepository->findLastRessourcesByCategory('Document', 3);
         // dd($documents);
@@ -40,12 +41,19 @@ class HomeController extends AbstractController
 
         // dd($almo_intro_1);
 
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
         return $this->render('home/index.html.twig', [
             'documents' => $documents,
             'articles' => $articles,
             'webinars' => $webinars,
             'almo_intro_1' => $almo_intro_1,
             'almo_intro_2' => $almo_intro_2,
+            'last_username' => $lastUsername, 
+            'error' => $error
         ]);
     }
 

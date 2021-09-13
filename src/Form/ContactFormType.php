@@ -23,7 +23,7 @@ class ContactFormType extends AbstractType
                 'label' => 'Email'
             ])
             ->add('content', TextareaType::class, [
-                "label" => "Contenu",
+                "label" => "Votre demande",
             ])
             ->add('Envoyer', SubmitType::class)
         ;

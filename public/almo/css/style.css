@@ -59,8 +59,17 @@ p {
 }
 
 .almo-message-background {
-    background-color: #b3aeae;
-    border-radius: 24px;
+    background-color: #dadada;
+    border-radius: 10px;
+}
+
+.almo-fixed-top {
+    position: fixed;
+    background-color: #FAE6D5;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
 }
 
 .almo-hr {
@@ -126,15 +135,28 @@ p {
 
 .almo-card-title {
     font-family: 'Arial', sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     font-weight: bold;
+    /* color: #28225B; */
+}
+
+
+/* .almo-card-title:hover {
+    color: #ffffff;
+} */
+
+.almo-card-p {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    text-align: center;
+    /* font-weight: bold; */
     color: #28225B;
 }
 
 .almo-card-border {
     border: 2px solid #224F9D;
-    border-radius: 25px;
+    border-radius: 10px;
     /* padding: 10px; */
     /* margin: 20px; */
 }
@@ -145,13 +167,14 @@ p {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    border: 2px solid #224F9D;
-    border-radius: 25px;
+    /* border: 2px solid #224F9D; */
+    border-radius: 10px;
     height: 200px;
 }
 
 .almo-card-quick-access:hover {
     background-color: #38AAE0;
+    color: #ffffff;
 }
 
 .almo-card-title-experiment {
@@ -175,8 +198,8 @@ p {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    border: 2px solid #224F9D;
-    border-radius: 25px;
+    /* border: 2px solid #224F9D; */
+    border-radius: 10px;
     height: 200px;
     background-color: #28225B;
 }
@@ -191,12 +214,13 @@ p {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    border: 2px solid #224F9D;
+    border: 0px solid #224F9D;
     border-radius: 5px;
     height: 450px;
 }
 
 .almo-card-article:hover {
+    /* color: #ffffff; */
     background-color: #38AAE0;
 }
 
@@ -204,6 +228,17 @@ p {
     font-family: 'Arial', sans-serif;
     font-size: 20px;
     color: #224F9D;
+}
+
+.almo-login {
+    font-family: 'Arial', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: #224F9D;
+}
+
+.almo-login-input {
+    border-color: #224F9D;
 }
 
 .almo-navbar {
@@ -291,4 +326,16 @@ p {
     font-size: 12px!important;
     margin: 2px!important;
     /* font-weight: bold!important; */
+}
+
+.btn-info {
+    background-color: #faf600!important;
+    border-radius: 24px!important;
+    border-color: #28225B!important;
+    margin: 2px!important;
+    font-family: 'Arial', sans-serif!important;
+    font-size: 15px!important;
+    font-weight: bold!important;
+    color: #224F9D!important;
+    border-width: 2px;
 }
