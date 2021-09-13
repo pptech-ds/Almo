@@ -11,7 +11,7 @@
         <div class="container"> 
             <div class="row">
                 <div class="almo-title-section">
-                    <img src="{{ asset('almo/img/rdv.png') }}" height="50%"> Mes rendez-vous et activités passées
+                    <img src="{{ asset('almo/img/pictos/rdv.png') }}" height="50%"> Mes rendez-vous et activités passées
                 </div>
             </div>
 
@@ -30,10 +30,10 @@
                     </div>
                     <div class="col-3 almo-rdv-content">
                         {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
-                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.reservedBy.id})}}">{{ reservation.reservedBy.civility }} {{ reservation.reservedBy.firstname }} {{ reservation.reservedBy.lastname }}</a>
+                            <img src="{{ asset('almo/img/pictos/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.reservedBy.id})}}">{{ reservation.reservedBy.civility }} {{ reservation.reservedBy.firstname }} {{ reservation.reservedBy.lastname }}</a>
                         {% endif %}
                         {% if (is_granted("ROLE_PATIENT")) %}
-                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.createdBy.id})}}">{{ reservation.createdBy.civility }} {{ reservation.createdBy.firstname }} {{ reservation.createdBy.lastname }}</a>
+                            <img src="{{ asset('almo/img/pictos/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.createdBy.id})}}">{{ reservation.createdBy.civility }} {{ reservation.createdBy.firstname }} {{ reservation.createdBy.lastname }}</a>
                         {% endif %}
                     </div>
                     <div class="col-2 almo-rdv-content-italic">
