@@ -6,8 +6,8 @@
     {% if is_granted("ROLE_USER") %}
     
         <div class="almo-background-color">
-            <div style="height: 15rem">
-            </div>
+            {# <div style="height: 15rem">
+            </div> #}
 
             <div class="container">
 
@@ -32,7 +32,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Mes rendez-vous et mes activités passés</h5>
                                         <img src="{{ asset('almo/img/rdv.png') }}">
-                                        <p>Donner mon avis</p>
+                                        <p class="almo-card-p">Donner mon avis</p>
                                     </div>
                                 </div>
                             </a>
@@ -45,7 +45,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Les webinars à venir</h5>
                                         <img src="{{ asset('almo/img/webinar.png') }}">
-                                        <p>Poser des questions</p>
+                                        <p class="almo-card-p">Poser des questions</p>
                                     </div>
                                 </div>
                             </a>
@@ -57,7 +57,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Les webinars passés</h5>
                                         <img src="{{ asset('almo/img/webinar.png') }}">
-                                        <p>Visionner les webinars passés</p>
+                                        <p class="almo-card-p">Visionner les webinars passés</p>
                                     </div>
                                 </div>
                             </a>
@@ -160,9 +160,9 @@
                 </div>   
                 <div class="row">
                     
-                    <div class="section-title">
+                    {# <div class="section-title">
                         <h2>Nos derniers articles</h2>
-                    </div>
+                    </div> #}
 
                     
                         {% for article in articles %}

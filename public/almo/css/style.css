@@ -59,8 +59,8 @@ p {
 }
 
 .almo-message-background {
-    background-color: #b3aeae;
-    border-radius: 24px;
+    background-color: #dadada;
+    border-radius: 10px;
 }
 
 .almo-fixed-top {
@@ -135,15 +135,28 @@ p {
 
 .almo-card-title {
     font-family: 'Arial', sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     font-weight: bold;
+    /* color: #28225B; */
+}
+
+
+/* .almo-card-title:hover {
+    color: #ffffff;
+} */
+
+.almo-card-p {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    text-align: center;
+    /* font-weight: bold; */
     color: #28225B;
 }
 
 .almo-card-border {
     border: 2px solid #224F9D;
-    border-radius: 25px;
+    border-radius: 10px;
     /* padding: 10px; */
     /* margin: 20px; */
 }
@@ -154,13 +167,14 @@ p {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    border: 2px solid #224F9D;
-    border-radius: 25px;
+    /* border: 2px solid #224F9D; */
+    border-radius: 10px;
     height: 200px;
 }
 
 .almo-card-quick-access:hover {
     background-color: #38AAE0;
+    color: #ffffff;
 }
 
 .almo-card-title-experiment {
@@ -184,8 +198,8 @@ p {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    border: 2px solid #224F9D;
-    border-radius: 25px;
+    /* border: 2px solid #224F9D; */
+    border-radius: 10px;
     height: 200px;
     background-color: #28225B;
 }
@@ -200,12 +214,13 @@ p {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    border: 2px solid #224F9D;
+    border: 0px solid #224F9D;
     border-radius: 5px;
     height: 450px;
 }
 
 .almo-card-article:hover {
+    /* color: #ffffff; */
     background-color: #38AAE0;
 }
 
