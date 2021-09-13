@@ -34,29 +34,7 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
         $dateStartFuture = DateTime::createFromFormat('Y-m-d H:i:s', '2021-12-10 09:00:00');
         $dateEndFuture = DateTime::createFromFormat('Y-m-d H:i:s', '2021-12-10 10:00:00');
 
-        $dateStartPast = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 09:00:00');
-        $dateEndPast = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 10:00:00');
-
-        for($i = 0; $i<40; $i++ ) {
-            $user = $this->getReference('user_pro_'.$i);
-
-            for($j=0; $j<10; $j++){
-                $disponility = new Appointment;
-                $disponility->setContent($faker->realText($maxNbChars = 200, $indexSize = 2));
-                $disponility->setStartTime($dateStartFuture);
-                $disponility->setEndTime($dateEndFuture);
-                $disponility->setCreatedBy($user);
-                $disponility->setName('RV '.$user->getSpeciality());
-                if($j%2==0){
-                    $disponility->setIsVisio(1);
-                } else {
-                    $disponility->setIsVisio(0);
-                }
-                $manager->persist($disponility);
-            }
-        }
-
-        for($i = 0; $i<10; $i++ ) {
+        for($i = 0; $i<4; $i++ ) {
             $user = $this->getReference('user_pro');
 
             

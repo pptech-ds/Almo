@@ -32,7 +32,7 @@ class InformationFixtures extends Fixture implements DependentFixtureInterface
         $almo_experiment = new Information;
         $almo_experiment->setCreatedBy($user);
         $almo_experiment->setTitle('almo_experiment');
-        $almo_experiment->setContent('Tout savoir sur l’expérimentation Cette expérimentation réunit des patients, des praticiens, un établissement de soin et son équipe, et l’équipe d’Almo. Elle a pour but de comprendre comment mieux répondre aux besoins de santé mentale des personnes atteintes de cancer. Dans le cadre de l’expérimentation, un programme est proposé, au jour le jour, semaine après semaine, en présentiel ou à distance. Hypnose, EMDR, méditation de pleine conscience, yoga thérapeutique, consultations de psychologie, consultations dédiées au sommeil, thérapies cognitive-comportementales… Notre établissement partenaire : LOGO Dr X et son équipe Notre comité scientifique est composé de : - - - Almo est le fruit d’une co-construction impliquant des patients, des oncologues, des infirmières spécialisées, des coaches. Ils ont participé : - - - -');
+        $almo_experiment->setContent('A changer une fois deployer (Pras)');
         $almo_experiment->setIsActive(true);
         $manager->persist($almo_experiment);
 

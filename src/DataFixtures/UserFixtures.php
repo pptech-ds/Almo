@@ -28,7 +28,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR'); 
 
 
-        for($i = 0; $i <= 11; $i++){
+        for($i = 0; $i <= 3; $i++){
             
             
             // le premier de la liste est admin
@@ -63,7 +63,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setZipcode($faker->postcode());
                 $user->setPhone($faker->phoneNumber());
                 $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
-                $user->setHospital($this->getReference('hospital_0'));
+                $user->setHospital($this->getReference('hospital'));
                 $user->setVisioLink('https://meet.google.com/yze-zkvf-mjy');
                 $manager->persist($user);
                 $this->addReference('user_doc', $user);
@@ -73,7 +73,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setEmail('user_pro@almo.com');
                 $user->setIsVerified(1);
                 $user->setCivility('Mr');
-                $user->setSpeciality($this->getReference('speciality_0'));
+                $user->setSpeciality($this->getReference('speciality'));
                 $user->setPassword($this->encoder->hashPassword($user, '123456'));
                 $user->setFirstname('User');
                 $user->setlastname('Pro');
@@ -99,115 +99,11 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setZipcode($faker->postcode());
                 $user->setPhone($faker->phoneNumber());
                 $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
-                $user->setHospital($this->getReference('hospital_1'));
+                $user->setHospital($this->getReference('hospital'));
                 $user->setDoctor($this->getReference('user_doc'));
                 $manager->persist($user);
                 $this->addReference('user_patient', $user);
-            } elseif (($i > 3) && ($i <= 10)) {
-                $user = new User;
-                $user->setRoles(['ROLE_DOC']);
-                $user->setEmail($faker->email);
-                $user->setIsVerified($faker->numberBetween(0,1));
-                $user->setCivility('Dr');
-                $user->setSpeciality($this->getReference('speciality_' . $faker->numberBetween(0, 4)));
-                $user->setPassword($this->encoder->hashPassword($user, '123456'));
-                $user->setFirstname($faker->firstName());
-                $user->setlastname($faker->lastName());
-                $user->setAddress($faker->streetAddress());
-                $user->setCity($faker->city());
-                $user->setZipcode($faker->postcode());
-                $user->setPhone($faker->phoneNumber());
-                $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
-                $user->setVisioLink('https://meet.google.com/yze-zkvf-mjy');
-                if($i%3 == 0){
-                    $user->setHospital($this->getReference('hospital_0'));
-                } elseif($i%3 == 1) {
-                    $user->setHospital($this->getReference('hospital_1'));
-                } elseif($i%3 == 2) {
-                    $user->setHospital($this->getReference('hospital_2'));
-                } else{
-                    $user->setHospital($this->getReference('hospital_3'));
-                }
-                $manager->persist($user);
-                $this->addReference('user_doc_' . $i, $user);
-            } else {
-                // print('test in 11');
-                $count = 0;
-                for($j=0; $j<10; $j++){
-                    // print('test in '.$count);
-                    for($k=0; $k<4; $k++){
-                        $user = new User;
-                        $user->setRoles(['ROLE_PRO']);
-                        $user->setEmail($faker->email);
-                        if($k%2==0){
-                            $user->setIsVerified(1);
-                            $user->setCivility('Mme');
-                        }
-                        else {
-                            $user->setIsVerified(0);
-                            $user->setCivility('Mr');
-                        }
-                        $user->setSpeciality($this->getReference('speciality_' . $j));
-                        $user->setPassword($this->encoder->hashPassword($user, '123456'));
-                        $user->setFirstname($faker->firstName());
-                        $user->setlastname($faker->lastName());
-                        $user->setAddress($faker->streetAddress());
-                        $user->setCity($faker->city());
-                        $user->setZipcode($faker->postcode());
-                        $user->setPhone($faker->phoneNumber());
-                        $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
-                        $user->setVisioLink('https://meet.google.com/yze-zkvf-mjy');
-                        $manager->persist($user);
-                        // print('user_pro_'.($count));
-                        $this->addReference('user_pro_'.($count), $user);
-                        $count++;
-                    }
-                }
             } 
-        }
-
-        for($i = 0; $i <= 29; $i++){
-            $user = new User;
-            $user->setRoles(['ROLE_PATIENT']);
-            $user->setEmail($faker->email);
-            $user->setIsVerified($faker->numberBetween(0,1));
-            if($i%2 == 0){
-                $user->setCivility('Mr');
-            } else {
-                $user->setCivility('Mme');
-            }
-            $user->setPassword($this->encoder->hashPassword($user, '123456'));
-            $user->setFirstname($faker->firstName());
-            $user->setlastname($faker->lastName());
-            $user->setAddress($faker->streetAddress());
-            $user->setCity($faker->city());
-            $user->setZipcode($faker->postcode());
-            $user->setPhone($faker->phoneNumber());
-            if($i%6 == 0){
-                $user->setDoctor($this->getReference('user_doc_4'));
-            } elseif($i%6 == 1) {
-                $user->setDoctor($this->getReference('user_doc_5'));
-            } elseif($i%6 == 2) {
-                $user->setDoctor($this->getReference('user_doc_6'));
-            } elseif($i%6 == 3) {
-                $user->setDoctor($this->getReference('user_doc_7'));
-            } elseif($i%6 == 4) {
-                $user->setDoctor($this->getReference('user_doc_8'));
-            } elseif($i%6 == 5) {
-                $user->setDoctor($this->getReference('user_doc_9'));
-            }
-            $user->setDetails($faker->realText($maxNbChars = 2000, $indexSize = 2));
-            if($i%3 == 0){
-                $user->setHospital($this->getReference('hospital_0'));
-            } elseif($i%3 == 1) {
-                $user->setHospital($this->getReference('hospital_1'));
-            } elseif($i%3 == 2) {
-                $user->setHospital($this->getReference('hospital_2'));
-            } else{
-                $user->setHospital($this->getReference('hospital_3'));
-            }
-            $manager->persist($user);
-            $this->addReference('user_' . $i, $user);
         }
         $manager->flush();         
     }
