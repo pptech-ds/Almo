@@ -24,12 +24,11 @@
                                 <div class="card almo-card-article">
                                     <div class="card-body">
                                         <img src={{ article.image }} alt="" style="width: 100%">
+                                        <div style="height: 1rem"></div>
                                         <h5 class="card-title almo-card-title">{{article.title}}</h5>
                                         <p class="card-text">{{ article.content | u.truncate(100, '...') | raw }}</p>
                                     </div>
-                                    {# <div class="card-body">
-                                        <p class="fs-6">Ecrit par <a href="{{path('user_biography', {'id':article.user.id})}}">{{article.user.civility}} {{article.user.firstname}} {{article.user.lastname}}</a> {{article.createdAt | ago}}</p>
-                                    </div> #}
+                                   
                                 </div>
                             </a>
                         </div>

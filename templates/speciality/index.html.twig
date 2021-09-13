@@ -23,6 +23,7 @@
                                 <div class="card almo-card-article">
                                     <div class="card-body">
                                         <img src={{ speciality.image }} alt="" style="width: 100%">
+                                        <div style="height: 1rem"></div>
                                         <h5 class="card-title almo-card-title">{{speciality.name}}</h5>
                                         <p class="card-text">{{ speciality.description | u.truncate(100, '...') | raw }}</p>
                                     </div>

@@ -18,35 +18,12 @@ class WebinarFixtures extends Fixture implements DependentFixtureInterface
 
         // print('Starting WebinarFixtures ');
 
-        $dateFuture = DateTime::createFromFormat('Y-m-d H:i:s', '2021-09-28 09:00:00');
+        $dateFuture = DateTime::createFromFormat('Y-m-d H:i:s', '2021-12-28 09:00:00');
         $datePast = DateTime::createFromFormat('Y-m-d H:i:s', '2021-07-28 09:00:00');
 
-        for($i = 0; $i < 10; $i++ ) {
+        for($i = 0; $i < 3; $i++ ) {
             // getting references created in WebinarCategoryFixtures
-            $webinarCategory = $this->getReference('webinarCategory_' . $faker->numberBetween(0, 1));
-            $user = $this->getReference('user_pro_' . $faker->numberBetween(1, 10));
-            $webinar = new Webinar;
-            $webinar->setWebinarCategory($webinarCategory);
-            $webinar->setTitle('Webinar "'.$faker->catchPhrase().'"');
-            $webinar->setContent($faker->realText($maxNbChars = 500, $indexSize = 2));
-            if($i%2 == 0){
-                $webinar->setStartTime($dateFuture);
-            }
-            else {
-                $webinar->setStartTime($datePast);
-            }
-            $webinar->setImage('img/demo'.rand(1,18).'.jpg');
-            $webinar->setActive(true);
-            $webinar->setUser($user);
-            $webinar->setHost($user);
-            $webinar->setVisioLink('https://meet.google.com/yze-zkvf-mjy');
-            $manager->persist($webinar);
-        }
-
-
-        for($i = 0; $i < 6; $i++ ) {
-            // getting references created in WebinarCategoryFixtures
-            $webinarCategory = $this->getReference('webinarCategory_' . $faker->numberBetween(0, 1));
+            $webinarCategory = $this->getReference('webinarCategory');
             $user = $this->getReference('user_pro');
             $webinar = new Webinar;
             $webinar->setWebinarCategory($webinarCategory);

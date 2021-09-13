@@ -19,7 +19,7 @@
                                 <div class="card almo-card-quick-access">
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Mes rendez-vous et mes activités prévus</h5>
-                                        <img src="{{ asset('almo/img/calendar.png') }}">
+                                        <img src="{{ asset('almo/img/pictos/calendar.png') }}">
                                         
                                     </div>
                                 </div>
@@ -31,7 +31,7 @@
                                 <div class="card almo-card-quick-access">
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Mes rendez-vous et mes activités passés</h5>
-                                        <img src="{{ asset('almo/img/rdv.png') }}">
+                                        <img src="{{ asset('almo/img/pictos/rdv.png') }}">
                                         <p class="almo-card-p">Donner mon avis</p>
                                     </div>
                                 </div>
@@ -44,7 +44,7 @@
                                 <div class="card almo-card-quick-access">
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Les webinars à venir</h5>
-                                        <img src="{{ asset('almo/img/webinar.png') }}">
+                                        <img src="{{ asset('almo/img/pictos/webinar.png') }}">
                                         <p class="almo-card-p">Poser des questions</p>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
                                 <div class="card almo-card-quick-access">
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Les webinars passés</h5>
-                                        <img src="{{ asset('almo/img/webinar.png') }}">
+                                        <img src="{{ asset('almo/img/pictos/webinar.png') }}">
                                         <p class="almo-card-p">Visionner les webinars passés</p>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                 <div class="card almo-card-quick-access">
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Mes rendez-vous à venir</h5>
-                                        <img src="{{ asset('almo/img/calendar.png') }}">
+                                        <img src="{{ asset('almo/img/pictos/calendar.png') }}">
                                         <p>Contacter les patients si besoin</p>
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                                 <div class="card almo-card-quick-access">
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Mes rendez-vous passés</h5>
-                                        <img src="{{ asset('almo/img/rdv.png') }}">
+                                        <img src="{{ asset('almo/img/pictos/rdv.png') }}">
                                         <p>Gerer mes comptes rendus</p>
                                     </div>
                                 </div>
@@ -126,7 +126,7 @@
                                 <div class="card almo-card-quick-access">
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Créer mes disponibilités</h5>
-                                        <img src="{{ asset('almo/img/calendar.png') }}">
+                                        <img src="{{ asset('almo/img/pictos/calendar.png') }}">
                                         
                                     </div>
                                 </div>
@@ -138,7 +138,7 @@
                                 <div class="card almo-card-quick-access">
                                     <div class="card-body">
                                         <h5 class="card-title almo-card-title">Voir mes disponibilités</h5>
-                                        <img src="{{ asset('almo/img/calendar.png') }}">
+                                        <img src="{{ asset('almo/img/pictos/calendar.png') }}">
                                         <p>Modifier, supprimer mes disponibilités</p>
                                     </div>
                                 </div>
@@ -171,6 +171,7 @@
                                     <div class="card almo-card-article">
                                         <div class="card-body">
                                             <img src={{ article.image }} alt="" style="width: 100%">
+                                            <div style="height: 1rem"></div>
                                             <h5 class="card-title almo-card-title">{{article.title}}</h5>
                                             <p class="card-text">{{ article.content | u.truncate(100, '...') | raw }}</p>
                                         </div>
@@ -201,7 +202,7 @@
             <div class="container">
                 
                 <div class="text-center">
-                    <img  src="{{ asset('almo/img/logo_home.png') }}">
+                    <img  src="{{ asset('almo/img/pictos/logo_home.png') }}">
                 </div>
                 
                 <div>

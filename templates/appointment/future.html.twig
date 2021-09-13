@@ -11,7 +11,7 @@
         <div class="container"> 
             <div class="row">
                     <div class="almo-title-section">
-                        <img src="{{ asset('almo/img/calendar.png') }}" height="50%"> Mes rendez-vous et activités prévus
+                        <img src="{{ asset('almo/img/pictos/calendar.png') }}" height="50%"> Mes rendez-vous et activités prévus
                     </div>
             </div>
 
@@ -33,10 +33,10 @@
                     </div>
                     <div class="col-3 almo-rdv-content">
                         {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
-                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.reservedBy.id})}}">{{ reservation.reservedBy.civility }} {{ reservation.reservedBy.firstname }} {{ reservation.reservedBy.lastname }}</a>
+                            <img src="{{ asset('almo/img/pictos/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.reservedBy.id})}}">{{ reservation.reservedBy.civility }} {{ reservation.reservedBy.firstname }} {{ reservation.reservedBy.lastname }}</a>
                         {% endif %}
                         {% if (is_granted("ROLE_PATIENT")) %}
-                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.createdBy.id})}}">{{ reservation.createdBy.civility }} {{ reservation.createdBy.firstname }} {{ reservation.createdBy.lastname }}</a>
+                            <img src="{{ asset('almo/img/pictos/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':reservation.createdBy.id})}}">{{ reservation.createdBy.civility }} {{ reservation.createdBy.firstname }} {{ reservation.createdBy.lastname }}</a>
                         {% endif %}
                     </div>
                     <div class="col-2 almo-rdv-content-italic">
@@ -95,10 +95,10 @@
                     </div>
                     <div class="col-3 almo-rdv-content">
                         {% if (is_granted("ROLE_DOC") or is_granted("ROLE_PRO")) %}
-                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':webinar.reservedBy.id})}}">{{ webinar.reservedBy.civility }} {{ webinar.reservedBy.firstname }} {{ webinar.reservedBy.lastname }}</a>
+                            <img src="{{ asset('almo/img/pictos/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':webinar.reservedBy.id})}}">{{ webinar.reservedBy.civility }} {{ webinar.reservedBy.firstname }} {{ webinar.reservedBy.lastname }}</a>
                         {% endif %}
                         {% if (is_granted("ROLE_PATIENT")) %}
-                            <img src="{{ asset('almo/img/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':webinar.user.id})}}">{{ webinar.user.civility }} {{ webinar.user.firstname }} {{ webinar.user.lastname }}</a>
+                            <img src="{{ asset('almo/img/pictos/rdv_pro.png') }}"> <a href="{{path('user_biography', {'id':webinar.user.id})}}">{{ webinar.user.civility }} {{ webinar.user.firstname }} {{ webinar.user.lastname }}</a>
                         {% endif %}
                     </div>
                     <div class="col-2 almo-rdv-content-italic">
